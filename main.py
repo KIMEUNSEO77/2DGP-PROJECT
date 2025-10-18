@@ -54,7 +54,7 @@ def reset_world():
     global world   # 모든 객체를 담을 수 있는 리스트
     world = []
 
-    stage = Stage(0)
+    stage = Stage(3)
     stage.enter()
     world.append(stage)
     if player == 0:
