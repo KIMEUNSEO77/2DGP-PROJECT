@@ -1,17 +1,19 @@
 from pico2d import *
+import random
 
 class Mage:
     def __init__(self, x=400, y=300):
         self.x = x
         self.y = y
         self.image = load_image("player_sprite.png")
+        self.frame = 0
 
     def update(self):
         pass
 
     def draw(self):
         if self.image:
-            self.image.draw(self.x, self.y)
+            self.image.clip_draw(self.frame * 100, 140, 33, 40, self.x, 90)
 
 
 class Knight:
