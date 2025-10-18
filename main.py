@@ -1,19 +1,23 @@
 from pico2d import *
 import random
 
+WIDTH, HEIGHT = 1000, 600
+
 class Mage:
-    def __init__(self, x=400, y=300):
+    def __init__(self, x=40, y=300):
         self.x = x
         self.y = y
         self.image = load_image("player_sprite.png")
+        # (x, y) 좌표를 담는 프레임 리스트
+        self.frames = [0, 33, 66]
         self.frame = 0
 
     def update(self):
-        pass
-
+        self.x += 1
+        self.frame = (self.frame + 1) % 3
     def draw(self):
         if self.image:
-            self.image.clip_draw(self.frame * 100, 140, 33, 40, self.x, 90)
+            self.image.clip_draw(self.frames[self.frame], 0, 32, 40, self.x, 90)
 
 
 class Knight:
@@ -25,7 +29,7 @@ class Stage:
         self.bg = None
 
     def enter(self):  # 스테이지 시작 시 초기화
-        if self.id == 1:
+        if self.id == 0:
             self.bg = load_image("Tutorial_BG.png")
 
     def exit(self):   # 스테이시 종료 시 처리
@@ -36,9 +40,7 @@ class Stage:
 
     def draw(self): # 화면 그리기
         if self.bg:
-            clear_canvas()
-            self.bg.draw(400, 300)
-            update_canvas()
+            self.bg.draw(WIDTH // 2, HEIGHT // 2)
 
     def handle_events(self, event):
         pass
@@ -61,6 +63,10 @@ def reset_world():
 
     global world   # 모든 객체를 담을 수 있는 리스트
     world = []
+
+    stage = Stage(0)
+    stage.enter()
+    world.append(stage)
 
     mage = Mage()
     world.append(mage)
@@ -85,6 +91,6 @@ while running:
     # close_canvas()
     update_world()
     render_world()
-    delay(0.02)
+    delay(0.05)
 
 close_canvas()
