@@ -1,4 +1,9 @@
 from pico2d import *
+class Mage:
+    pass
+
+class Knight:
+    pass
 
 def handle_events():
     global running
