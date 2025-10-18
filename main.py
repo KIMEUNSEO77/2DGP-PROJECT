@@ -14,7 +14,13 @@ class Stage:
 
     def enter(self):  # 스테이지 시작 시 초기화
         if self.id == 0:
-            self.bg = load_image("Tutorial_BG.png")
+            self.bg = load_image("BG_0stage.png")
+        elif self.id == 1:
+            self.bg = load_image("BG_1stage.png")
+        elif self.id == 2:
+            self.bg = load_image("BG_2stage.png")
+        elif self.id == 3:
+            self.bg = load_image("BG_3stage.png")
 
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None
