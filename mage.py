@@ -5,7 +5,7 @@ class Mage:
     def __init__(self, x=40, y=300):
         self.x = x
         self.y = y
-        self.image = load_image("player_sprite.png")
+        self.image = load_image("mage_sprite.png")
         # (x, y) 좌표를 담는 프레임 리스트
         self.frames = [0, 33, 66]
         self.frame = 0

@@ -3,9 +3,24 @@ from pico2d import *
 from mage import Mage
 
 WIDTH, HEIGHT = 1000, 600
+player = 1  # 0: mage, 1: knight
 
 class Knight:
-    pass
+    def __init__(self, x=40, y=300):
+        self.x = x
+        self.y = y
+        self.image = load_image("knight_sprite.png")
+        # (x, y) 좌표를 담는 프레임 리스트
+        self.frames = [0, 33, 66]
+        self.frame = 0
+
+    def update(self):
+        self.x += 1
+        self.frame = (self.frame + 1) % 3
+    def draw(self):
+        if self.image:
+            self.image.clip_draw(self.frames[self.frame], 0, 32, 40, self.x, 90)
+
 
 class Stage:
     def __init__(self, id):
@@ -51,9 +66,12 @@ def reset_world():
     stage = Stage(0)
     stage.enter()
     world.append(stage)
-
-    mage = Mage()
-    world.append(mage)
+    if player == 0:
+        mage = Mage()
+        world.append(mage)
+    else:
+        knight = Knight()
+        world.append(knight)
 
 def update_world():   # 객체들의 상호작용, 행위 업데이트
     for obj in world:
