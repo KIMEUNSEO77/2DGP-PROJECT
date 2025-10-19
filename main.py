@@ -2,38 +2,12 @@ from pico2d import *
 
 from knight import Knight
 from mage import Mage
+from stage import Stage
 
 WIDTH, HEIGHT = 1000, 600
 player = 1  # 0: mage, 1: knight
+cur_stage = 0
 
-
-class Stage:
-    def __init__(self, id):
-        self.id = id
-        self.bg = None
-
-    def enter(self):  # 스테이지 시작 시 초기화
-        if self.id == 0:
-            self.bg = load_image("BG_0stage.png")
-        elif self.id == 1:
-            self.bg = load_image("BG_1stage.png")
-        elif self.id == 2:
-            self.bg = load_image("BG_2stage.png")
-        elif self.id == 3:
-            self.bg = load_image("BG_3stage.png")
-
-    def exit(self):   # 스테이시 종료 시 처리
-        self.bg = None
- 
-    def update(self): # 게임 로직 업데이트
-        pass
-
-    def draw(self): # 화면 그리기
-        if self.bg:
-            self.bg.draw(WIDTH // 2, HEIGHT // 2)
-
-    def handle_events(self, event):
-        pass
 
 def handle_events():
     global running
@@ -45,16 +19,16 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
-open_canvas()
+open_canvas(WIDTH, HEIGHT)
 
 def reset_world():
-    global running
+    global running, cur_stage
     running = True
 
     global world   # 모든 객체를 담을 수 있는 리스트
     world = []
 
-    stage = Stage(3)
+    stage = Stage(cur_stage, WIDTH, HEIGHT)
     stage.enter()
     world.append(stage)
     if player == 0:
