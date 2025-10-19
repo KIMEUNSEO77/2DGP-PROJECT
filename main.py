@@ -5,7 +5,7 @@ from mage import Mage
 from stage import Stage
 
 WIDTH, HEIGHT = 1000, 600
-player = 0  # 0: mage, 1: knight
+player = 0 # 0: mage, 1: knight
 cur_stage = 0
 
 
@@ -19,12 +19,15 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
         else:
-            mage.handle_events(event)
+            if player == 1:
+                knight.handle_events(event)
+            else:
+                mage.handle_events(event)
 
 open_canvas(WIDTH, HEIGHT)
 
 def reset_world():
-    global running, cur_stage, mage
+    global running, cur_stage, mage, knight
     running = True
 
     global world   # 모든 객체를 담을 수 있는 리스트
