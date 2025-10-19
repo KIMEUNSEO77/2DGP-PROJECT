@@ -1,5 +1,13 @@
 from pico2d import load_image
 
+class Idle:
+    pass
+
+class Run:
+    pass
+
+class Jump:
+    pass
 
 class Mage:
     def __init__(self, x=40, y=300):
