@@ -1,13 +1,48 @@
 from pico2d import load_image
 
 class Idle:
-    pass
+    def __init__(self, player):
+        self.player = player
+    def enter(self, e):
+        pass
+    def exit(self, e):
+        pass
+    def do(self):
+        pass
+    def draw(self):
+        pass
 
 class Run:
-    pass
+    def __init__(self, player):
+        self.player = player
+
+    def enter(self, e):
+        pass
+
+    def exit(self, e):
+        pass
+
+    def do(self):
+        pass
+
+    def draw(self):
+        pass
 
 class Jump:
-    pass
+    def __init__(self, player):
+        self.player = player
+
+    def enter(self, e):
+        pass
+
+    def exit(self, e):
+        pass
+
+    def do(self):
+        pass
+
+    def draw(self):
+        pass
 
 class Mage:
     def __init__(self, x=40, y=300):
