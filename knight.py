@@ -10,7 +10,7 @@ class Knight:
         self.y = y
         self.image = load_image("knight_sprite.png")
         # (x, y) 좌표를 담는 프레임 리스트
-        self.frames = [1, 30, 60]
+        self.frames = [0, 30, 61]
         self.frame = 0
 
         self.dir = 0  # 가는 방향 (1: 오른쪽, -1: 왼쪽)
@@ -23,7 +23,7 @@ class Knight:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {right_down: self.RUN, left_down: self.RUN, jump_down: self.JUMP},
+                self.IDLE: {right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
                 self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE}
             }
         )

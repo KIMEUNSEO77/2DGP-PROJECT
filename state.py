@@ -54,7 +54,7 @@ class Jump:
         self.player = player
 
     def enter(self, e):
-        pass
+        self.player.frame = 1
 
     def exit(self, e):
         pass
