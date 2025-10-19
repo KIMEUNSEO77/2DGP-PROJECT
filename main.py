@@ -5,7 +5,7 @@ from mage import Mage
 from stage import Stage
 
 WIDTH, HEIGHT = 1000, 600
-player = 0 # 0: mage, 1: knight
+player = 1 # 0: mage, 1: knight
 cur_stage = 0
 
 
