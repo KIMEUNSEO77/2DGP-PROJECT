@@ -8,6 +8,7 @@ from stage import Stage1
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
 cur_stage = 0
+world = []
 
 
 def handle_events():
@@ -27,14 +28,98 @@ def handle_events():
 
 open_canvas(WIDTH, HEIGHT)
 
-def reset_world(change_stage=0):   # 모든 객체 초기화
+def change_stage(new_stage):
+    global world, mage, cur_stage, knight
+
+    # 기존 월드 객체들 정리
+    if 'world' in globals() and world:
+        old_stage = None
+        for obj in world:
+            if isinstance(obj, Stage):
+                old_stage = obj
+                break
+        if old_stage and hasattr(old_stage, 'exit'):
+            old_stage.exit()
+        for obj in world:
+            if obj is old_stage:
+                continue
+            if hasattr(obj, 'exit'):
+                obj.exit()
+
+    cur_stage = new_stage
+    stage = Stage(cur_stage, WIDTH, HEIGHT)
+    stage.enter()
+    world.append(stage)
+
+    # 플레이어를 월드에 다시 추가하고 위치/방향/상태/이벤트 초기화
+    start_positions = {
+        0: (50, 80),  # 스테이지별 시작 좌표 필요하면 확장
+        1: (50, 80),
+    }
+    sx, sy = start_positions.get(cur_stage, (50, 80))
+
+    if player == 0:
+        # mage가 이미 있으면 재사용, 없으면 새로 생성
+        if 'mage' not in globals() or mage is None:
+            mage = Mage()
+        # 위치/방향 초기화
+        mage.x, mage.y = sx, sy
+        if hasattr(mage, 'dir'):
+            mage.dir = 1
+        # 이벤트 큐 초기화(있으면)
+        if hasattr(mage, 'event_que'):
+            try:
+                mage.event_que.clear()
+            except Exception:
+                mage.event_que = []
+        # 상태 초기화(안정적으로 시도)
+        if hasattr(mage, 'change_state'):
+            try:
+                mage.change_state('Idle')
+            except Exception:
+                try:
+                    mage.change_state(0)
+                except Exception:
+                    pass
+        elif hasattr(mage, 'state'):
+            try:
+                mage.state = 'Idle'
+            except Exception:
+                mage.state = None
+        world.append(mage)
+    else:
+        if 'knight' not in globals() or knight is None:
+            knight = Knight()
+        knight.x, knight.y = sx, sy
+        if hasattr(knight, 'dir'):
+            knight.dir = 1
+        if hasattr(knight, 'event_que'):
+            try:
+                knight.event_que.clear()
+            except Exception:
+                knight.event_que = []
+        if hasattr(knight, 'change_state'):
+            try:
+                knight.change_state('Idle')
+            except Exception:
+                try:
+                    knight.change_state(0)
+                except Exception:
+                    pass
+        elif hasattr(knight, 'state'):
+            try:
+                knight.state = 'Idle'
+            except Exception:
+                knight.state = None
+        world.append(knight)
+
+def reset_world():   # 모든 객체 초기화
     global running, cur_stage, mage, knight
     running = True
 
     global world   # 모든 객체를 담을 수 있는 리스트
-    world = []
 
-    cur_stage = change_stage
+    cur_stage = 0
     stage = Stage(cur_stage, WIDTH, HEIGHT)
     stage.enter()
     world.append(stage)
@@ -66,7 +151,7 @@ while running:
     update_world()
 
     if mage.at_stage0_exit():
-        reset_world(1)
+        change_stage(1)
 
     render_world()
     delay(0.05)
