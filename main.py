@@ -3,9 +3,10 @@ from pico2d import *
 from knight import Knight
 from mage import Mage
 from stage import Stage
+from stage import Stage1
 
 WIDTH, HEIGHT = 1000, 600
-player = 1 # 0: mage, 1: knight
+player = 0 # 0: mage, 1: knight
 cur_stage = 0
 
 
@@ -26,13 +27,14 @@ def handle_events():
 
 open_canvas(WIDTH, HEIGHT)
 
-def reset_world():
+def reset_world(change_stage=0):   # 모든 객체 초기화
     global running, cur_stage, mage, knight
     running = True
 
     global world   # 모든 객체를 담을 수 있는 리스트
     world = []
 
+    cur_stage = change_stage
     stage = Stage(cur_stage, WIDTH, HEIGHT)
     stage.enter()
     world.append(stage)
@@ -62,6 +64,10 @@ while running:
     handle_events()
     # close_canvas()
     update_world()
+
+    if mage.at_stage0_exit():
+        reset_world(1)
+
     render_world()
     delay(0.05)
 

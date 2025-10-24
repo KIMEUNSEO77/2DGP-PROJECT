@@ -5,7 +5,7 @@ from state import Idle, Run, Jump
 from state_machine import StateMachine
 
 class Mage:
-    def __init__(self, x=40, y=300):
+    def __init__(self, x=40, y=80):
         self.x = x
         self.y = y
         self.image = load_image("mage_sprite.png")
@@ -36,3 +36,6 @@ class Mage:
 
     def handle_events(self, event):
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
+
+    def at_stage0_exit(self, x_target=900, y_target=80, eps=6):
+        return abs(self.x - x_target) <= eps and abs(self.y - y_target) <= eps
