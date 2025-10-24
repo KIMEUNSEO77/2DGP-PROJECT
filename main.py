@@ -9,7 +9,7 @@ from stage import Stage3
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 0
+cur_stage = 1
 world = []
 
 
@@ -126,7 +126,7 @@ def reset_world():   # 모든 객체 초기화
 
     global world   # 모든 객체를 담을 수 있는 리스트
 
-    cur_stage = 0
+    # cur_stage = 0
     stage = Stage(cur_stage, WIDTH, HEIGHT)
     stage.enter()
     world.append(stage)
