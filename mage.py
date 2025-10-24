@@ -26,9 +26,9 @@ class Mage:
             self.IDLE,
             {
                 self.IDLE: {down_down: self.DOWN, up_down: self.UP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
-                self.UP: {up_up: self.IDLE},
-                self.DOWN: {down_up: self.IDLE}
+                self.RUN: {up_down: self.UP, down_down: self.DOWN, right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
+                self.UP: {right_down: self.RUN, down_down: self.DOWN, left_down: self.RUN, up_up: self.IDLE},
+                self.DOWN: {right_down: self.RUN, down_down: self.DOWN, left_down: self.RUN,down_up: self.IDLE}
             }
         )
 

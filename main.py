@@ -8,7 +8,7 @@ from stage import Stage2
 from stage import Stage3
 
 WIDTH, HEIGHT = 1000, 600
-player = 0 # 0: mage, 1: knight
+player = 1 # 0: mage, 1: knight
 cur_stage = 1
 world = []
 
@@ -157,7 +157,9 @@ while running:
     # close_canvas()
     update_world()
 
-    if mage.at_stage0_exit():
+    if player == 0 and mage.at_stage0_exit():
+        change_stage(1)
+    if player == 1 and knight.at_stage0_exit():
         change_stage(1)
 
     render_world()
