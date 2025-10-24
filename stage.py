@@ -32,6 +32,8 @@ class Stage:
 class Stage1(Stage):
     def __init__(self, w, h):
         super().__init__(1, w, h)
+        self.x = 50
+        self.y = 20
 
 class Stage2(Stage):
     def __init__(self, w, h):

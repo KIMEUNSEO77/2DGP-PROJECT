@@ -5,7 +5,7 @@ from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 
 class Mage:
-    def __init__(self, x=40, y=80):
+    def __init__(self, x=40, y=40):
         self.x = x
         self.y = y
         self.image = load_image("mage_sprite.png")
