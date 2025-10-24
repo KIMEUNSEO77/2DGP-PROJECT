@@ -1,7 +1,7 @@
 from pico2d import load_image
 
-from event import right_down, left_down, jump_down, right_up, left_up
-from state import Idle, Run, Jump
+from event import right_down, left_down, jump_down, right_up, left_up, up_down, down_down, up_up, down_up
+from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 
 class Mage:
@@ -19,12 +19,16 @@ class Mage:
         self.IDLE = Idle(self)
         self.RUN = Run(self)
         self.JUMP = Jump(self)
+        self.UP = Up(self)
+        self.DOWN = Down(self)
 
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE}
+                self.IDLE: {down_down: self.DOWN, up_down: self.UP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
+                self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
+                self.UP: {up_up: self.IDLE},
+                self.DOWN: {down_up: self.IDLE}
             }
         )
 
