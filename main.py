@@ -4,6 +4,8 @@ from knight import Knight
 from mage import Mage
 from stage import Stage
 from stage import Stage1
+from stage import Stage2
+from stage import Stage3
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
@@ -47,7 +49,12 @@ def change_stage(new_stage):
                 obj.exit()
 
     cur_stage = new_stage
-    stage = Stage(cur_stage, WIDTH, HEIGHT)
+    if cur_stage == 1:
+        stage = Stage1(WIDTH, HEIGHT)
+    elif cur_stage == 2:
+        stage = Stage2(WIDTH, HEIGHT)
+    elif cur_stage == 3:
+        stage = Stage3(WIDTH, HEIGHT)
     stage.enter()
     world.append(stage)
 

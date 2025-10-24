@@ -32,3 +32,11 @@ class Stage:
 class Stage1(Stage):
     def __init__(self, w, h):
         super().__init__(1, w, h)
+
+class Stage2(Stage):
+    def __init__(self, w, h):
+        super().__init__(2, w, h)
+
+class Stage3(Stage):
+    def __init__(self, w, h):
+        super().__init__(3, w, h)
