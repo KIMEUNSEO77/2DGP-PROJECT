@@ -15,8 +15,6 @@ class Mage:
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
-        self.falling = True  # 떨어지는 중인지 여부
-        self.vy = -5
 
         self.IDLE = Idle(self)
         self.RUN = Run(self)

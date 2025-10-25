@@ -168,15 +168,6 @@ def apply_collision(player_obj, stage_obj):
     if player is None or stage_obj is None:
         return
 
-    grounded = False
-    if stage_obj:
-        try:
-            grounded = stage_obj.check_collision(player_obj)
-        except Exception:
-            grounded = False
-    if player_obj.falling == False and not grounded:
-        player_obj.y += player_obj.vy
-
 running = True
 
 # game loop
