@@ -1,4 +1,4 @@
-from event import right_down, left_down, right_up, left_up, up_down, down_down, up_up, down_up
+from event import right_down, left_down, right_up, left_up
 
 w, h = 32, 40
 
@@ -51,6 +51,8 @@ class Run:
 class Jump:
     def __init__(self, player):
         self.player = player
+        self.cur_y = 0  # y증가량
+        self.dy = 10  # y증가 속도
 
     def enter(self, e):
         self.player.frame = 1
@@ -59,7 +61,15 @@ class Jump:
         pass
 
     def do(self):
-        pass
+        if self.cur_y < 80:
+            self.player.y += self.dy
+            self.cur_y += self.dy
 
     def draw(self):
-        pass
+        global w, h
+        if self.player.face_dir == 1:
+            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+                                                  0, '', self.player.x, self.player.y, w * 1.5, h * 1.5)
+        else:
+            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+                                                  0, 'h', self.player.x, self.player.y, w * 1.5, h * 1.5)

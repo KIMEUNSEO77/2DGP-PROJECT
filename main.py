@@ -129,11 +129,17 @@ def reset_world():   # 모든 객체 초기화
 
     if player == 0:
         mage = Mage()
+        mage.vy = 0
+        mage.on_ground = False
+
         stage = Stage0(mage, WIDTH, HEIGHT)
         world.append(stage)
         world.append(mage)
     else:
         knight = Knight()
+        knight.vy = 0
+        knight.on_ground = False
+
         stage = Stage0(knight, WIDTH, HEIGHT)
         world.append(stage)
         world.append(knight)
@@ -151,22 +157,64 @@ def render_world():   # 객체들 그리기
         obj.draw()
     update_canvas()
 
-running = True
+def get_current_stage():
+    global world
+    for o in world:
+        if isinstance(o, Stage):
+            return o
+    return None
 
+def apply_collision(player_obj, stage_obj, dt=0.05, gravity=1200):
+    if not player_obj:
+        return
+
+    grounded = False
+    if stage_obj:
+        try:
+            grounded = stage_obj.check_collision(player_obj)
+        except Exception:
+            grounded = False
+
+    if grounded:
+        player_obj.on_ground = True
+        player_obj.vy = 0
+        # ground_y가 있으면 스냅
+        gy = getattr(stage_obj, "ground_y", None)
+        if gy is not None:
+            if hasattr(player_obj, "h"):
+                player_obj.y = gy + (player_obj.h / 2)
+            else:
+                player_obj.y = gy
+    else:
+        player_obj.on_ground = False
+        player_obj.vy = getattr(player_obj, "vy", 0) + gravity * dt
+        # y 갱신 (기존 코드 스타일과 동일하게 vy를 더하는 방식)
+        player_obj.y += player_obj.vy * dt
+
+running = True
+gravity = -120
+dt = 0.05
 # game loop
 reset_world()
 
 while running:
     handle_events()
-    # close_canvas()
+
+    cur_stage_obj = get_current_stage()
+    player_obj = mage if player == 0 else knight
+
+    apply_collision(player_obj, cur_stage_obj, dt, gravity)
+
     update_world()
 
-    if player == 0 and mage.at_stage0_exit():
-        change_stage(1)
-    if player == 1 and knight.at_stage0_exit():
-        change_stage(1)
+    if player == 0:
+        if mage.at_stage0_exit():
+            change_stage(1)
+    if player == 1:
+        if knight.at_stage0_exit():
+            change_stage(1)
 
     render_world()
-    delay(0.05)
+    delay(dt)
 
 close_canvas()
