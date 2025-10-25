@@ -43,11 +43,7 @@ class Stage0(Stage):
         player.y = getattr(player, "y", self.ground_y)
 
     def check_collision(self, player):
-        if hasattr(player, "h"):
-            foot_y = player.y - player.h / 2
-        else:
-            foot_y = player.y
-        return foot_y <= self.ground_y + self.eps
+        return player.y <= self.ground_y + self.eps
 
 class Stage1(Stage):
     def __init__(self, player, w, h):

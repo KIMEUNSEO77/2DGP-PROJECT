@@ -15,6 +15,8 @@ class Mage:
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
+        self.falling = True  # 떨어지는 중인지 여부
+        self.vy = -5
 
         self.IDLE = Idle(self)
         self.RUN = Run(self)
@@ -25,7 +27,7 @@ class Mage:
             {
                 self.IDLE: {jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
                 self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
-                self.JUMP: {jump_up: self.IDLE}
+                self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN}
             }
         )
 

@@ -164,8 +164,8 @@ def get_current_stage():
             return o
     return None
 
-def apply_collision(player_obj, stage_obj, dt=0.05, gravity=1200):
-    if not player_obj:
+def apply_collision(player_obj, stage_obj):
+    if player is None or stage_obj is None:
         return
 
     grounded = False
@@ -174,26 +174,11 @@ def apply_collision(player_obj, stage_obj, dt=0.05, gravity=1200):
             grounded = stage_obj.check_collision(player_obj)
         except Exception:
             grounded = False
-
-    if grounded:
-        player_obj.on_ground = True
-        player_obj.vy = 0
-        # ground_y가 있으면 스냅
-        gy = getattr(stage_obj, "ground_y", None)
-        if gy is not None:
-            if hasattr(player_obj, "h"):
-                player_obj.y = gy + (player_obj.h / 2)
-            else:
-                player_obj.y = gy
-    else:
-        player_obj.on_ground = False
-        player_obj.vy = getattr(player_obj, "vy", 0) + gravity * dt
-        # y 갱신 (기존 코드 스타일과 동일하게 vy를 더하는 방식)
-        player_obj.y += player_obj.vy * dt
+    if player_obj.falling == False and not grounded:
+        player_obj.y += player_obj.vy
 
 running = True
-gravity = -120
-dt = 0.05
+
 # game loop
 reset_world()
 
@@ -203,7 +188,7 @@ while running:
     cur_stage_obj = get_current_stage()
     player_obj = mage if player == 0 else knight
 
-    apply_collision(player_obj, cur_stage_obj, dt, gravity)
+    apply_collision(player_obj, cur_stage_obj)
 
     update_world()
 
@@ -215,6 +200,6 @@ while running:
             change_stage(1)
 
     render_world()
-    delay(dt)
+    delay(0.05)
 
 close_canvas()

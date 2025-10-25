@@ -52,18 +52,20 @@ class Jump:
     def __init__(self, player):
         self.player = player
         self.cur_y = 0  # y증가량
-        self.dy = 10  # y증가 속도
 
     def enter(self, e):
         self.player.frame = 1
+        self.player.falling = False
+        self.player.vx = 20
 
     def exit(self, e):
-        pass
+        self.player.falling = True
+        self.player.vx = -20
 
     def do(self):
         if self.cur_y < 80:
-            self.player.y += self.dy
-            self.cur_y += self.dy
+            self.player.y += self.player.vx
+            self.cur_y += self.player.vx
 
     def draw(self):
         global w, h
