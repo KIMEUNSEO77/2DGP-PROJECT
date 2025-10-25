@@ -29,11 +29,21 @@ class Stage:
     def handle_events(self, event):
         pass
 
+    def check_collision(self, player):
+        """스테이지별로 오버라이드할 것. player는 x,y,w,h 같은 속성을 가정."""
+        raise NotImplementedError
+
+class Stage0(Stage):
+    def __init__(self, player, w, h):
+        super().__init__(0, w, h)
+        player.x = 40
+        player.y = 80
+
 class Stage1(Stage):
-    def __init__(self, w, h):
+    def __init__(self, player, w, h):
         super().__init__(1, w, h)
-        self.x = 40
-        self.y = 40
+        player.x = 50
+        player.y = 80
 
 class Stage2(Stage):
     def __init__(self, w, h):

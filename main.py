@@ -3,6 +3,7 @@ from pico2d import *
 from knight import Knight
 from mage import Mage
 from stage import Stage
+from stage import Stage0
 from stage import Stage1
 from stage import Stage2
 from stage import Stage3
@@ -126,16 +127,19 @@ def reset_world():   # 모든 객체 초기화
 
     global world   # 모든 객체를 담을 수 있는 리스트
 
-    # cur_stage = 0
-    stage = Stage(cur_stage, WIDTH, HEIGHT)
-    stage.enter()
-    world.append(stage)
     if player == 0:
         mage = Mage()
+        stage = Stage0(mage, WIDTH, HEIGHT)
+        world.append(stage)
         world.append(mage)
     else:
         knight = Knight()
+        stage = Stage0(knight, WIDTH, HEIGHT)
+        world.append(stage)
         world.append(knight)
+
+        # cur_stage = 0
+    stage.enter()
 
 def update_world():   # 객체들의 상호작용, 행위 업데이트
     for obj in world:

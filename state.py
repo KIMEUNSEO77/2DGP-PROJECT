@@ -48,46 +48,6 @@ class Run:
             self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
                                                   0, 'h', self.player.x, self.player.y, w * 1.5, h * 1.5)
 
-class Up:
-    def __init__(self, player):
-        self.player = player
-
-    def enter(self, e):
-        if up_down(e) or down_up(e):
-            self.player.dir = 1
-
-    def exit(self, e):
-        pass
-
-    def do(self):
-        self.player.frame = (self.player.frame + 1) % 3
-        self.player.y += self.player.dir * 5
-
-    def draw(self):
-        global w, h
-        self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 0, w, h,
-                                              0, '', self.player.x, self.player.y, w * 1.5, h * 1.5)
-
-class Down:
-    def __init__(self, player):
-        self.player = player
-
-    def enter(self, e):
-        if down_down(e) or up_up(e):
-            self.player.dir = -1
-
-    def exit(self, e):
-        pass
-
-    def do(self):
-        self.player.frame = (self.player.frame + 1) % 3
-        self.player.y += self.player.dir * 5
-
-    def draw(self):
-        global w, h
-        self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 140, w, h,
-                                              0, '', self.player.x, self.player.y, w * 1.5, h * 1.5)
-
 class Jump:
     def __init__(self, player):
         self.player = player
