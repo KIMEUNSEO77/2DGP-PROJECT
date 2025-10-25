@@ -9,7 +9,7 @@ from stage import Stage3
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 1
+cur_stage = 0
 world = []
 
 
