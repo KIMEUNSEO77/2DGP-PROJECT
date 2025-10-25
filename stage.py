@@ -31,13 +31,23 @@ class Stage:
 
     def check_collision(self, player):
         """스테이지별로 오버라이드할 것. player는 x,y,w,h 같은 속성을 가정."""
-        raise NotImplementedError
+        return False
 
 class Stage0(Stage):
-    def __init__(self, player, w, h):
+    def __init__(self, player, w, h, ground_y=50, eps=6):
         super().__init__(0, w, h)
-        player.x = 40
-        player.y = 80
+        self.ground_y = ground_y
+        self.eps = eps
+
+        player.x = getattr(player, "x", 40)
+        player.y = getattr(player, "y", self.ground_y)
+
+    def check_collision(self, player):
+        if hasattr(player, "h"):
+            foot_y = player.y - player.h / 2
+        else:
+            foot_y = player.y
+        return foot_y <= self.ground_y + self.eps
 
 class Stage1(Stage):
     def __init__(self, player, w, h):
