@@ -38,6 +38,11 @@ class Mage:
     def update(self):
         self.state_machine.update()
 
+        if self.x >= 900 and self.x <= 960:
+            self.can_up = True
+        else:
+            self.can_up = False
+
     def draw(self):
         self.state_machine.draw()
 
@@ -46,5 +51,5 @@ class Mage:
             return
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
 
-    def at_stage0_exit(self, x_target=900, y_target=100, eps=6):
+    def at_stage0_exit(self, x_target=900, y_target=80, eps=20):
         return abs(self.x - x_target) <= eps and abs(self.y - y_target) <= eps
