@@ -37,12 +37,20 @@ class Stage0(Stage):
     def __init__(self, player, w, h):
         super().__init__(0, w, h)
 
-        player.x = 40
+        player.x = 400
         player.y = 50
 
 class Stage1(Stage):
     def __init__(self, w, h, player=None):
         super().__init__(1, w, h)
+        self.floor = load_image("floor_stage1.png")
+        self.floor_y = [10, 155, 290, 435]
+        self.bg = load_image("BG_1stage.png")
+
+    def draw(self):
+        super().draw()
+        for y in self.floor_y:
+            self.floor.draw(self.w // 2, y)
 
 class Stage2(Stage):
     def __init__(self, w, h):
