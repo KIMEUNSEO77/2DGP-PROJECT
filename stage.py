@@ -46,10 +46,11 @@ class Stage0(Stage):
         return player.y <= self.ground_y + self.eps
 
 class Stage1(Stage):
-    def __init__(self, player, w, h):
+    def __init__(self, w, h, player=None):
         super().__init__(1, w, h)
-        player.x = 50
-        player.y = 80
+        if player is not None:
+            player.x = 50
+            player.y = 80
 
 class Stage2(Stage):
     def __init__(self, w, h):
