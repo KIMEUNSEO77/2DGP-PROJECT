@@ -42,7 +42,9 @@ class Mage:
         self.state_machine.draw()
 
     def handle_events(self, event):
+        if event in (up_down, up_up) and not self.can_up:
+            return
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
 
-    def at_stage0_exit(self, x_target=900, y_target=80, eps=6):
-        return abs(self.x - x_target) <= eps
+    def at_stage0_exit(self, x_target=900, y_target=100, eps=6):
+        return abs(self.x - x_target) <= eps and abs(self.y - y_target) <= eps
