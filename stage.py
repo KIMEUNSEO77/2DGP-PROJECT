@@ -43,7 +43,9 @@ class Stage0(Stage):
 class Stage1(Stage):
     def __init__(self, w, h, player=None):
         super().__init__(1, w, h)
-        self.floor = load_image("floor_stage1.png")
+        self.floor = None
+        if self.floor == None:
+            self.floor = load_image("floor_stage1.png")
         self.floor_y = [10, 155, 290, 435]
         self.bg = load_image("BG_1stage.png")
 
