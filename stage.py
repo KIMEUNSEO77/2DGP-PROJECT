@@ -50,7 +50,7 @@ class Stage1(Stage):
         super().__init__(1, w, h)
         if player is not None:
             player.x = 50
-            player.y = 80
+            player.y = 50
 
 class Stage2(Stage):
     def __init__(self, w, h):

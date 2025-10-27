@@ -15,41 +15,37 @@ class Mage:
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
-        self.can_up = False  # 위쪽으로 갈 수 있는지 여부
+        # self.can_up = False  # 위쪽으로 갈 수 있는지 여부
 
         self.IDLE = Idle(self)
         self.RUN = Run(self)
         self.JUMP = Jump(self)
-        self.UP = Up(self)
-        self.DOWN = Down(self)
+        # self.UP = Up(self)
+        # self.DOWN = Down(self)
 
 
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {down_down: self.DOWN, up_down: self.UP, jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
+                self.IDLE: {jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
                 self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
-                self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN},
-                self.DOWN: {down_up: self.IDLE},
-                self.UP: {up_up: self.IDLE}
+                self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN}
             }
         )
 
     def update(self):
         self.state_machine.update()
 
-        if self.x >= 900 and self.x <= 960:
-            self.can_up = True
-        else:
-            self.can_up = False
+        if self.x >= 990:
+            self.x = 990
+        elif self.x <= 20:
+            self.x = 20
 
     def draw(self):
         self.state_machine.draw()
 
     def handle_events(self, event):
-        if event in (up_down, up_up) and not self.can_up:
-            return
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
 
-    def at_stage0_exit(self, x_target=900, y_target=80, eps=20):
-        return abs(self.x - x_target) <= eps and abs(self.y - y_target) <= eps
+    def at_stage0_exit(self, x_target=920, eps=6):
+        return abs(self.x - x_target) <= eps
