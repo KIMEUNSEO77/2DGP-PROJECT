@@ -60,11 +60,13 @@ def change_stage(new_stage):
     world.append(stage)
 
     # 플레이어를 월드에 다시 추가하고 위치/방향/상태/이벤트 초기화
-    start_positions = {
-        0: (50, 80),  # 스테이지별 시작 좌표 필요하면 확장
-        1: (50, 80),
+    stage_start_positions = {
+        0: {0: (40, 50), 1: (40, 50)},  # 스테이지0의 mage(0), knight(1)
+        1: {0: (40, 40), 1: (40, 40)},  # 스테이지1 시작 위치
+        2: {0: (40, 140), 1: (40, 120)},  # 스테이지2 시작 위치
+        3: {0: (900, 80), 1: (900, 60)},  # 스테이지3 시작 위치
     }
-    sx, sy = start_positions.get(cur_stage, (50, 80))
+    sx, sy = stage_start_positions.get(cur_stage, stage_start_positions[0]).get(player, (50, 80))
 
     if player == 0:
         # mage가 이미 있으면 재사용, 없으면 새로 생성
@@ -164,10 +166,6 @@ def get_current_stage():
             return o
     return None
 
-def apply_collision(player_obj, stage_obj):
-    if player is None or stage_obj is None:
-        return
-
 running = True
 
 # game loop
@@ -178,8 +176,6 @@ while running:
 
     cur_stage_obj = get_current_stage()
     player_obj = mage if player == 0 else knight
-
-    apply_collision(player_obj, cur_stage_obj)
 
     update_world()
 

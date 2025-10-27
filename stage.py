@@ -34,23 +34,15 @@ class Stage:
         return False
 
 class Stage0(Stage):
-    def __init__(self, player, w, h, ground_y=50, eps=6):
+    def __init__(self, player, w, h):
         super().__init__(0, w, h)
-        self.ground_y = ground_y
-        self.eps = eps
 
-        player.x = getattr(player, "x", 40)
-        player.y = getattr(player, "y", self.ground_y)
-
-    def check_collision(self, player):
-        return player.y <= self.ground_y + self.eps
+        player.x = 40
+        player.y = 50
 
 class Stage1(Stage):
     def __init__(self, w, h, player=None):
         super().__init__(1, w, h)
-        if player is not None:
-            player.x = 50
-            player.y = 50
 
 class Stage2(Stage):
     def __init__(self, w, h):
