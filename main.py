@@ -1,5 +1,6 @@
 from pico2d import *
 
+import game_world
 from knight import Knight
 from mage import Mage
 from stage import Stage
@@ -7,11 +8,11 @@ from stage import Stage0
 from stage import Stage1
 from stage import Stage2
 from stage import Stage3
+from game_world import *
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
 cur_stage = 0
-world = []
 
 
 def handle_events():
@@ -35,19 +36,7 @@ def change_stage(new_stage):
     global world, mage, cur_stage, knight
 
     # 기존 월드 객체들 정리
-    if 'world' in globals() and world:
-        old_stage = None
-        for obj in world:
-            if isinstance(obj, Stage):
-                old_stage = obj
-                break
-        if old_stage and hasattr(old_stage, 'exit'):
-            old_stage.exit()
-        for obj in world:
-            if obj is old_stage:
-                continue
-            if hasattr(obj, 'exit'):
-                obj.exit()
+
 
     cur_stage = new_stage
     if cur_stage == 1:
@@ -57,7 +46,7 @@ def change_stage(new_stage):
     elif cur_stage == 3:
         stage = Stage3(WIDTH, HEIGHT)
     stage.enter()
-    world.append(stage)
+    game_world.add_object(stage, 0)
 
     # 플레이어를 월드에 다시 추가하고 위치/방향/상태/이벤트 초기화
     stage_start_positions = {
@@ -68,103 +57,40 @@ def change_stage(new_stage):
     }
     sx, sy = stage_start_positions.get(cur_stage, stage_start_positions[0]).get(player, (50, 80))
 
-    if player == 0:
-        # mage가 이미 있으면 재사용, 없으면 새로 생성
-        if 'mage' not in globals() or mage is None:
-            mage = Mage()
-        # 위치/방향 초기화
-        mage.x, mage.y = sx, sy
-        if hasattr(mage, 'dir'):
-            mage.dir = 1
-        # 이벤트 큐 초기화(있으면)
-        if hasattr(mage, 'event_que'):
-            try:
-                mage.event_que.clear()
-            except Exception:
-                mage.event_que = []
-        # 상태 초기화(안정적으로 시도)
-        if hasattr(mage, 'change_state'):
-            try:
-                mage.change_state('Idle')
-            except Exception:
-                try:
-                    mage.change_state(0)
-                except Exception:
-                    pass
-        elif hasattr(mage, 'state'):
-            try:
-                mage.state = 'Idle'
-            except Exception:
-                mage.state = None
-        world.append(mage)
-    else:
-        if 'knight' not in globals() or knight is None:
-            knight = Knight()
-        knight.x, knight.y = sx, sy
-        if hasattr(knight, 'dir'):
-            knight.dir = 1
-        if hasattr(knight, 'event_que'):
-            try:
-                knight.event_que.clear()
-            except Exception:
-                knight.event_que = []
-        if hasattr(knight, 'change_state'):
-            try:
-                knight.change_state('Idle')
-            except Exception:
-                try:
-                    knight.change_state(0)
-                except Exception:
-                    pass
-        elif hasattr(knight, 'state'):
-            try:
-                knight.state = 'Idle'
-            except Exception:
-                knight.state = None
-        world.append(knight)
+
 
 def reset_world():   # 모든 객체 초기화
     global running, cur_stage, mage, knight
     running = True
 
-    global world   # 모든 객체를 담을 수 있는 리스트
-
+    # global world   # 모든 객체를 담을 수 있는 리스트
     if player == 0:
         mage = Mage()
         mage.vy = 0
         mage.on_ground = False
 
         stage = Stage0(mage, WIDTH, HEIGHT)
-        world.append(stage)
-        world.append(mage)
+        game_world.add_object(stage, 0)
+        game_world.add_object(mage, 1)
     else:
         knight = Knight()
         knight.vy = 0
         knight.on_ground = False
 
         stage = Stage0(knight, WIDTH, HEIGHT)
-        world.append(stage)
-        world.append(knight)
+        game_world.add_object(stage, 0)
+        game_world.add_object(knight, 1)
 
         # cur_stage = 0
     stage.enter()
 
 def update_world():   # 객체들의 상호작용, 행위 업데이트
-    for obj in world:
-        obj.update()
+    game_world.update()
 
 def render_world():   # 객체들 그리기
     clear_canvas()
-    for obj in world:
-        obj.draw()
+    game_world.render()
     update_canvas()
-
-def get_current_stage():
-    global world
-    for o in world:
-        if isinstance(o, Stage):
-            return o
-    return None
 
 running = True
 
@@ -174,7 +100,6 @@ reset_world()
 while running:
     handle_events()
 
-    cur_stage_obj = get_current_stage()
     player_obj = mage if player == 0 else knight
 
     update_world()
