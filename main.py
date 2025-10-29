@@ -41,7 +41,7 @@ def change_stage(new_stage):
     cur_stage = new_stage
 
     if cur_stage == 1:
-        stage = Stage1(player_obj, WIDTH, HEIGHT)
+        stage = Stage1(WIDTH, HEIGHT, player_obj)
     elif cur_stage == 2:
         stage = Stage2(WIDTH, HEIGHT)
     elif cur_stage == 3:
