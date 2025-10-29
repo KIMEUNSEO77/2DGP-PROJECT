@@ -1,5 +1,12 @@
 from pico2d import load_image
 
+class Object:
+    def __init__(self, w, h, x, y, image_file, id): # id 0이면 위만 충돌체크, 1이면 전체 충돌체크
+        self.w, self.h = w, h
+        self.x, self.y = x, y
+        self.image = load_image(image_file)
+        self.id = id
+
 class Stage:
     def __init__(self, id, w, h):
         self.id = id
@@ -29,10 +36,6 @@ class Stage:
     def handle_events(self, event):
         pass
 
-    def check_collision(self, player):
-        """스테이지별로 오버라이드할 것. player는 x,y,w,h 같은 속성을 가정."""
-        return False
-
 class Stage0(Stage):
     def __init__(self, player, w, h):
         super().__init__(0, w, h)
@@ -43,18 +46,20 @@ class Stage0(Stage):
 class Stage1(Stage):
     def __init__(self, w, h, player):
         super().__init__(1, w, h)
-        self.floor = None
-        if self.floor == None:
-            self.floor = load_image("floor_stage1.png")
-        self.floor_y = [10, 155, 290, 435]
         self.bg = load_image("BG_1stage.png")
         if player:
             player.x, player.y = 40, 40
+        self.floor_y = [10, 155, 290, 435]
+        self.floors = []
+        for idx, y in enumerate(self.floor_y):
+            floor = Object(800, 50, w // 2, y, "floor_stage1.png", 0)
+            self.floors.append(floor)
+
 
     def draw(self):
         super().draw()
-        for y in self.floor_y:
-            self.floor.draw(self.w // 2, y)
+        for floor in self.floors:
+            floor.image.draw(floor.x, floor.y)
 
 class Stage2(Stage):
     def __init__(self, w, h):

@@ -18,7 +18,6 @@ class Player:
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
-        # self.can_up = False  # 위쪽으로 갈 수 있는지 여부
 
         self.IDLE = Idle(self)
         self.RUN = Run(self)
