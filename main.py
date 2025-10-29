@@ -1,8 +1,7 @@
 from pico2d import *
 
 import game_world
-from knight import Knight
-from mage import Player
+from player import Player
 from stage import Stage
 from stage import Stage0
 from stage import Stage1
