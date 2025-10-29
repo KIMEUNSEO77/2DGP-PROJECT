@@ -52,7 +52,7 @@ class Jump:
     def __init__(self, player):
         self.player = player
         self.cur_y = 0  # y증가량
-        self.dy = 20
+        self.dy = 40
 
     def enter(self, e):
         self.player.frame = 1
@@ -61,7 +61,7 @@ class Jump:
         self.cur_y = 0
 
     def do(self):
-        if self.cur_y < 80:
+        if self.cur_y < 150:
             self.player.y += self.dy
             self.cur_y += self.dy
 

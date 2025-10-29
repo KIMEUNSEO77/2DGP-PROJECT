@@ -88,6 +88,8 @@ while running:
     if player_obj.at_stage0_exit():
         change_stage(1)
 
+    cur_stage_obj.check_collision(player_obj)
+
     render_world()
     delay(0.05)
 

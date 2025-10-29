@@ -18,6 +18,11 @@ class Player:
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
+        self.prev_x, self.prev_y = self.x, self.y   # 이전 위치 저장
+        self.w, self.h = 32, 40
+
+        self.gravity = -5
+        self.on_ground = False
 
         self.IDLE = Idle(self)
         self.RUN = Run(self)
@@ -35,13 +40,24 @@ class Player:
             }
         )
 
+    def aabb(self):
+        hw, hh = self.w * 0.5, self.h * 0.5
+        return self.x - hw, self.y - hh, self.x + hw, self.y + hh
+
     def update(self):
         self.state_machine.update()
+        self.prev_x, self.prev_y = self.x, self.y
+
+        self.on_ground = False # 매 프레임마다 땅에 있는지 초기화
+
+        if not self.on_ground:
+            self.y += self.gravity
 
         if self.x >= 990:
             self.x = 990
         elif self.x <= 20:
             self.x = 20
+
 
     def draw(self):
         self.state_machine.draw()
