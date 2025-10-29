@@ -8,11 +8,11 @@ from stage import Stage0
 from stage import Stage1
 from stage import Stage2
 from stage import Stage3
-from game_world import *
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 0
+cur_stage = 0 # 현재 스테이지 번호
+cur_stage_obj = None # 현재 스테이지 객체
 
 
 def handle_events():
@@ -33,20 +33,25 @@ def handle_events():
 open_canvas(WIDTH, HEIGHT)
 
 def change_stage(new_stage):
-    global world, mage, cur_stage, knight
+    global mage, cur_stage, knight, cur_stage_obj
 
     # 기존 월드 객체들 정리
-
-
+    if cur_stage_obj is not None:
+        game_world.remove_object(cur_stage_obj)
+        cur_stage_obj = None
     cur_stage = new_stage
+
     if cur_stage == 1:
         stage = Stage1(WIDTH, HEIGHT)
     elif cur_stage == 2:
         stage = Stage2(WIDTH, HEIGHT)
     elif cur_stage == 3:
         stage = Stage3(WIDTH, HEIGHT)
+    else:
+        stage = Stage0(WIDTH, HEIGHT)
     stage.enter()
     game_world.add_object(stage, 0)
+    cur_stage_obj = stage
 
     # 플레이어를 월드에 다시 추가하고 위치/방향/상태/이벤트 초기화
     stage_start_positions = {
@@ -60,7 +65,7 @@ def change_stage(new_stage):
 
 
 def reset_world():   # 모든 객체 초기화
-    global running, cur_stage, mage, knight
+    global running, cur_stage, mage, knight, cur_stage_obj
     running = True
 
     # global world   # 모든 객체를 담을 수 있는 리스트
@@ -83,6 +88,7 @@ def reset_world():   # 모든 객체 초기화
 
         # cur_stage = 0
     stage.enter()
+    cur_stage_obj = stage
 
 def update_world():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
