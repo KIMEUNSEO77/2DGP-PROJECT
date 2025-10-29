@@ -4,11 +4,14 @@ from event import right_down, left_down, jump_down, right_up, left_up, jump_up, 
 from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 
-class Mage:
-    def __init__(self, x=40, y=40):
+class Player:
+    def __init__(self, x=40, y=40, id=0):
         self.x = x
         self.y = y
-        self.image = load_image("mage_sprite.png")
+        if id == 0:
+            self.image = load_image("mage_sprite.png")
+        elif id == 1:
+            self.image = load_image("knight_sprite.png")
         # (x, y) 좌표를 담는 프레임 리스트
         self.frames = [0, 31, 62]
         self.frame = 0
