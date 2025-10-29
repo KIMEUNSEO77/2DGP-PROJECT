@@ -154,7 +154,8 @@ class Stage0(Stage):
         self.floor = Object(1000, 10, w // 2, 10, "floor_stage0.png", 0)
         self.objects.append(self.floor)
         player.x = 400
-        player.y = 50
+        player.y = 600
+        player.gravity = -10
     def enter(self):
         super().enter()
     def draw(self):
@@ -167,11 +168,12 @@ class Stage1(Stage):
         super().__init__(1, w, h)
         self.bg = load_image("BG_1stage.png")
         if player:
-            player.x, player.y = 40, 40
-        self.floor_y = [10, 155, 290, 435]
+            player.x, player.y = 60, 100
+            player.gravity = -5
+        self.floor_y = [30, 165, 300, 445]
         self.objects = []
         for idx, y in enumerate(self.floor_y):
-            floor = Object(800, 50, w // 2, y, "floor_stage1.png", 0)
+            floor = Object(1000, 10, w // 4, y, "floor_stage1.png", 0)
             self.objects.append(floor)
     def enter(self):
         super().enter()

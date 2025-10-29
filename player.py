@@ -57,6 +57,8 @@ class Player:
             self.x = 990
         elif self.x <= 20:
             self.x = 20
+        elif self.y >= 590:
+            self.y = 590
 
 
     def draw(self):
