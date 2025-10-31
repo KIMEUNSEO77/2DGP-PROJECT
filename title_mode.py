@@ -2,13 +2,11 @@ from pico2d import *
 import game_framework
 
 image = None
-running = True
 title_start_time = 0.0
 
 def init():
     global image, running, title_start_time
     image = load_image('title_scene.png')
-    running = True
     title_start_time = get_time()
 
 def finish():
@@ -16,7 +14,7 @@ def finish():
     del image
 
 def update():
-    global running, title_start_time
+    global title_start_time
     if get_time() - title_start_time > 2.0:
         title_start_time = get_time()
         game_framework.quit()
