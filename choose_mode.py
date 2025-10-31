@@ -1,13 +1,13 @@
 from pico2d import *
 import game_framework
 import play_mode
-import choose_mode
+import title_mode
 
 image = None
 
 def init():
     global image
-    image = load_image('title_scene.png')
+    image = load_image('choose_scene.png')
 
 def finish():
     global image
@@ -27,9 +27,13 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            game_framework.change_mode(choose_mode)
+            game_framework.change_mode(title_mode)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
+            play_mode.player = 0
+            game_framework.change_mode(play_mode)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
+            play_mode.player = 1
+            game_framework.change_mode(play_mode)
 
 def pause(): pass
 def resume(): pass

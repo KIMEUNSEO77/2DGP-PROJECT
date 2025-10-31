@@ -9,6 +9,7 @@ from stage import Stage2
 from stage import Stage3
 import game_framework
 import title_mode
+import choose_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
@@ -24,7 +25,7 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.change_mode(title_mode)
+            game_framework.change_mode(choose_mode)
         else:
             if player_obj is not None:
                 player_obj.handle_events(event)
