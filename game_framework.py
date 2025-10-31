@@ -1,3 +1,5 @@
+from pico2d import *
+
 running = None
 stack = None
 
@@ -50,6 +52,8 @@ def run(start_mode):
         stack[-1].handle_events()
         stack[-1].update()
         stack[-1].draw()
+
+        delay(0.05)   # 임시로 플레임 딜레이
 
     # repeatedly delete the top of the stack
     # 스택에 남아있는 모든 게임 모드들을 차례로 제거
