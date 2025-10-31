@@ -1,4 +1,5 @@
 from pico2d import *
+import game_framework
 
 image = None
 running = True
@@ -18,7 +19,7 @@ def update():
     global running, title_start_time
     if get_time() - title_start_time > 2.0:
         title_start_time = get_time()
-        running = False
+        game_framework.quit()
 
 def draw():
     clear_canvas()
