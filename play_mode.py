@@ -1,0 +1,79 @@
+from pico2d import *
+
+import game_world
+from player import Player
+from stage import Stage
+from stage import Stage0
+from stage import Stage1
+from stage import Stage2
+from stage import Stage3
+
+WIDTH, HEIGHT = 1000, 600
+player = 0 # 0: mage, 1: knight
+cur_stage = 0 # 현재 스테이지 번호
+cur_stage_obj = None # 현재 스테이지 객체
+player_obj = None    # 현재 플레이어 객체
+running = True
+
+def handle_events():
+    global running, player_obj
+
+    event_list = get_events()
+    for event in event_list:
+        if event.type == SDL_QUIT:
+            running = False
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            running = False
+        else:
+            if player_obj is not None:
+                player_obj.handle_events(event)
+
+def change_stage(new_stage):
+    global cur_stage, cur_stage_obj, player_obj
+
+    # 기존 월드 객체들 정리
+    if cur_stage_obj is not None:
+        game_world.remove_object(cur_stage_obj)
+        cur_stage_obj = None
+    cur_stage = new_stage
+
+    if cur_stage == 1:
+        stage = Stage1(WIDTH, HEIGHT, player_obj)
+    elif cur_stage == 2:
+        stage = Stage2(WIDTH, HEIGHT)
+    elif cur_stage == 3:
+        stage = Stage3(WIDTH, HEIGHT)
+    else:
+        stage = Stage0(WIDTH, HEIGHT)
+    stage.enter()
+    game_world.add_object(stage, 0)
+    cur_stage_obj = stage
+
+
+def init():   # 모든 객체 초기화
+    global running, cur_stage, cur_stage_obj, player_obj
+    running = True
+
+    # global world   # 모든 객체를 담을 수 있는 리스트
+    if player == 0:
+        player_obj = Player(40, 40, 0)
+    else:
+        player_obj = Player(40, 40, 1)
+    player_obj.vy = 0
+    stage = Stage0(player_obj, WIDTH, HEIGHT)
+    game_world.add_object(stage, 0)
+    game_world.add_object(player_obj, 1)
+    stage.enter()
+    cur_stage_obj = stage
+
+def update():   # 객체들의 상호작용, 행위 업데이트
+    game_world.update()
+
+def draw():   # 객체들 그리기
+    clear_canvas()
+    game_world.render()
+    update_canvas()
+
+def finish():   # 게임 종료 시 처리
+    pass
+
