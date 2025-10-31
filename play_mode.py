@@ -75,5 +75,5 @@ def draw():   # 객체들 그리기
     update_canvas()
 
 def finish():   # 게임 종료 시 처리
-    pass
+    game_world.clear()
 

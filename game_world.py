@@ -24,3 +24,8 @@ def remove_object(o):
             layer.remove(o)
             return
     raise ValueError("Cannot find object in any layer")
+
+
+def clear():
+    for layer in world:
+        layer.clear()
