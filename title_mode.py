@@ -1,23 +1,19 @@
 from pico2d import *
 import game_framework
+import play_mode
 
 image = None
-title_start_time = 0.0
 
 def init():
-    global image, running, title_start_time
+    global image
     image = load_image('title_scene.png')
-    title_start_time = get_time()
 
 def finish():
     global image
     del image
 
 def update():
-    global title_start_time
-    if get_time() - title_start_time > 2.0:
-        title_start_time = get_time()
-        game_framework.quit()
+    pass
 
 def draw():
     clear_canvas()
@@ -25,4 +21,14 @@ def draw():
     update_canvas()
 
 def handle_events():
-    events = get_events()   # 현재 이벤트들을 소비
+    event_list = get_events()
+    for event in event_list:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+            game_framework.change_mode(play_mode)
+
+def pause(): pass
+def resume(): pass
