@@ -7,23 +7,24 @@ from stage import Stage0
 from stage import Stage1
 from stage import Stage2
 from stage import Stage3
+import game_framework
+import title_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
 cur_stage = 0 # 현재 스테이지 번호
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
-running = True
 
 def handle_events():
-    global running, player_obj
+    global player_obj
 
     event_list = get_events()
     for event in event_list:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.change_mode(title_mode)
         else:
             if player_obj is not None:
                 player_obj.handle_events(event)
@@ -51,8 +52,7 @@ def change_stage(new_stage):
 
 
 def init():   # 모든 객체 초기화
-    global running, cur_stage, cur_stage_obj, player_obj
-    running = True
+    global cur_stage, cur_stage_obj, player_obj
 
     # global world   # 모든 객체를 담을 수 있는 리스트
     if player == 0:
