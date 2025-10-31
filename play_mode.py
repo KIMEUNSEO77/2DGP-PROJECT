@@ -69,6 +69,10 @@ def init():   # 모든 객체 초기화
 
 def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
+    cur_stage_obj.check_collision(player_obj)
+
+    if player_obj.at_stage0_exit():
+        change_stage(1)
 
 def draw():   # 객체들 그리기
     clear_canvas()
