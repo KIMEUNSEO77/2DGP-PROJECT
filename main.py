@@ -1,9 +1,12 @@
 from pico2d import *
 import play_mode
+import title_mode
 
 open_canvas(play_mode.WIDTH, play_mode.HEIGHT)
-play_mode.init()
+# play_mode.init()
+title_mode.init()
 
+'''
 while play_mode.running:
     play_mode.handle_events()
     play_mode.update()
@@ -16,4 +19,12 @@ while play_mode.running:
     play_mode.draw()
     delay(0.05)
 play_mode.finish()
+'''
+
+while title_mode.running:
+    title_mode.handle_events()
+    title_mode.update()
+    title_mode.draw()
+    delay(0.05)
+title_mode.finish()
 close_canvas()
