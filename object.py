@@ -33,6 +33,7 @@ class Object:
         top = self.y + half_h
         return left, bottom, right, top
 
+# monster book 클래스 (1스테이지 몬스터)
 class MonsterBook():
     def __init__(self, x, y):
         self.x = x

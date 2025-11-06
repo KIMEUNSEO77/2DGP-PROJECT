@@ -10,7 +10,7 @@ class Stage:
         self.bg = None
         self.w, self.h = w, h
 
-        self.objects = []
+        self.floors = []
         self.monsters = []
         self._top_snap_tol = 8  # 위만 충돌 스냅 허용 오차(px)
 
@@ -27,7 +27,7 @@ class Stage:
         # 플레이어 AABB
         pl, pb, pr, pt = player.aabb()
 
-        for obj in self.objects:
+        for obj in self.floors:
             ol, ob, or_, ot = obj.aabb()
 
             # 빠른 탈락(AABB 안겹치면 continue)
@@ -108,7 +108,7 @@ class Stage:
         elif self.id == 3:
             self.bg = load_image("BG_3stage.png")
 
-        for obj in self.objects:
+        for obj in self.floors:
             game_world.add_object(obj, 0)
 
         for monster in self.monsters:
@@ -117,7 +117,7 @@ class Stage:
 
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None
-        for obj in list(self.objects):
+        for obj in list(self.floors):
             game_world.remove_object(obj)
 
     def update(self): # 게임 로직 업데이트
@@ -133,9 +133,9 @@ class Stage:
 class Stage0(Stage):
     def __init__(self, player, w, h):
         super().__init__(0, w, h)
-        self.objects = []
+        self.floors = []
         self.floor = Object(1000, 10, w // 2, 10, "floor_stage0.png", 0)
-        self.objects.append(self.floor)
+        self.floors.append(self.floor)
         player.x = 400
         player.y = 600
         player.gravity = -10
@@ -155,12 +155,12 @@ class Stage1(Stage):
             player.gravity = -5
         self.floor_y = [30, 165, 300, 445]
 
-        self.objects = []
+        self.floors = []
         self.monsters = []
 
         for idx, y in enumerate(self.floor_y):
             floor = Object(1000, 10, w // 4, y, "floor_stage1.png", 0)
-            self.objects.append(floor)
+            self.floors.append(floor)
 
         self.monster_y = [220, 355, 500]
         self.monster_x = [900, 500, 100]
