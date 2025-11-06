@@ -1,8 +1,10 @@
 from pico2d import *
+import time
 
 running = None
 stack = None
 
+frame_time = 0.0
 
 def change_mode(mode):
     global stack
@@ -47,13 +49,21 @@ def run(start_mode):
     stack = [start_mode]   # start_mode를 담고 있는 스택을 생성
     start_mode.init()
 
+    global frame_time
+    frame_time = 0.0
+    current_time = time.time()
+
     while running:
         # 현재 게임 모드(stack top에 있는 게임 모드)에 대한 루프 진행
         stack[-1].handle_events()
         stack[-1].update()
         stack[-1].draw()
+        frame_time = time.time() - current_time
+        frame_rate = 1.0 / frame_time
+        current_time += frame_time
+        print("Frame Time: %f Frame Rate: %f" % (frame_time, frame_rate))
 
-        delay(0.05)   # 임시로 플레임 딜레이
+        # delay(0.05)   # 임시로 플레임 딜레이
 
     # repeatedly delete the top of the stack
     # 스택에 남아있는 모든 게임 모드들을 차례로 제거
