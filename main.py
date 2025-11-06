@@ -1,9 +1,9 @@
 from pico2d import *
-import play_mode
-import title_mode as start_mode   # start_mode로 별칭 지정
+import play_mode as start_mode   # start_mode로 별칭 지정
+import title_mode
 import game_framework
 
-open_canvas(play_mode.WIDTH, play_mode.HEIGHT)
+open_canvas(start_mode.WIDTH, start_mode.HEIGHT)
 game_framework.run(start_mode)
 '''
 play_mode.init()

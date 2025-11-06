@@ -73,3 +73,6 @@ class Player:
 
     def at_stage0_exit(self, x_target=920, eps=6):
         return abs(self.x - x_target) <= eps
+
+    def get_bb(self):
+        return self.x - 16, self.y - 20, self.x + 16, self.y + 20
