@@ -76,4 +76,4 @@ class Player:
         return abs(self.x - x_target) <= eps
 
     def get_bb(self):
-        return self.x - 16, self.y - 20, self.x + 16, self.y + 25
+        return self.x - 16, self.y - 20, self.x + 16, self.y + 30
