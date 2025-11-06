@@ -3,6 +3,9 @@ from pico2d import load_image
 from event import right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up
 from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
+import game_framework
+
+GRAVITY_PPS = -200
 
 class Player:
     def __init__(self, x=40, y=40, id=0):
@@ -22,7 +25,6 @@ class Player:
         self.prev_x, self.prev_y = self.x, self.y   # 이전 위치 저장
         self.w, self.h = 32, 40
 
-        self.gravity = -5
         self.on_ground = False
 
         self.IDLE = Idle(self)
@@ -52,7 +54,7 @@ class Player:
         self.on_ground = False # 매 프레임마다 땅에 있는지 초기화
 
         if not self.on_ground and self.state_machine.cur_state != self.JUMP:
-            self.y += self.gravity
+            self.y += GRAVITY_PPS * game_framework.frame_time
 
         if self.x >= 990:
             self.x = 990
