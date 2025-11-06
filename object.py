@@ -73,7 +73,7 @@ class MonsterBook():
             print("Player collided with MonsterBook")
 
 class Book():
-    def __init__(self, x, y, image_type):
+    def __init__(self, x, y, image_type, key=False):
         self.x = x
         self.y = y
         if image_type == 1:
@@ -86,6 +86,8 @@ class Book():
             self.image = load_image("object_book_4.png")
         elif image_type == 5:
             self.image = load_image("object_book_5.png")
+
+        self.key = key
 
         self.w, self.h = 100, 100
 
@@ -102,4 +104,7 @@ class Book():
 
     def handle_collision(self, group, other):
         if group == 'player:object':
-            game_world.remove_object(self)
+            if self.key:
+                print("Player obtained a key book!")
+            else:
+                game_world.remove_object(self)

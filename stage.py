@@ -176,10 +176,12 @@ class Stage1(Stage):
             monster = MonsterBook(mx, my)
             self.monsters.append(monster)
 
+        key_index = random.randint(0, 17)
         self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
         self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
-        for bx, by in zip(self.book_x, self.book_y):
-            book = Book(bx, by, random.randint(1, 5))
+        # key인 인덱스는 True
+        for i, (bx, by) in enumerate(zip(self.book_x, self.book_y)):
+            book = Book(bx, by, random.randint(1, 5), key=(i == key_index))
             self.objects.append(book)
 
 
