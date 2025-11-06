@@ -161,8 +161,11 @@ class Stage1(Stage):
             floor = Object(1000, 10, w // 4, y, "floor_stage1.png", 0)
             self.objects.append(floor)
 
-        self.monster = MonsterBook(800, 300)
-        self.monsters.append(self.monster)
+        self.monster_y = [220, 355, 500]
+        self.monster_x = [900, 500, 100]
+        for mx, my in zip(self.monster_x, self.monster_y):
+            monster = MonsterBook(mx, my)
+            self.monsters.append(monster)
 
 
     def enter(self):
