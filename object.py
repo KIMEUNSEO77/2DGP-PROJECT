@@ -86,7 +86,7 @@ class Book():
         elif image_type == 5:
             self.image = load_image("object_book_5.png")
 
-        self.w, self.h = 32, 32
+        self.w, self.h = 200, 200
 
     def draw(self):
         self.image.draw(self.x, self.y)

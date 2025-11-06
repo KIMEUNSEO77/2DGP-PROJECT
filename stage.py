@@ -1,7 +1,7 @@
 from pico2d import load_image
 
 import game_world
-from object import Object, MonsterBook
+from object import Object, MonsterBook, Book
 
 
 class Stage:
@@ -10,8 +10,10 @@ class Stage:
         self.bg = None
         self.w, self.h = w, h
 
-        self.floors = []
-        self.monsters = []
+        self.floors = []    # 바닥 오브젝트 리스트
+        self.monsters = []  # 몬스터 오브젝트 리스트
+        self.objects = []   # 기타 오브젝트 리스트
+
         self._top_snap_tol = 8  # 위만 충돌 스냅 허용 오차(px)
 
     def check_collision(self, player):
@@ -115,6 +117,9 @@ class Stage:
             game_world.add_object(monster, 1)
             game_world.add_collision_pairs("player:monster", None, monster)
 
+        for obj in self.objects:
+            game_world.add_object(obj, 1)
+
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None
         for obj in list(self.floors):
@@ -157,6 +162,7 @@ class Stage1(Stage):
 
         self.floors = []
         self.monsters = []
+        self.objects = []
 
         for idx, y in enumerate(self.floor_y):
             floor = Object(1000, 10, w // 4, y, "floor_stage1.png", 0)
@@ -167,6 +173,11 @@ class Stage1(Stage):
         for mx, my in zip(self.monster_x, self.monster_y):
             monster = MonsterBook(mx, my)
             self.monsters.append(monster)
+
+        self.object = Book(700, 200, 1)
+        self.objects.append(self.object)
+
+
 
 
     def enter(self):
