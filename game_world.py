@@ -23,9 +23,16 @@ def remove_object(o):
     for layer in world:
         if o in layer:
             layer.remove(o)
+            remove_collision_object(o)
             return
     raise ValueError("Cannot find object in any layer")
 
+def remove_collision_object(o):
+    for pairs in collision_pairs.values():
+        if o in pairs[0]:
+            pairs[0].remove(o)
+        if o in pairs[1]:
+            pairs[1].remove(o)
 
 def clear():
     for layer in world:

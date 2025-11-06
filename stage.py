@@ -120,6 +120,7 @@ class Stage:
 
         for obj in self.objects:
             game_world.add_object(obj, 1)
+            game_world.add_collision_pairs("player:object", None, obj)
 
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None

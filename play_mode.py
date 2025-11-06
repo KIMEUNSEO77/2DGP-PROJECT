@@ -65,6 +65,7 @@ def init():   # 모든 객체 초기화
     game_world.add_object(stage, 0)
     game_world.add_object(player_obj, 1)
     game_world.add_collision_pairs('player:monster', player_obj, None)
+    game_world.add_collision_pairs('player:object', player_obj, None)
 
     stage.enter()
     cur_stage_obj = stage

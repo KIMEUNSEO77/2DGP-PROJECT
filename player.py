@@ -81,3 +81,6 @@ class Player:
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with monster!")
+
+        elif group == 'player:object':
+            print("Player collided with object!")
