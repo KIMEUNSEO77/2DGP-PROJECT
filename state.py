@@ -10,6 +10,11 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
+# Action Speed
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 3
+
 class Idle:   # 가만히 서 있는 상태
     def __init__(self, player):
         self.player = player
@@ -44,16 +49,18 @@ class Run:
         pass
 
     def do(self):
-        self.player.frame = (self.player.frame + 1) % 3
+        # self.player.frame = (self.player.frame + 1) % 3
+        self.player.frame = (self.player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         self.player.x += self.player.dir * RUN_SPEED_PPS * game_framework.frame_time
 
     def draw(self):
+        self.player.frame_idx = int(self.player.frame)
         global w, h
         if self.player.face_dir == 1:
-            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+            self.player.image.clip_composite_draw(self.player.frames[self.player.frame_idx], 45, w, h,
                                                   0, '', self.player.x, self.player.y, w * 1.5, h * 1.5)
         else:
-            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+            self.player.image.clip_composite_draw(self.player.frames[self.player.frame_idx], 45, w, h,
                                                   0, 'h', self.player.x, self.player.y, w * 1.5, h * 1.5)
 
 class Jump:

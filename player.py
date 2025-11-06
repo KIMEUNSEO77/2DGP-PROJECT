@@ -15,6 +15,7 @@ class Player:
         # (x, y) 좌표를 담는 프레임 리스트
         self.frames = [0, 31, 62]
         self.frame = 0
+        self.frame_idx = 0
 
         self.dir = 0   # 가는 방향 (1: 오른쪽, -1: 왼쪽)
         self.face_dir = -1  # 보는 방향 (1: 오른쪽, -1: 왼쪽)
