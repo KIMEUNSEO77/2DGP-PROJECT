@@ -176,7 +176,7 @@ class Stage1(Stage):
             self.monsters.append(monster)
 
         self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
-        self.book_y = [80, 80, 80, 80, 180, 180, 180, 180, 180, 320, 320, 320, 320, 470, 470, 470, 470, 470]
+        self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
         for bx, by in zip(self.book_x, self.book_y):
             book = Book(bx, by, random.randint(1, 5))
             self.objects.append(book)

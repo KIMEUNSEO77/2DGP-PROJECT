@@ -86,14 +86,15 @@ class Book():
         elif image_type == 5:
             self.image = load_image("object_book_5.png")
 
-        self.w, self.h = 150, 150
+        self.w, self.h = 100, 100
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        self.image.clip_composite_draw(0, 0, 120, 120,
+                                       0, '', self.x, self.y, self.w, self.h)
         draw_rectangle(*self.get_bb())
 
     def update(self):
         pass
 
     def get_bb(self):
-        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
+        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
