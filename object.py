@@ -12,6 +12,7 @@ BOOK_SPEED_MPM = (BOOK_SPEED_KMPH * 1000.0 / 60.0)
 BOOK_SPEED_MPS = (BOOK_SPEED_MPM / 60.0)
 BOOK_SPEED_PPS = (BOOK_SPEED_MPS * PIXEL_PER_METER)
 
+# 사실상 바닥
 class Object:
     def __init__(self, w, h, x, y, image_file, id): # id 0이면 위만 충돌체크, 1이면 전체 충돌체크
         self.w, self.h = w, h
@@ -63,12 +64,36 @@ class MonsterBook():
         elif self.x <= 20:
             self.dir = 1
 
-    def aabb(self):
-        pass
-
     def get_bb(self):
         return self.x - 40, self.y - 25, self.x + 40, self.y + 25
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with MonsterBook")
+
+class Book():
+    def __init__(self, x, y, image_type):
+        self.x = x
+        self.y = y
+        if image_type == 1:
+            self.image = load_image("object_book_1.png")
+        elif image_type == 2:
+            self.image = load_image("object_book_2.png")
+        elif image_type == 3:
+            self.image = load_image("object_book_3.png")
+        elif image_type == 4:
+            self.image = load_image("object_book_4.png")
+        elif image_type == 5:
+            self.image = load_image("object_book_5.png")
+
+        self.w, self.h = 32, 32
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        pass
+
+    def get_bb(self):
+        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
