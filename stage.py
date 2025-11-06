@@ -2,6 +2,7 @@ from pico2d import load_image
 
 import game_world
 from object import Object, MonsterBook, Book
+import random
 
 
 class Stage:
@@ -114,7 +115,7 @@ class Stage:
             game_world.add_object(obj, 0)
 
         for monster in self.monsters:
-            game_world.add_object(monster, 1)
+            game_world.add_object(monster, 2)
             game_world.add_collision_pairs("player:monster", None, monster)
 
         for obj in self.objects:
@@ -174,8 +175,11 @@ class Stage1(Stage):
             monster = MonsterBook(mx, my)
             self.monsters.append(monster)
 
-        self.object = Book(700, 200, 1)
-        self.objects.append(self.object)
+        self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
+        self.book_y = [80, 80, 80, 80, 180, 180, 180, 180, 180, 320, 320, 320, 320, 470, 470, 470, 470, 470]
+        for bx, by in zip(self.book_x, self.book_y):
+            book = Book(bx, by, random.randint(1, 5))
+            self.objects.append(book)
 
 
 

@@ -1,6 +1,7 @@
 # layer0 = []  # Background layer
 # layer1 = []  # Foreground layer
-world = [[], []]
+# layer2 = []  # UI layer
+world = [[], [], []]
 
 def add_object(o, depth=0):
     world[depth].append(o)
