@@ -3,15 +3,17 @@ import game_framework
 
 w, h = 32, 40
 
-# 단위 환산
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-RUN_SPEED_KMPH = 20.0  # Km / Hour
+# RUN
+RUN_SPEED_KMPH = 10.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
+# JUMP
+JUMP_SPEED_PPS = 750.0
+GRAVITY_PPS = 1800.0
 # Action Speed
-TIME_PER_ACTION = 0.5
+TIME_PER_ACTION = 0.2
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 3
 
@@ -66,19 +68,22 @@ class Run:
 class Jump:
     def __init__(self, player):
         self.player = player
-        self.cur_y = 0  # y증가량
-        self.dy = 40
+        self.cur_y = 0.0  # y증가량
+        self.dy = 0.0
 
     def enter(self, e):
         self.player.frame = 1
+        self.dy = JUMP_SPEED_PPS
+        self.cur_y = 0
 
     def exit(self, e):
         self.cur_y = 0
+        self.dy = 0.0
 
     def do(self):
         if self.cur_y < 150:
-            self.player.y += self.dy
-            self.cur_y += self.dy
+            self.player.y += self.dy * game_framework.frame_time
+            self.cur_y += self.dy * game_framework.frame_time
 
     def draw(self):
         global w, h

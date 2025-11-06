@@ -61,7 +61,7 @@ def run(start_mode):
         frame_time = time.time() - current_time
         frame_rate = 1.0 / frame_time
         current_time += frame_time
-        print("Frame Time: %f Frame Rate: %f" % (frame_time, frame_rate))
+       # print("Frame Time: %f Frame Rate: %f" % (frame_time, frame_rate))
 
         # delay(0.05)   # 임시로 플레임 딜레이
 

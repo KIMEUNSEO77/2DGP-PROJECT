@@ -51,7 +51,7 @@ class Player:
 
         self.on_ground = False # 매 프레임마다 땅에 있는지 초기화
 
-        if not self.on_ground:
+        if not self.on_ground and self.state_machine.cur_state != self.JUMP:
             self.y += self.gravity
 
         if self.x >= 990:
