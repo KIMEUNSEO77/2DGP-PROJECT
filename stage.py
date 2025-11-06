@@ -1,7 +1,7 @@
 from pico2d import load_image
 
 import game_world
-from object import Object
+from object import Object, MonsterBook
 
 
 class Stage:
@@ -11,6 +11,7 @@ class Stage:
         self.w, self.h = w, h
 
         self.objects = []
+        self.monsters = []
         self._top_snap_tol = 8  # 위만 충돌 스냅 허용 오차(px)
 
     def check_collision(self, player):
@@ -110,6 +111,9 @@ class Stage:
         for obj in self.objects:
             game_world.add_object(obj, 0)
 
+        for monster in self.monsters:
+            game_world.add_object(monster, 1)
+
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None
         for obj in list(self.objects):
@@ -149,15 +153,27 @@ class Stage1(Stage):
             player.x, player.y = 60, 100
             player.gravity = -5
         self.floor_y = [30, 165, 300, 445]
+
         self.objects = []
+        self.monsters = []
+
         for idx, y in enumerate(self.floor_y):
             floor = Object(1000, 10, w // 4, y, "floor_stage1.png", 0)
             self.objects.append(floor)
+
+        self.monster = MonsterBook(800, 300)
+        self.monsters.append(self.monster)
+
+
     def enter(self):
         super().enter()
 
     def draw(self):
         super().draw()
+
+
+
+
 
 class Stage2(Stage):
     def __init__(self, w, h):
