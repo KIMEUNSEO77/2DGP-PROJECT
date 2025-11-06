@@ -71,6 +71,9 @@ class Jump:
         self.dy = 0.0
 
     def enter(self, e):
+        if not getattr(self.player, 'on_ground', True):
+            return
+        self.player.on_ground = False
         self.player.frame = 1
         self.dy = JUMP_SPEED_PPS
         self.cur_y = 0

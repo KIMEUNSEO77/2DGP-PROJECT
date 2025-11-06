@@ -52,7 +52,8 @@ class Player:
         self.prev_x, self.prev_y = self.x, self.y
 
         self.on_ground = False # 매 프레임마다 땅에 있는지 초기화
-
+        
+        # 점프 상태 아닐 때만 중력 적용
         if not self.on_ground and self.state_machine.cur_state != self.JUMP:
             self.y += GRAVITY_PPS * game_framework.frame_time
 
