@@ -64,6 +64,8 @@ def init():   # 모든 객체 초기화
     stage = Stage0(player_obj, WIDTH, HEIGHT)
     game_world.add_object(stage, 0)
     game_world.add_object(player_obj, 1)
+    game_world.add_collision_pairs('player:monster', player_obj, None)
+
     stage.enter()
     cur_stage_obj = stage
 
@@ -73,6 +75,8 @@ def update():   # 객체들의 상호작용, 행위 업데이트
 
     if cur_stage == 0 and player_obj.at_stage0_exit():
         change_stage(1)
+
+    game_world.handle_collisions()
 
 def draw():   # 객체들 그리기
     clear_canvas()

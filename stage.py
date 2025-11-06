@@ -113,6 +113,7 @@ class Stage:
 
         for monster in self.monsters:
             game_world.add_object(monster, 1)
+            game_world.add_collision_pairs("player:monster", None, monster)
 
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None

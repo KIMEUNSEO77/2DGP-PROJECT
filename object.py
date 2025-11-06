@@ -67,3 +67,7 @@ class MonsterBook():
 
     def get_bb(self):
         return self.x - 40, self.y - 25, self.x + 40, self.y + 25
+
+    def handle_collision(self, group, other):
+        if group == 'player:monster':
+            print("Player collided with MonsterBook")
