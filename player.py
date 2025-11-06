@@ -1,4 +1,4 @@
-from pico2d import load_image
+from pico2d import load_image, draw_rectangle
 
 from event import right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up
 from state import Idle, Run, Jump, Up, Down
@@ -67,6 +67,7 @@ class Player:
 
     def draw(self):
         self.state_machine.draw()
+        draw_rectangle(*self.get_bb())
 
     def handle_events(self, event):
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
@@ -75,4 +76,4 @@ class Player:
         return abs(self.x - x_target) <= eps
 
     def get_bb(self):
-        return self.x - 16, self.y - 20, self.x + 16, self.y + 20
+        return self.x - 16, self.y - 20, self.x + 16, self.y + 25
