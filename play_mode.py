@@ -36,7 +36,7 @@ def change_stage(new_stage):
     # 기존 월드 객체들 정리
     if cur_stage_obj is not None:
         cur_stage_obj.exit()
-        game_world.remove_object(cur_stage_obj)
+        # game_world.remove_object(cur_stage_obj)
         cur_stage_obj = None
     cur_stage = new_stage
 
@@ -79,7 +79,7 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         change_stage(1)
 
     if cur_stage == 1 and player_obj.find_key:
-        cur_stage_obj.exit()
+        # cur_stage_obj.exit()
         change_stage(2)
 
     game_world.handle_collisions()

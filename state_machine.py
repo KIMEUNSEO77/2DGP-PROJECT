@@ -19,10 +19,10 @@ class StateMachine:
                 self.cur_state.exit(state_event)   # 현재 상태 exit 처리
                 self.next_state.enter(state_event) # 다음 상태 enter 처리
                 # 현재 상태가 어떤 이벤트에 의해서 다음 상태로 바뀌는지 정보를 표시
-                print(f'{self.cur_state.__class__.__name__}======={event_to_string(state_event)}======>{self.next_state.__class__.__name__}')
+                # print(f'{self.cur_state.__class__.__name__}======={event_to_string(state_event)}======>{self.next_state.__class__.__name__}')
                 self.cur_state = self.next_state  # 현재 상태를 다음 상태로 변경
                 return
 
                 # 처리 되지 않은 이벤트를 출력
-            print(f'처리되지 않은 이벤트 {event_to_string(state_event)}')
+            #print(f'처리되지 않은 이벤트 {event_to_string(state_event)}')
 

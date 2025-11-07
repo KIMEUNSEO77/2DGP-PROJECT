@@ -123,29 +123,41 @@ class Stage:
             game_world.add_object(obj, 1)
             game_world.add_collision_pairs("player:object", None, obj)
 
-    def exit(self):   # 스테이시 종료 시 처리
-        '''
-        self.bg = None
-        if self.floors is not None:
-            for obj in list(self.floors):
+    def exit(self):  # 스테이지 종료 시 처리
+        print("Stage", self.id, "exit")
+
+        # 안전 제거 함수
+        def safe_remove(obj):
+            # 충돌 제거 시도 (없으면 조용히 패스)
+            try:
                 remove_collision_object(obj)
+            except:
+                pass
+
+            # 월드에서 제거 시도 (없으면 조용히 패스)
+            try:
                 game_world.remove_object(obj)
+            except:
+                pass
 
-        if self.monsters is not None:
-            for monster in list(self.monsters):
-                remove_collision_object(monster)
-                game_world.remove_object(monster)
+        # floors 제거
+        for obj in list(self.floors):
+            safe_remove(obj)
 
-        if self.objects is not None:
-            for obj in list(self.objects):
-                remove_collision_object(obj)
-                game_world.remove_object(obj)
+        # monsters 제거
+        for monster in list(self.monsters):
+            safe_remove(monster)
 
+        # objects 제거
+        for obj in list(self.objects):
+            safe_remove(obj)
+
+        # 리스트 초기화
         self.floors.clear()
         self.monsters.clear()
         self.objects.clear()
-        '''
 
+        self.bg = None
 
     def update(self): # 게임 로직 업데이트
         pass
@@ -163,6 +175,8 @@ class Stage0(Stage):
     def __init__(self, player, w, h):
         super().__init__(0, w, h)
         self.floors = []
+        self.objects = []
+        self.monsters = []
         self.floor = Object(1000, 10, w // 2, 10, "floor_stage0.png", 0)
         self.floors.append(self.floor)
         player.x = 400
@@ -220,8 +234,6 @@ class Stage1(Stage):
 
     def exit(self):
         super().exit()
-        if self.player.find_key:
-            print("Stage2: Player has the key!")
 
 
 
