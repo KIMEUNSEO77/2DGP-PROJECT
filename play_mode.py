@@ -63,7 +63,15 @@ def init():   # 모든 객체 초기화
     else:
         player_obj = Player(40, 40, 1)
     player_obj.vy = 0
-    stage = Stage0(player_obj, WIDTH, HEIGHT)
+    # stage = Stage0(player_obj, WIDTH, HEIGHT)
+    if cur_stage == 0:
+        stage = Stage0(player_obj, WIDTH, HEIGHT)
+    elif cur_stage == 1:
+        stage = Stage1(WIDTH, HEIGHT, player_obj)
+    elif cur_stage == 2:
+        stage = Stage2(WIDTH, HEIGHT, player_obj)
+    elif cur_stage == 3:
+        stage = Stage3(WIDTH, HEIGHT, player_obj)
     game_world.add_object(stage, 0)
     game_world.add_object(player_obj, 1)
     game_world.add_collision_pairs('player:monster', player_obj, None)
