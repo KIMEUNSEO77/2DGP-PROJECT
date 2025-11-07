@@ -252,8 +252,8 @@ class Stage2(Stage):
         floor = Object(1000, 10, w // 2, 20, "floor_stage2.png", 0)
         self.floors.append(floor)
 
-        self.monster_y = [220, 355, 500]
-        self.monster_x = [900, 500, 100]
+        self.monster_y = [130, 260, 390, 520]
+        self.monster_x = [900, 500, 100, 700]
         for mx, my in zip(self.monster_x, self.monster_y):
             monster = MonsterVet(mx, my)
             self.monsters.append(monster)
