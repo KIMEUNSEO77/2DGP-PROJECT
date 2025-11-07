@@ -2,8 +2,9 @@ from pico2d import load_image
 
 import game_world
 from game_world import remove_collision_object
-from object import Object, MonsterBook, Book, MonsterVet
+from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull
 import random
+import time
 
 
 class Stage:
@@ -234,6 +235,9 @@ class Stage1(Stage):
     def exit(self):
         super().exit()
 
+    def update(self):
+        pass
+
 
 
 
@@ -261,12 +265,35 @@ class Stage2(Stage):
 
     def enter(self):
         super().enter()
-
+        self._last_spawn = time.time()
+        self._spawn_interval = 5.0  # 5초마다 스폰
     def draw(self):
         super().draw()
 
     def exit(self):
         super().exit()
+
+    def update(self):
+        now = time.time()
+        if self._last_spawn is None:
+            self._last_spawn = now
+
+        # 5초마다 MonsterSkull 생성
+        if now - self._last_spawn >= self._spawn_interval:
+            # 스폰 위치: 오른쪽 화면(예시) 및 y는 랜덤 선택
+            spawn_x = random.randint(100, 900)
+            spawn_y = 600
+            skull = MonsterSkull(spawn_x, spawn_y)
+
+            # 월드와 스테이지 리스트에 추가, 충돌 등록
+            self.monsters.append(skull)
+            game_world.add_object(skull, 2)
+            try:
+                game_world.add_collision_pairs("player:monster", None, skull)
+            except:
+                pass
+
+            self._last_spawn = now
 
 
 
@@ -281,3 +308,5 @@ class Stage3(Stage):
         super().draw()
     def exit(self):
         super().exit()
+    def update(self):
+        pass

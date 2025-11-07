@@ -150,3 +150,27 @@ class MonsterVet():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with MonsterVet")
+            
+class MonsterSkull():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.image = load_image("monster_stage2_2.png")
+        self.w, self.h = 80, 80
+
+    def draw(self):
+        self.image.clip_composite_draw(0, 0, 100, 100,
+                                           0, '', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        self.y -= BOOK_SPEED_PPS * game_framework.frame_time
+        if self.y <= 20:
+            self.y = 20
+
+    def get_bb(self):
+        return self.x - 40, self.y - 40, self.x + 40, self.y + 40
+
+    def handle_collision(self, group, other):
+        if group == 'player:monster':
+            print("Player collided with MonsterSkull")
