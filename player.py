@@ -32,6 +32,7 @@ class Player:
         self.JUMP = Jump(self)
         # self.UP = Up(self)
         # self.DOWN = Down(self)
+        self.find_key = False
 
 
         self.state_machine = StateMachine(
@@ -83,4 +84,4 @@ class Player:
             print("Player collided with monster!")
 
         elif group == 'player:object':
-            print("Player collided with object!")
+            self.find_key = True
