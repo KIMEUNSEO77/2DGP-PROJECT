@@ -114,3 +114,39 @@ class Book():
                 # game_world.remove_object(self)
             else:
                 game_world.remove_object(self)
+
+class MonsterVet():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.image = load_image("monster_stage2.png")
+        self.w, self.h = 80, 50
+        self.dir = 1  # 이동 방향 (1: 오른쪽, -1: 왼쪽)
+        self.frame = 0
+        self.frames = [0, 130, 270, 410]
+        self.frame_idx = 0
+
+    def draw(self):
+        self.frame_idx = int(self.frame)
+        if self.dir == 1:
+            self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 135, 85,
+                                           0, '', self.x, self.y, self.w, self.h)
+        else:
+            self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 135, 85,
+                                           0, 'h', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+        self.x += self.dir * BOOK_SPEED_PPS * game_framework.frame_time
+        if self.x >= 980:
+            self.dir = -1
+        elif self.x <= 20:
+            self.dir = 1
+
+    def get_bb(self):
+        return self.x - 40, self.y - 25, self.x + 40, self.y + 25
+
+    def handle_collision(self, group, other):
+        if group == 'player:monster':
+            print("Player collided with MonsterVet")

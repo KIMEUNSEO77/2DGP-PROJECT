@@ -2,7 +2,7 @@ from pico2d import load_image
 
 import game_world
 from game_world import remove_collision_object
-from object import Object, MonsterBook, Book
+from object import Object, MonsterBook, Book, MonsterVet
 import random
 
 
@@ -246,8 +246,18 @@ class Stage2(Stage):
             player.x, player.y = 60, 500
 
         self.floors = []
+        self.monsters = []
+        self.objects = []
+
         floor = Object(1000, 10, w // 2, 20, "floor_stage2.png", 0)
         self.floors.append(floor)
+
+        self.monster_y = [220, 355, 500]
+        self.monster_x = [900, 500, 100]
+        for mx, my in zip(self.monster_x, self.monster_y):
+            monster = MonsterVet(mx, my)
+            self.monsters.append(monster)
+
 
     def enter(self):
         super().enter()
