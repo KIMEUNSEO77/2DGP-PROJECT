@@ -7,7 +7,10 @@ image = None
 
 def init():
     global image, start_time
-    image = load_image('Mage_Leave.png')
+    if play_mode.player == 0:
+        image = load_image('Mage_Leave.png')
+    elif play_mode.player == 1:
+        image = load_image('Knight_Leave.png')
     start_time = get_time()
 
 def finish():
@@ -17,8 +20,12 @@ def finish():
 def update():
     global image, start_time
     if get_time() - start_time >= 1.5:
-        image = load_image('Mage_Holl.png')
+        if play_mode.player == 0:
+            image = load_image('Mage_Holl.png')
+        elif play_mode.player == 1:
+            image = load_image('Knight_Holl.png')
         if get_time() - start_time >= 3.0:
+            play_mode.cur_stage = 2
             game_framework.change_mode(play_mode)
 
 def draw():
