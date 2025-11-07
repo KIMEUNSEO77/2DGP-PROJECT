@@ -83,5 +83,5 @@ class Player:
         if group == 'player:monster':
             print("Player collided with monster!")
 
-        elif group == 'player:object':
+        elif group == 'player:object' and other.key:
             self.find_key = True

@@ -124,20 +124,27 @@ class Stage:
             game_world.add_collision_pairs("player:object", None, obj)
 
     def exit(self):   # 스테이시 종료 시 처리
+        '''
         self.bg = None
-        for obj in list(self.floors):
-            remove_collision_object(obj)
-            game_world.remove_object(obj)
-        for monster in list(self.monsters):
-            remove_collision_object(monster)
-            game_world.remove_object(monster)
-        for obj in list(self.objects):
-            remove_collision_object(obj)
-            game_world.remove_object(obj)
+        if self.floors is not None:
+            for obj in list(self.floors):
+                remove_collision_object(obj)
+                game_world.remove_object(obj)
+
+        if self.monsters is not None:
+            for monster in list(self.monsters):
+                remove_collision_object(monster)
+                game_world.remove_object(monster)
+
+        if self.objects is not None:
+            for obj in list(self.objects):
+                remove_collision_object(obj)
+                game_world.remove_object(obj)
 
         self.floors.clear()
         self.monsters.clear()
         self.objects.clear()
+        '''
 
 
     def update(self): # 게임 로직 업데이트
@@ -176,6 +183,7 @@ class Stage0(Stage):
 class Stage1(Stage):
     def __init__(self, w, h, player):
         super().__init__(1, w, h)
+        self.player = player
         self.bg = load_image("BG_1stage.png")
         if player:
             player.x, player.y = 60, 100
@@ -212,6 +220,8 @@ class Stage1(Stage):
 
     def exit(self):
         super().exit()
+        if self.player.find_key:
+            print("Stage2: Player has the key!")
 
 
 
@@ -240,3 +250,10 @@ class Stage2(Stage):
 class Stage3(Stage):
     def __init__(self, w, h, player):
         super().__init__(3, w, h)
+
+    def enter(self):
+        super().enter()
+    def draw(self):
+        super().draw()
+    def exit(self):
+        super().exit()
