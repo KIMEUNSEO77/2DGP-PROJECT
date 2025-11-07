@@ -77,6 +77,9 @@ def update():   # 객체들의 상호작용, 행위 업데이트
     if cur_stage == 0 and player_obj.at_stage0_exit():
         change_stage(1)
 
+    if cur_stage == 1 and player_obj.find_key:
+        change_stage(2)
+
     game_world.handle_collisions()
 
 def draw():   # 객체들 그리기
