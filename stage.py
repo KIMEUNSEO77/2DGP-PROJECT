@@ -201,7 +201,6 @@ class Stage1(Stage):
         self.bg = load_image("BG_1stage.png")
         if player:
             player.x, player.y = 60, 100
-            player.gravity = -5
         self.floor_y = [30, 165, 300, 445]
 
         self.floors = []
@@ -245,7 +244,10 @@ class Stage2(Stage):
         self.bg = load_image("BG_2stage.png")
         if player:
             player.x, player.y = 60, 500
-            player.gravity = -5
+
+        self.floors = []
+        floor = Object(1000, 10, w // 2, 20, "floor_stage2.png", 0)
+        self.floors.append(floor)
 
     def enter(self):
         super().enter()
