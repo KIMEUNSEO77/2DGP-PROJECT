@@ -22,7 +22,8 @@ class Object:
         self.id = id
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        self.image.draw(self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.aabb())
     def update(self):
         pass
 

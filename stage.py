@@ -262,11 +262,15 @@ class Stage2(Stage):
             monster = MonsterVet(mx, my)
             self.monsters.append(monster)
 
+        platform = Object(100, 10, 600, 100, "floor_stage2_2.png", 0)
+        self.floors.append(platform)
+
 
     def enter(self):
         super().enter()
         self._last_spawn = time.time()
         self._spawn_interval = 5.0  # 5초마다 스폰
+
     def draw(self):
         super().draw()
 
