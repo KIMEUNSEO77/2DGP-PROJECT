@@ -244,7 +244,7 @@ class Stage2(Stage):
         super().__init__(2, w, h)
         self.bg = load_image("BG_2stage.png")
         if player:
-            player.x, player.y = 60, 100
+            player.x, player.y = 60, 500
             player.gravity = -5
 
     def enter(self):

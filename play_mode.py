@@ -79,7 +79,7 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         change_stage(1)
 
     if cur_stage == 1 and player_obj.find_key:
-        # cur_stage_obj.exit()
+        delay(1.5)  # 열쇠 찾고 나서 잠시 대기
         change_stage(2)
 
     game_world.handle_collisions()
