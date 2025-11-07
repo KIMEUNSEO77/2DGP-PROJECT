@@ -262,9 +262,13 @@ class Stage2(Stage):
             monster = MonsterVet(mx, my)
             self.monsters.append(monster)
 
-        platform = Object(100, 10, 600, 100, "floor_stage2_2.png", 0)
-        self.floors.append(platform)
-
+        self.platform_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,
+                           50, 250, 500, 750, 900]
+        self.platform_y = [100, 120, 140, 160, 140, 200, 220, 240, 260, 300, 320, 340, 360, 340, 400, 420, 440, 460,
+                           500, 520, 540, 560, 540]
+        for px, py in zip(self.platform_x, self.platform_y):
+            platform = Object(100, 10, px, py, "floor_stage2_3.png", 0)
+            self.floors.append(platform)
 
     def enter(self):
         super().enter()

@@ -23,7 +23,7 @@ class Object:
 
     def draw(self):
         self.image.draw(self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.aabb())
+        #draw_rectangle(*self.aabb())
     def update(self):
         pass
 
