@@ -164,12 +164,12 @@ class MonsterSkull():
         draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.y -= BOOK_SPEED_PPS * game_framework.frame_time
-        if self.y <= 20:
-            self.y = 20
+        self.y -= 1.5 + BOOK_SPEED_PPS * game_framework.frame_time
+        if self.y <= 30:
+            self.y = 30
 
     def get_bb(self):
-        return self.x - 40, self.y - 40, self.x + 40, self.y + 40
+        return self.x - 30, self.y - 20, self.x + 30, self.y + 20
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
