@@ -1,6 +1,7 @@
 from pico2d import load_image
 
 import game_world
+from game_world import remove_collision_object
 from object import Object, MonsterBook, Book
 import random
 
@@ -125,7 +126,19 @@ class Stage:
     def exit(self):   # 스테이시 종료 시 처리
         self.bg = None
         for obj in list(self.floors):
+            remove_collision_object(obj)
             game_world.remove_object(obj)
+        for monster in list(self.monsters):
+            remove_collision_object(monster)
+            game_world.remove_object(monster)
+        for obj in list(self.objects):
+            remove_collision_object(obj)
+            game_world.remove_object(obj)
+
+        self.floors.clear()
+        self.monsters.clear()
+        self.objects.clear()
+
 
     def update(self): # 게임 로직 업데이트
         pass
@@ -136,6 +149,8 @@ class Stage:
 
     def handle_events(self, event):
         pass
+
+
 
 class Stage0(Stage):
     def __init__(self, player, w, h):
@@ -150,8 +165,13 @@ class Stage0(Stage):
         super().enter()
     def draw(self):
         super().draw()
+    def exit(self):
+        super().exit()
     def update(self):
         pass
+
+
+
 
 class Stage1(Stage):
     def __init__(self, w, h, player):
@@ -184,8 +204,26 @@ class Stage1(Stage):
             book = Book(bx, by, random.randint(1, 5), key=(i == key_index))
             self.objects.append(book)
 
+    def enter(self):
+        super().enter()
+
+    def draw(self):
+        super().draw()
+
+    def exit(self):
+        super().exit()
 
 
+
+
+
+class Stage2(Stage):
+    def __init__(self, w, h, player):
+        super().__init__(2, w, h)
+        self.bg = load_image("BG_2stage.png")
+        if player:
+            player.x, player.y = 60, 100
+            player.gravity = -5
 
     def enter(self):
         super().enter()
@@ -193,14 +231,12 @@ class Stage1(Stage):
     def draw(self):
         super().draw()
 
+    def exit(self):
+        super().exit()
 
 
 
-
-class Stage2(Stage):
-    def __init__(self, w, h):
-        super().__init__(2, w, h)
 
 class Stage3(Stage):
-    def __init__(self, w, h):
+    def __init__(self, w, h, player):
         super().__init__(3, w, h)

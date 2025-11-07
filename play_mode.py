@@ -35,6 +35,7 @@ def change_stage(new_stage):
 
     # 기존 월드 객체들 정리
     if cur_stage_obj is not None:
+        # cur_stage_obj.exit()
         game_world.remove_object(cur_stage_obj)
         cur_stage_obj = None
     cur_stage = new_stage
@@ -42,9 +43,9 @@ def change_stage(new_stage):
     if cur_stage == 1:
         stage = Stage1(WIDTH, HEIGHT, player_obj)
     elif cur_stage == 2:
-        stage = Stage2(WIDTH, HEIGHT)
+        stage = Stage2(WIDTH, HEIGHT, player_obj)
     elif cur_stage == 3:
-        stage = Stage3(WIDTH, HEIGHT)
+        stage = Stage3(WIDTH, HEIGHT, player_obj)
     else:
         stage = Stage0(WIDTH, HEIGHT)
     stage.enter()
