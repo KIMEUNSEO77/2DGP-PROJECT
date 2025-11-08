@@ -19,18 +19,18 @@ def finish():
 
 def update():
     global image, start_time
-    if get_time() - start_time >= 1.5:
+    if get_time() - start_time >= 2.5:
         if play_mode.player == 0:
             image = load_image('Mage_2.5stage_2.png')
         elif play_mode.player == 1:
             image = load_image('Knight_2.5stage_2.png')
 
-    if get_time() - start_time >= 3.0:
+    if get_time() - start_time >= 5.0:
             if play_mode.player == 0:
                 image = load_image('Mage_2.5stage_3.png')
             elif play_mode.player == 1:
                 image = load_image('Knight_2.5stage_3.png')
-    if get_time() - start_time >= 4.5:
+    if get_time() - start_time >= 7.5:
         play_mode.cur_stage = 3
         game_framework.change_mode(play_mode)
 
