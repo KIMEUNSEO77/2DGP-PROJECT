@@ -2,6 +2,7 @@ from event import right_down, left_down, right_up, left_up, up_down, down_down, 
     left_attack_down, up_attack_down, down_attack_down
 
 import game_framework
+import play_mode
 
 w, h = 32, 40
 
@@ -24,13 +25,13 @@ class Idle:   # 가만히 서 있는 상태
     def enter(self, e):
         pass
     def exit(self, e):
-        if right_attack_down(e):
+        if right_attack_down(e) and play_mode.cur_stage == 2:
             self.player.fire_ball_right()
-        elif left_attack_down(e):
+        elif left_attack_down(e) and play_mode.cur_stage == 2:
             self.player.fire_ball_left()
-        elif up_attack_down(e):
+        elif up_attack_down(e) and play_mode.cur_stage == 2:
             self.player.fire_ball_up()
-        elif down_attack_down(e):
+        elif down_attack_down(e) and play_mode.cur_stage == 2:
             self.player.fire_ball_down()
 
     def do(self):

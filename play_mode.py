@@ -13,8 +13,8 @@ import choose_mode
 import first_to_second_mode
 
 WIDTH, HEIGHT = 1000, 600
-player = 1 # 0: mage, 1: knight
-cur_stage = 2 # 현재 스테이지 번호 디버깅을 위해 1
+player = 0 # 0: mage, 1: knight
+cur_stage = 1 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 
