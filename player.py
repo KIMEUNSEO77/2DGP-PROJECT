@@ -105,8 +105,13 @@ class FireBall:
         self.dirY = dirY
         self.w, self.h = 32, 32
 
+        if player.id == 0:
+            self.draw_w, self.draw_h = 60, 60
+        elif player.id == 1:
+            self.draw_w, self.draw_h = 16, 16
+
     def draw(self):
-        self.image.clip_composite_draw(0, 0, 60, 60,
+        self.image.clip_composite_draw(0, 0, self.draw_w, self.draw_h,
                                        0, '', self.x, self.y, self.w, self.h)
         draw_rectangle(*self.get_bb())
 
