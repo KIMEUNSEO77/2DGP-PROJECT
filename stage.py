@@ -270,12 +270,14 @@ class Stage2(Stage):
             platform = Object(100, 10, px, py, "floor_stage2_3.png", 0)
             self.floors.append(platform)
 
+        key_index = random.randint(0, 26)   # key인 인덱스는 True
         self.box_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,
                            50, 250, 500, 750, 900, 100, 300, 500, 800]
         self.box_y = [120, 140, 160, 180, 160, 220, 240, 260, 280, 320, 340, 360, 380, 360, 420, 440, 460, 480,
                             520, 540, 560, 580, 560, 30, 30, 30, 30]
-        for bx, by in zip(self.box_x, self.box_y):
-            box = Box(bx, by)
+        for i, (bx, by) in enumerate(zip(self.box_x, self.box_y)):
+            # 생성자가 key 인자를 받는다면
+            box = Box(bx, by, key=(i == key_index))
             self.objects.append(box)
 
     def enter(self):

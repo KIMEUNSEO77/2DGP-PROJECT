@@ -177,17 +177,23 @@ class MonsterSkull():
             print("Player collided with MonsterSkull")
 
 class Box():
-    def __init__(self, x, y):
+    def __init__(self, x, y, key=False):
         self.x = x
         self.y = y
         self.image = load_image("object_box.png")
         self.w, self.h = 50, 35
-        self.key = False
+        self.key = key
+        self.finded = False
+        self.key_image = load_image("key_image.png")
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 175, 124,
                                            0, '', self.x, self.y, self.w, self.h)
         draw_rectangle(*self.get_bb())
+
+        if self.key and self.finded:
+            self.key_image.clip_composite_draw(0, 0, 47, 111,
+                                               0, '', 500, 300 + 40, 150, 300)
 
     def update(self):
         pass
@@ -197,4 +203,8 @@ class Box():
 
     def handle_collision(self, group, other):
         if group == 'player:object':
-            print("Player collided with Box")
+            if self.key:
+                self.finded = True
+                # game_world.remove_object(self)
+            else:
+                game_world.remove_object(self)
