@@ -11,6 +11,7 @@ import game_framework
 import title_mode
 import choose_mode
 import first_to_second_mode
+import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
@@ -91,6 +92,10 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         delay(1.5)  # 열쇠 찾고 나서 잠시 대기
         game_framework.change_mode(first_to_second_mode)
         change_stage(2)
+    if cur_stage == 2 and player_obj.find_key:
+        delay(1.5)
+        game_framework.change_mode(second_to_third_mode)
+        change_stage(3)
 
     game_world.handle_collisions()
 
