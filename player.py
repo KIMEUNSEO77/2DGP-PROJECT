@@ -1,6 +1,7 @@
 from pico2d import load_image, draw_rectangle
 
-from event import right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up, right_attack_down
+from event import (right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up, right_attack_down, \
+                   left_attack_down, up_attack_down, down_attack_down)
 from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 import game_framework
@@ -40,8 +41,10 @@ class Player:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {right_attack_down: self.IDLE, jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN: {right_attack_down: self.RUN, right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
+                self.IDLE: {down_attack_down: self.IDLE, up_attack_down: self.IDLE, left_attack_down: self.IDLE, right_attack_down: self.IDLE,
+                            jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
+                self.RUN: {left_attack_down: self.RUN, up_attack_down: self.RUN, down_attack_down: self.RUN, right_attack_down: self.RUN,
+                           right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
                 self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN}
             }
         )
@@ -91,6 +94,15 @@ class Player:
     def fire_ball_right(self):
         fire_ball = FireBall(self, self.x + 25, self.y, 1, 0)
         game_world.add_object(fire_ball, 1)
+    def fire_ball_left(self):
+        fire_ball = FireBall(self, self.x - 25, self.y, -1, 0)
+        game_world.add_object(fire_ball, 1)
+    def fire_ball_up(self):
+        fire_ball = FireBall(self, self.x, self.y + 25, 0, 1)
+        game_world.add_object(fire_ball, 1)
+    def fire_ball_down(self):
+        fire_ball = FireBall(self, self.x, self.y - 25, 0, -1)
+        game_world.add_object(fire_ball, 1)
 
 class FireBall:
     image = None
@@ -118,6 +130,9 @@ class FireBall:
     def update(self):
         self.x += self.dirX * 400 * game_framework.frame_time
         self.y += self.dirY * 400 * game_framework.frame_time
+
+        if self.x > 1000 or self.x < 0 or self.y > 600 or self.y < 0:
+            game_world.remove_object(self)
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16
