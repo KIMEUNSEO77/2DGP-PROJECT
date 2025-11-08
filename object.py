@@ -1,6 +1,7 @@
 from pico2d import load_image, draw_rectangle
 import game_framework
 import game_world
+from game_world import remove_object
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -151,6 +152,8 @@ class MonsterVet():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with MonsterVet")
+        if group == 'attack:monster':
+            print("Monster attacked by player!")
             
 class MonsterSkull():
     def __init__(self, x, y):
@@ -175,6 +178,8 @@ class MonsterSkull():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with MonsterSkull")
+        if group == 'attack:monster':
+            game_world.remove_object(self)
 
 class Box():
     def __init__(self, x, y, key=False):

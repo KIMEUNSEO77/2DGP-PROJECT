@@ -94,15 +94,19 @@ class Player:
     def fire_ball_right(self):
         fire_ball = FireBall(self, self.x + 25, self.y, 1, 0)
         game_world.add_object(fire_ball, 1)
+        game_world.add_collision_pairs("attack:monster", fire_ball, None)
     def fire_ball_left(self):
         fire_ball = FireBall(self, self.x - 25, self.y, -1, 0)
         game_world.add_object(fire_ball, 1)
+        game_world.add_collision_pairs("attack:monster", fire_ball, None)
     def fire_ball_up(self):
         fire_ball = FireBall(self, self.x, self.y + 25, 0, 1)
         game_world.add_object(fire_ball, 1)
+        game_world.add_collision_pairs("attack:monster", fire_ball, None)
     def fire_ball_down(self):
         fire_ball = FireBall(self, self.x, self.y - 25, 0, -1)
         game_world.add_object(fire_ball, 1)
+        game_world.add_collision_pairs("attack:monster", fire_ball, None)
 
 class FireBall:
     image = None
@@ -136,3 +140,8 @@ class FireBall:
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16
+
+    def handle_collision(self, group, other):
+        if group == 'attack:monster':
+            print("FireBall collided with monster!")
+            game_world.remove_object(self)

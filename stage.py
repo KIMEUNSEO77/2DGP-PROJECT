@@ -284,6 +284,8 @@ class Stage2(Stage):
         super().enter()
         self._last_spawn = time.time()
         self._spawn_interval = 5.0  # 5초마다 스폰
+        for monster in self.monsters:
+            game_world.add_collision_pairs("attack:monster", None, monster)
 
     def draw(self):
         super().draw()
@@ -308,6 +310,7 @@ class Stage2(Stage):
             game_world.add_object(skull, 2)
             try:
                 game_world.add_collision_pairs("player:monster", None, skull)
+                game_world.add_collision_pairs("attack:monster", None, skull)
             except:
                 pass
 
