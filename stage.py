@@ -202,7 +202,7 @@ class Stage1(Stage):
         self.bg = load_image("BG_1stage.png")
         if player:
             player.x, player.y = 60, 100
-        self.floor_y = [30, 165, 300, 445]
+        self.floor_y = [10, 155, 295, 440]
 
         self.floors = []
         self.monsters = []

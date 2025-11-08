@@ -25,13 +25,13 @@ class Idle:   # 가만히 서 있는 상태
     def enter(self, e):
         pass
     def exit(self, e):
-        if right_attack_down(e) and play_mode.cur_stage == 2:
+        if right_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_right()
-        elif left_attack_down(e) and play_mode.cur_stage == 2:
+        elif left_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_left()
-        elif up_attack_down(e) and play_mode.cur_stage == 2:
+        elif up_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_up()
-        elif down_attack_down(e) and play_mode.cur_stage == 2:
+        elif down_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_down()
 
     def do(self):
@@ -58,13 +58,13 @@ class Run:
             self.player.dir = self.player.face_dir = -1
 
     def exit(self, e):
-        if right_attack_down(e):
+        if right_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_right()
-        elif left_attack_down(e):
+        elif left_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_left()
-        elif up_attack_down(e):
+        elif up_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_up()
-        elif down_attack_down(e):
+        elif down_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_down()
 
     def do(self):
