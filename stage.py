@@ -259,7 +259,7 @@ class Stage2(Stage):
         self.monster_y = [130, 260, 390, 520]
         self.monster_x = [900, 500, 100, 700]
         for mx, my in zip(self.monster_x, self.monster_y):
-            monster = MonsterVet(mx, my)
+            monster = MonsterVet(mx, my, player.id)
             self.monsters.append(monster)
 
         self.platform_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,

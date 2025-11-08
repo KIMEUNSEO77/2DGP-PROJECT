@@ -118,7 +118,7 @@ class Book():
                 game_world.remove_object(self)
 
 class MonsterVet():
-    def __init__(self, x, y):
+    def __init__(self, x, y, player_id):
         self.x = x
         self.y = y
         self.image = load_image("monster_stage2.png")
@@ -127,6 +127,8 @@ class MonsterVet():
         self.frame = 0
         self.frames = [0, 130, 270, 410]
         self.frame_idx = 0
+        self.player_id = player_id  # 플레이어 id에 따라서 충돌 효과 다름.
+        self.speed_minus = 1.0   # 감속되는 스피드
 
     def draw(self):
         self.frame_idx = int(self.frame)
@@ -140,7 +142,7 @@ class MonsterVet():
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        self.x += self.dir * BOOK_SPEED_PPS * game_framework.frame_time
+        self.x += self.dir * BOOK_SPEED_PPS * game_framework.frame_time * self.speed_minus
         if self.x >= 980:
             self.dir = -1
         elif self.x <= 20:
@@ -153,7 +155,10 @@ class MonsterVet():
         if group == 'player:monster':
             print("Player collided with MonsterVet")
         if group == 'attack:monster':
-            print("Monster attacked by player!")
+            if self.player_id == 0:
+                self.speed_minus -= 0.1
+            elif self.player_id == 1:
+                pass
             
 class MonsterSkull():
     def __init__(self, x, y):
