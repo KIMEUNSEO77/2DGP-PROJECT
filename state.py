@@ -1,4 +1,4 @@
-from event import right_down, left_down, right_up, left_up, up_down, down_down, up_up, down_up
+from event import right_down, left_down, right_up, left_up, up_down, down_down, up_up, down_up, right_attack_down
 import game_framework
 
 w, h = 32, 40
@@ -22,7 +22,8 @@ class Idle:   # 가만히 서 있는 상태
     def enter(self, e):
         pass
     def exit(self, e):
-        pass
+        if right_attack_down(e):
+            self.player.fire_ball_right()
     def do(self):
         self.player.frame = 1
 
@@ -47,7 +48,8 @@ class Run:
             self.player.dir = self.player.face_dir = -1
 
     def exit(self, e):
-        pass
+        if right_attack_down(e):
+            self.player.fire_ball_right()
 
     def do(self):
         # self.player.frame = (self.player.frame + 1) % 3

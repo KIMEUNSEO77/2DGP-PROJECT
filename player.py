@@ -1,9 +1,10 @@
 from pico2d import load_image, draw_rectangle
 
-from event import right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up
+from event import right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up, right_attack_down
 from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 import game_framework
+import game_world
 
 GRAVITY_PPS = -200
 
@@ -15,6 +16,7 @@ class Player:
             self.image = load_image("mage_sprite.png")
         elif id == 1:
             self.image = load_image("knight_sprite.png")
+        self.id = id  # 0: mage, 1: knight
         # (x, y) 좌표를 담는 프레임 리스트
         self.frames = [0, 31, 62]
         self.frame = 0
@@ -38,8 +40,8 @@ class Player:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN: {right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
+                self.IDLE: {right_attack_down: self.IDLE, jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
+                self.RUN: {right_attack_down: self.RUN, right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
                 self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN}
             }
         )
@@ -85,3 +87,32 @@ class Player:
 
         elif group == 'player:object' and other.key:
             self.find_key = True
+
+    def fire_ball_right(self):
+        fire_ball = FireBall(self, self.x + 25, self.y, 1, 0)
+        game_world.add_object(fire_ball, 1)
+
+class FireBall:
+    image = None
+    def __init__(self, player, x, y, dirX, dirY):
+        if FireBall.image is None and player.id == 0:
+            FireBall.image = load_image("Mage_FireBall.png")
+        elif FireBall.image is None and player.id == 1:
+            FireBall.image = load_image("Knight_bullet.png")
+        self.x = x
+        self.y = y
+        self.dirX = dirX
+        self.dirY = dirY
+        self.w, self.h = 32, 32
+
+    def draw(self):
+        self.image.clip_composite_draw(0, 0, 60, 60,
+                                       0, '', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        self.x += self.dirX * 400 * game_framework.frame_time
+        self.y += self.dirY * 400 * game_framework.frame_time
+
+    def get_bb(self):
+        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
