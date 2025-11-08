@@ -129,6 +129,8 @@ class MonsterVet():
         self.frame_idx = 0
         self.player_id = player_id  # 플레이어 id에 따라서 충돌 효과 다름.
         self.speed_minus = 1.0   # 감속되는 스피드
+        self.moving = True   # 이동 여부 (전사가 공격시 2초간 멈춤)
+        self.freeze_time = 0.0 # 멈춘 시간
 
     def draw(self):
         self.frame_idx = int(self.frame)
@@ -141,8 +143,14 @@ class MonsterVet():
         draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        self.x += self.dir * BOOK_SPEED_PPS * game_framework.frame_time * self.speed_minus
+        if self.freeze_time > 0.0:
+            self.freeze_time -= game_framework.frame_time
+            if self.freeze_time <= 0.0:
+                self.moving = True
+
+        if self.moving:
+            self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+            self.x += self.dir * BOOK_SPEED_PPS * game_framework.frame_time * self.speed_minus
         if self.x >= 980:
             self.dir = -1
         elif self.x <= 20:
@@ -156,9 +164,10 @@ class MonsterVet():
             print("Player collided with MonsterVet")
         if group == 'attack:monster':
             if self.player_id == 0:
-                self.speed_minus -= 0.1
+                self.speed_minus = max(0.1, self.speed_minus - 0.1)
             elif self.player_id == 1:
-                pass
+                self.moving = False
+                self.freeze_time = 2.0  # 2초간 멈춤
             
 class MonsterSkull():
     def __init__(self, x, y):
