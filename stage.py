@@ -2,7 +2,7 @@ from pico2d import load_image
 
 import game_world
 from game_world import remove_collision_object
-from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull
+from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box
 import random
 import time
 
@@ -269,6 +269,14 @@ class Stage2(Stage):
         for px, py in zip(self.platform_x, self.platform_y):
             platform = Object(100, 10, px, py, "floor_stage2_3.png", 0)
             self.floors.append(platform)
+
+        self.box_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,
+                           50, 250, 500, 750, 900]
+        self.box_y = [130, 150, 170, 190, 170, 230, 250, 270, 290, 330, 350, 370, 390, 370, 410, 430, 450, 470,
+                            510, 530, 550, 570, 550]
+        for bx, by in zip(self.box_x, self.box_y):
+            box = Box(bx, by)
+            self.objects.append(box)
 
     def enter(self):
         super().enter()

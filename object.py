@@ -175,3 +175,26 @@ class MonsterSkull():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             print("Player collided with MonsterSkull")
+
+class Box():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.image = load_image("object_box.png")
+        self.w, self.h = 50, 35
+        self.key = False
+
+    def draw(self):
+        self.image.clip_composite_draw(0, 0, 175, 124,
+                                           0, '', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        pass
+
+    def get_bb(self):
+        return self.x - 25, self.y - 25, self.x + 17, self.y + 17
+
+    def handle_collision(self, group, other):
+        if group == 'player:object':
+            print("Player collided with Box")
