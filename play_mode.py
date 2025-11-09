@@ -15,7 +15,7 @@ import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 2 # 현재 스테이지 번호 디버깅을 위해 1
+cur_stage = 1 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 
@@ -83,7 +83,11 @@ def init():   # 모든 객체 초기화
 
 def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
-    cur_stage_obj.check_collision(player_obj)
+    #cur_stage_obj.check_collision(player_obj)
+
+    #game_world.handle_collisions()
+    if cur_stage is not None:
+        cur_stage_obj.check_collision(player_obj)
 
     if cur_stage == 0 and player_obj.at_stage0_exit():
         change_stage(1)
@@ -92,10 +96,12 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         delay(1.5)  # 열쇠 찾고 나서 잠시 대기
         game_framework.change_mode(first_to_second_mode)
         change_stage(2)
+        player_obj.find_key = False
     if cur_stage == 2 and player_obj.find_key:
         delay(1.5)
         game_framework.change_mode(second_to_third_mode)
         change_stage(3)
+        player_obj.find_key = False
 
     game_world.handle_collisions()
 

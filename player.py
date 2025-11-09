@@ -35,6 +35,7 @@ class Player:
         self.JUMP = Jump(self)
         # self.UP = Up(self)
         # self.DOWN = Down(self)
+
         self.find_key = False
 
 
@@ -144,4 +145,7 @@ class FireBall:
     def handle_collision(self, group, other):
         if group == 'attack:monster':
             print("FireBall collided with monster!")
-            game_world.remove_object(self)
+            try:
+                game_world.remove_object(self)
+            except Exception:
+                pass
