@@ -218,7 +218,8 @@ class Stage1(Stage):
             monster = MonsterBook(mx, my)
             self.monsters.append(monster)
 
-        key_index = random.randint(0, 17)
+        # key_index = random.randint(0, 17)
+        key_index = 17   # key 인덱스를 17로 고정
         self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
         self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
         # key인 인덱스는 True
