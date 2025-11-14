@@ -108,6 +108,7 @@ def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.handle_collisions()
 
 def draw():   # 객체들 그리기
+    global hp_image
     clear_canvas()
     game_world.render()
     if hp_image is not None:

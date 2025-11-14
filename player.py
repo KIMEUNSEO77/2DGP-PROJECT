@@ -88,6 +88,7 @@ class Player:
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
+            self.hp -= 1
             print("Player collided with monster!")
 
         elif group == 'player:object' and other.key:
