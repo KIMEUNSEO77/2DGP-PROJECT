@@ -59,13 +59,11 @@ def change_stage(new_stage):
 def init():   # 모든 객체 초기화
     global cur_stage, cur_stage_obj, player_obj
 
-    # global world   # 모든 객체를 담을 수 있는 리스트
     if player == 0:
         player_obj = Player(40, 40, 0)
     else:
         player_obj = Player(40, 40, 1)
-    player_obj.vy = 0
-    # stage = Stage0(player_obj, WIDTH, HEIGHT)
+
     if cur_stage == 0:
         stage = Stage0(player_obj, WIDTH, HEIGHT)
     elif cur_stage == 1:
@@ -84,9 +82,7 @@ def init():   # 모든 객체 초기화
 
 def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
-    #cur_stage_obj.check_collision(player_obj)
 
-    #game_world.handle_collisions()
     if cur_stage is not None:
         cur_stage_obj.check_collision(player_obj)
 
@@ -112,7 +108,7 @@ def draw():   # 객체들 그리기
     clear_canvas()
     game_world.render()
     if hp_image is not None:
-        hp_image.clip_composite_draw(0, 0, 439, 96,
+        hp_image.clip_composite_draw(0, 0, 327, 96,
                                      0, '', 100, 570, 160, 35)
     update_canvas()
 
@@ -122,9 +118,7 @@ def finish():   # 게임 종료 시 처리
 def set_player_hp_image():
     global player_obj, hp_image
     if player_obj is not None:
-        if player_obj.hp == 4:
-            hp_image = load_image("heart_4.png")
-        elif player_obj.hp == 3:
+        if player_obj.hp == 3:
             hp_image = load_image("heart_3.png")
         elif player_obj.hp == 2:
             hp_image = load_image("heart_2.png")

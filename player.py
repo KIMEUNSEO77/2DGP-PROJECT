@@ -38,7 +38,7 @@ class Player:
 
         self.find_key = False
 
-        self.hp = 4  # 기본 플레이어 체력은 4로 시작
+        self.hp = 3  # 기본 플레이어 체력은 3로 시작
 
         self.state_machine = StateMachine(
             self.IDLE,
