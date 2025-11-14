@@ -15,7 +15,7 @@ import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 3 # 현재 스테이지 번호 디버깅을 위해 1
+cur_stage = 2 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 hp_image = None      # 플레이어 체력 이미지
