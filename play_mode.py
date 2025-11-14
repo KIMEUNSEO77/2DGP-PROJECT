@@ -18,6 +18,7 @@ player = 0 # 0: mage, 1: knight
 cur_stage = 0 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
+hp_image = None      # 플레이어 체력 이미지
 
 def handle_events():
     global player_obj
@@ -103,13 +104,31 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         change_stage(3)
         player_obj.find_key = False
 
+    set_player_hp_image()
     game_world.handle_collisions()
 
 def draw():   # 객체들 그리기
     clear_canvas()
     game_world.render()
+    if hp_image is not None:
+        hp_image.clip_composite_draw(0, 0, 439, 96,
+                                     0, '', 100, 570, 160, 35)
     update_canvas()
 
 def finish():   # 게임 종료 시 처리
     game_world.clear()
+
+def set_player_hp_image():
+    global player_obj, hp_image
+    if player_obj is not None:
+        if player_obj.hp == 4:
+            hp_image = load_image("heart_4.png")
+        elif player_obj.hp == 3:
+            hp_image = load_image("heart_3.png")
+        elif player_obj.hp == 2:
+            hp_image = load_image("heart_2.png")
+        elif player_obj.hp == 1:
+            hp_image = load_image("heart_1.png")
+        else:
+            pass  # 게임 오버 할 예정
 
