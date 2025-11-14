@@ -322,6 +322,16 @@ class Stage2(Stage):
 class Stage3(Stage):
     def __init__(self, w, h, player):
         super().__init__(3, w, h)
+        self.bg = load_image("BG_3stage.png")
+        if player:
+            player.x, player.y = 60, 500
+
+        self.floors = []
+        self.monsters = []
+        self.objects = []
+
+        self.floor = Object(1000, 10, w // 2, 10, "floor_stage3.png", 0)
+        self.floors.append(self.floor)
 
     def enter(self):
         super().enter()

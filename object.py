@@ -193,7 +193,11 @@ class MonsterSkull():
         if group == 'player:monster':
             print("Player collided with MonsterSkull")
         if group == 'attack:monster':
-            game_world.remove_object(self)
+            try:
+                game_world.remove_object(self)
+            except Exception as e:
+                # 게임월드가 안전하게 처리한다면 이 블록은 실행되지 않음
+                print("object.handle_collision: remove failed:", e)
 
 class Box():
     def __init__(self, x, y, key=False):

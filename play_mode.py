@@ -14,8 +14,8 @@ import first_to_second_mode
 import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
-player = 1 # 0: mage, 1: knight
-cur_stage = 0 # 현재 스테이지 번호 디버깅을 위해 1
+player = 0 # 0: mage, 1: knight
+cur_stage = 3 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 hp_image = None      # 플레이어 체력 이미지
@@ -39,7 +39,6 @@ def change_stage(new_stage):
     # 기존 월드 객체들 정리
     if cur_stage_obj is not None:
         cur_stage_obj.exit()
-        # game_world.remove_object(cur_stage_obj)
         cur_stage_obj = None
     cur_stage = new_stage
 
