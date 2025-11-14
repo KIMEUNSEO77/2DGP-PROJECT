@@ -14,7 +14,7 @@ import first_to_second_mode
 import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
-player = 0 # 0: mage, 1: knight
+player = 1 # 0: mage, 1: knight
 cur_stage = 0 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
@@ -109,7 +109,7 @@ def draw():   # 객체들 그리기
     game_world.render()
     if hp_image is not None:
         hp_image.clip_composite_draw(0, 0, 327, 96,
-                                     0, '', 100, 570, 160, 35)
+                                     0, '', 100, 570, 120, 35)
     update_canvas()
 
 def finish():   # 게임 종료 시 처리
