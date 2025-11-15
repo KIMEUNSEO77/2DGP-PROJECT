@@ -102,6 +102,17 @@ def update():   # 객체들의 상호작용, 행위 업데이트
     set_player_hp_image()
     game_world.handle_collisions()
 
+def update_during_hint():   # 힌트 모드에서만 쓸 "안전 버전"
+    # 1) 기본 오브젝트 업데이트
+    game_world.update()
+
+    # 2) 스테이지 충돌 체크 (바닥/구멍 떨어짐 방지)
+    if cur_stage is not None:
+        cur_stage_obj.check_collision(player_obj)
+
+    # 3) 충돌 처리만 (HP, 데미지 등)
+    game_world.handle_collisions()
+
 def draw():   # 객체들 그리기
     global hp_image
     clear_canvas()

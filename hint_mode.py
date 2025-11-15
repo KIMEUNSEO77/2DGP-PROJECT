@@ -14,6 +14,15 @@ def init():
         hint = Hint(hint_index)
     game_world.add_object(hint, 2)
 
+    # ---- 여기서 플레이어 강제 정지 (아래 2번에서 설명) ----
+    if hasattr(play_mode, 'player_obj') and play_mode.player_obj is not None:
+        p = play_mode.player_obj
+        # 상태를 IDLE로 강제 변경
+        p.state_machine.cur_state = p.IDLE
+        p.dir = 0
+        p.prev_x, p.prev_y = p.x, p.y
+    # -----------------------------------------------------
+
 def finish():
     global hint
     if hint:
@@ -22,7 +31,9 @@ def finish():
 
 def update():
     # 플레이 모드의 업데이트를 호출해서 플레이어 물리/충돌을 계속 수행
-    game_world.update()   # 왜냐하면, 힌트 모드에서는 play 모드가 유지돼야하므로.
+    #game_world.update()   # 왜냐하면, 힌트 모드에서는 play 모드가 유지돼야하므로.
+    #play_mode.update()
+    play_mode.update_during_hint()
 
 def draw():
     clear_canvas()
@@ -35,11 +46,13 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_ESCAPE:
+            if event.key == SDLK_RETURN:
                 game_framework.pop_mode()   # 이전 모드로 복귀
+
 
 
 def pause():
     pass
 def resume():
     pass
+
