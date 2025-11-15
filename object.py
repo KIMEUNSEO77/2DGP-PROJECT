@@ -1,7 +1,7 @@
 from pico2d import load_image, draw_rectangle
 import game_framework
 import game_world
-from game_world import remove_object
+import hint_mode
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -75,7 +75,7 @@ class MonsterBook():
             print("Player collided with MonsterBook")
 
 class Book():
-    def __init__(self, x, y, image_type, key=False):
+    def __init__(self, x, y, image_type, key=False, hint_index=0):
         self.x = x
         self.y = y
         if image_type == 1:
@@ -93,6 +93,8 @@ class Book():
         self.key_image = load_image("key_image.png")
         self.w, self.h = 100, 100
         self.finded = False
+
+        self.hint_index = hint_index
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 120, 120,
@@ -114,6 +116,9 @@ class Book():
             if self.key:
                 self.finded = True
                 # game_world.remove_object(self)
+            elif self.hint_index is not None:   # 힌트 책일 경우
+                hint_mode.hint_index = self.hint_index
+                game_framework.push_mode(hint_mode)
             else:
                 game_world.remove_object(self)
 
