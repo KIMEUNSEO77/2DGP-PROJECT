@@ -29,7 +29,7 @@ class Hint:
             pass
 
     def draw(self):
-        self.image.draw(500, 300, 500, 300)
+        self.image.draw(500, 300, 600, 350)
 
     def update(self):
         pass

@@ -284,7 +284,7 @@ class Stage2(Stage):
                             540, 560, 580, 560, 30, 30, 30, 30]
 
         # 인덱스별 힌트 매핑 (요청한 매핑)
-        hint_map = {9: 6, 1: 7, 15: 8, 7: 9, 17: 10}
+        hint_map = {9: 6, 6: 7, 15: 8, 7: 9, 13: 10}
 
         for i, (bx, by) in enumerate(zip(self.box_x, self.box_y)):
             hint_idx = hint_map.get(i)  # 없으면 None
