@@ -208,7 +208,7 @@ class MonsterSkull():
                 print("object.handle_collision: remove failed:", e)
 
 class Box():
-    def __init__(self, x, y, key=False):
+    def __init__(self, x, y, key=False, hint_index=0):
         self.x = x
         self.y = y
         self.image = load_image("object_box.png")
@@ -216,6 +216,8 @@ class Box():
         self.key = key
         self.finded = False
         self.key_image = load_image("key_image.png")
+
+        self.hint_index = hint_index
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 175, 124,
@@ -237,5 +239,9 @@ class Box():
             if self.key:
                 self.finded = True
                 # game_world.remove_object(self)
+            elif self.hint_index is not None:   # 힌트 박스일 경우
+                hint_mode.hint_index = self.hint_index
+                game_world.remove_object(self)
+                game_framework.push_mode(hint_mode)
             else:
                 game_world.remove_object(self)

@@ -14,6 +14,17 @@ class Hint:
         elif self.hint_index == 5:
             self.image = load_image("hint_stage1_5.png")
 
+        elif self.hint_index == 6:
+            self.image = load_image("hint_stage2_1.png")
+        elif self.hint_index == 7:
+            self.image = load_image("hint_stage2_2.png")
+        elif self.hint_index == 8:
+            self.image = load_image("hint_stage2_3.png")
+        elif self.hint_index == 9:
+            self.image = load_image("hint_stage2_4.png")
+        elif self.hint_index == 10:
+            self.image = load_image("hint_stage2_5.png")
+
         else:
             pass
 

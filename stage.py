@@ -276,14 +276,20 @@ class Stage2(Stage):
             platform = Object(100, 10, px, py, "floor_stage2_3.png", 0)
             self.floors.append(platform)
 
-        key_index = random.randint(0, 26)   # key인 인덱스는 True
+        #key_index = random.randint(0, 26)   # key인 인덱스는 True
+        key_index = 4  # key 인덱스를 4로 고정
         self.box_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,
                            250, 500, 750, 900, 100, 300, 500, 800]
         self.box_y = [120, 140, 160, 180, 160, 220, 240, 260, 280, 320, 340, 360, 380, 360, 420, 440, 460, 480,
                             540, 560, 580, 560, 30, 30, 30, 30]
+
+        # 인덱스별 힌트 매핑 (요청한 매핑)
+        hint_map = {9: 6, 1: 7, 15: 8, 7: 9, 17: 10}
+
         for i, (bx, by) in enumerate(zip(self.box_x, self.box_y)):
+            hint_idx = hint_map.get(i)  # 없으면 None
             # 생성자가 key 인자를 받는다면
-            box = Box(bx, by, key=(i == key_index))
+            box = Box(bx, by, key=(i == key_index), hint_index=hint_idx)
             self.objects.append(box)
 
     def enter(self):
