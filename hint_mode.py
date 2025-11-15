@@ -8,7 +8,7 @@ hint_index = None
 hint = None
 
 def init():
-    global hint
+    global hint, start_time
 
     if hint_index is not None:
         hint = Hint(hint_index)
@@ -22,6 +22,7 @@ def init():
         p.dir = 0
         p.prev_x, p.prev_y = p.x, p.y
     # -----------------------------------------------------
+    start_time = get_time()
 
 def finish():
     global hint
@@ -30,6 +31,10 @@ def finish():
         hint = None
 
 def update():
+    global start_time
+    if get_time() - start_time >= 3.0:
+        game_framework.pop_mode()   # 이전 모드로 복귀
+
     # 플레이 모드의 업데이트를 호출해서 플레이어 물리/충돌을 계속 수행
     #game_world.update()   # 왜냐하면, 힌트 모드에서는 play 모드가 유지돼야하므로.
     #play_mode.update()
@@ -40,16 +45,36 @@ def draw():
     game_world.render()
     update_canvas()
 
+
 def handle_events():
     event_list = get_events()   # 버퍼로부터 모든 입력을 갖고 온다.
     for event in event_list:
+        print('[HINT] event:', event.type, getattr(event, 'key', None))
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RETURN:
+                print('[HINT] POP MODE!!!')
                 game_framework.pop_mode()   # 이전 모드로 복귀
+'''
+def handle_events():
+    events = get_events()
+    for e in events:
+        # 디버그 로그
+        # print(f'[HINT] event: {e.type} {getattr(e, "key", None)}')
 
+        if e.type == SDL_QUIT:
+            game_framework.quit()
 
+        elif e.type == SDL_KEYDOWN:
+            # 여기서 한 번 더 찍어보자
+            # print(f'[HINT] KEYDOWN {e.key}')
+
+            # 엔터 키 처리 (RETURN / 키패드 엔터 / 숫자값 13까지 모두 인정)
+            if e.key in (SDLK_RETURN, SDLK_KP_ENTER, 13):
+                # print('[HINT] POP MODE')
+                game_framework.pop_mode()
+'''
 
 def pause():
     pass
