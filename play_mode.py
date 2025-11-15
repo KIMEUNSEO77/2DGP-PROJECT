@@ -126,3 +126,8 @@ def set_player_hp_image():
         else:
             pass  # 게임 오버 할 예정
 
+
+def pause():
+    pass
+def resume():
+    pass

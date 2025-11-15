@@ -222,9 +222,14 @@ class Stage1(Stage):
         key_index = 17   # key 인덱스를 17로 고정
         self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
         self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
+
+        # 인덱스별 힌트 매핑 (요청한 매핑)
+        hint_map = { 0: 1, 4: 2, 10: 3, 15: 4, 12: 5 }
+
         # key인 인덱스는 True
         for i, (bx, by) in enumerate(zip(self.book_x, self.book_y)):
-            book = Book(bx, by, random.randint(1, 5), key=(i == key_index))
+            hint_idx = hint_map.get(i)  # 없으면 None
+            book = Book(bx, by, random.randint(1, 5), key=(i == key_index), hint_index=hint_idx)
             self.objects.append(book)
 
     def enter(self):
