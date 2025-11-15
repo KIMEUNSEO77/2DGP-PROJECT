@@ -118,6 +118,7 @@ class Book():
                 # game_world.remove_object(self)
             elif self.hint_index is not None:   # 힌트 책일 경우
                 hint_mode.hint_index = self.hint_index
+                game_world.remove_object(self)
                 game_framework.push_mode(hint_mode)
             else:
                 game_world.remove_object(self)
