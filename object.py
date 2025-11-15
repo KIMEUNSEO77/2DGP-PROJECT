@@ -68,7 +68,7 @@ class MonsterBook():
             self.dir = 1
 
     def get_bb(self):
-        return self.x - 40, self.y - 25, self.x + 40, self.y + 25
+        return self.x - 30, self.y - 20, self.x + 30, self.y + 20
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
@@ -107,7 +107,7 @@ class Book():
         pass
 
     def get_bb(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
     def handle_collision(self, group, other):
         if group == 'player:object':
@@ -157,7 +157,7 @@ class MonsterVet():
             self.dir = 1
 
     def get_bb(self):
-        return self.x - 40, self.y - 25, self.x + 40, self.y + 25
+        return self.x - 30, self.y - 25, self.x + 30, self.y + 25
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
