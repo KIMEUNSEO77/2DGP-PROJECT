@@ -8,7 +8,7 @@ hint_index = None
 hint = None
 
 def init():
-    global hint, start_time
+    global hint
 
     if hint_index is not None:
         hint = Hint(hint_index)
@@ -22,7 +22,6 @@ def init():
         p.dir = 0
         p.prev_x, p.prev_y = p.x, p.y
     # -----------------------------------------------------
-    start_time = get_time()
 
 def finish():
     global hint
@@ -31,10 +30,6 @@ def finish():
         hint = None
 
 def update():
-    global start_time
-    if get_time() - start_time >= 3.0:
-        game_framework.pop_mode()   # 이전 모드로 복귀
-
     # 플레이 모드의 업데이트를 호출해서 플레이어 물리/충돌을 계속 수행
     #game_world.update()   # 왜냐하면, 힌트 모드에서는 play 모드가 유지돼야하므로.
     #play_mode.update()
