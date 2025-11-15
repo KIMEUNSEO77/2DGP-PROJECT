@@ -23,7 +23,8 @@ class Idle:   # 가만히 서 있는 상태
     def __init__(self, player):
         self.player = player
     def enter(self, e):
-        pass
+        self.player.frame = 1
+
     def exit(self, e):
         if right_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_right()
@@ -38,12 +39,13 @@ class Idle:   # 가만히 서 있는 상태
         self.player.frame = 1
 
     def draw(self):
+        frame_idx = int(self.player.frame)
         global w, h
         if self.player.face_dir == 1:   # 오른쪽 바라볼 때
-            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+            self.player.image.clip_composite_draw(self.player.frames[frame_idx], 45, w, h,
                                                   0, '', self.player.x, self.player.y, w * 1.5, h * 1.5)
         else:   # 왼쪽 바라볼 때
-            self.player.image.clip_composite_draw(self.player.frames[self.player.frame], 45, w, h,
+            self.player.image.clip_composite_draw(self.player.frames[frame_idx], 45, w, h,
                                                   0, 'h', self.player.x, self.player.y, w * 1.5, h * 1.5)
 
 
@@ -68,7 +70,6 @@ class Run:
             self.player.fire_ball_down()
 
     def do(self):
-        # self.player.frame = (self.player.frame + 1) % 3
         self.player.frame = (self.player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         self.player.x += self.player.dir * RUN_SPEED_PPS * game_framework.frame_time
 
