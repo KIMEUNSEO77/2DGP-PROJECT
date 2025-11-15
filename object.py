@@ -199,7 +199,7 @@ class MonsterSkull():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            print("Player collided with MonsterSkull")
+            game_world.remove_object(self)
         if group == 'attack:monster':
             try:
                 game_world.remove_object(self)
