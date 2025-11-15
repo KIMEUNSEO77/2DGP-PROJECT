@@ -16,10 +16,12 @@ def init():
 
 def finish():
     global hint
-    game_world.remove_object(hint)
-    del hint
+    if hint:
+        game_world.remove_object(hint)
+        hint = None
 
 def update():
+    # 플레이 모드의 업데이트를 호출해서 플레이어 물리/충돌을 계속 수행
     game_world.update()   # 왜냐하면, 힌트 모드에서는 play 모드가 유지돼야하므로.
 
 def draw():
