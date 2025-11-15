@@ -72,7 +72,8 @@ class MonsterBook():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            print("Player collided with MonsterBook")
+            #print("Player collided with MonsterBook")
+            game_world.remove_object(self)
 
 class Book():
     def __init__(self, x, y, image_type, key=False, hint_index=0):
@@ -167,7 +168,8 @@ class MonsterVet():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            print("Player collided with MonsterVet")
+            #print("Player collided with MonsterVet")
+            game_world.remove_object(self)
         if group == 'attack:monster':
             if self.player_id == 0:
                 self.speed_minus = max(0.1, self.speed_minus - 0.1)
