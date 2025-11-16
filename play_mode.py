@@ -20,6 +20,10 @@ cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 hp_image = None      # 플레이어 체력 이미지
 
+poison_image_1 = None
+poison_image_2 = None
+
+
 def handle_events():
     global player_obj
 
@@ -56,7 +60,7 @@ def change_stage(new_stage):
 
 
 def init():   # 모든 객체 초기화
-    global cur_stage, cur_stage_obj, player_obj
+    global cur_stage, cur_stage_obj, player_obj, poison_image_1, poison_image_2
 
     if player == 0:
         player_obj = Player(40, 40, 0)
@@ -78,6 +82,9 @@ def init():   # 모든 객체 초기화
 
     stage.enter()
     cur_stage_obj = stage
+
+    poison_image_1 = load_image("poison_stage2_1.png")
+    poison_image_2 = load_image("poison_stage2_2.png")
 
 def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
@@ -120,6 +127,13 @@ def draw():   # 객체들 그리기
     if hp_image is not None:
         hp_image.clip_composite_draw(0, 0, 327, 96,
                                      0, '', 100, 570, 120, 35)
+
+    if player_obj.poision_1:
+        poison_image_1.draw(900, 550, 80, 80)
+    if player_obj.poision_2:
+        poison_image_2.draw(950, 550, 80, 80)
+
+
     update_canvas()
 
 def finish():   # 게임 종료 시 처리

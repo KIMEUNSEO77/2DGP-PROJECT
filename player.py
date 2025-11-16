@@ -35,10 +35,11 @@ class Player:
         self.JUMP = Jump(self)
         # self.UP = Up(self)
         # self.DOWN = Down(self)
-
         self.find_key = False
-
         self.hp = 3  # 기본 플레이어 체력은 3로 시작
+
+        self.poison_1 = False   # 독 상태 여부
+        self.poison_2 = False
 
         self.state_machine = StateMachine(
             self.IDLE,
