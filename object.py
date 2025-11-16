@@ -245,5 +245,11 @@ class Box():
                 hint_mode.hint_index = self.hint_index
                 game_world.remove_object(self)
                 game_framework.push_mode(hint_mode)
+            elif self.poison_1:
+                other.poison_1 = True
+                game_world.remove_object(self)
+            elif self.poison_2:
+                other.poison_2 = True
+                game_world.remove_object(self)
             else:
                 game_world.remove_object(self)
