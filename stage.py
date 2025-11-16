@@ -134,7 +134,6 @@ class Stage:
                 remove_collision_object(obj)
             except:
                 pass
-
             # 월드에서 제거 시도 (없으면 조용히 패스)
             try:
                 game_world.remove_object(obj)
@@ -159,6 +158,7 @@ class Stage:
         self.objects.clear()
 
         self.bg = None
+
 
     def update(self): # 게임 로직 업데이트
         pass
@@ -255,6 +255,8 @@ class Stage2(Stage):
         if player:
             player.x, player.y = 60, 500
 
+        self.player = player
+
         self.floors = []
         self.monsters = []
         self.objects = []
@@ -298,14 +300,18 @@ class Stage2(Stage):
         super().enter()
         self._last_spawn = time.time()
         self._spawn_interval = 5.0  # 5초마다 스폰
+        '''
         for monster in self.monsters:
             game_world.add_collision_pairs("attack:monster", None, monster)
+            '''
 
     def draw(self):
         super().draw()
 
     def exit(self):
         super().exit()
+        self.player.poison_1 = False
+        self.player.poison_2 = False
 
     def update(self):
         now = time.time()
