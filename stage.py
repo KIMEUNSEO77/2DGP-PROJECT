@@ -285,11 +285,13 @@ class Stage2(Stage):
 
         # 인덱스별 힌트 매핑 (요청한 매핑)
         hint_map = {9: 6, 6: 7, 15: 8, 7: 9, 13: 10}
+        poision_1_idx = [18, 19, 20, 21]
+        poison_2_idx = [22, 23, 24, 25]
 
         for i, (bx, by) in enumerate(zip(self.box_x, self.box_y)):
             hint_idx = hint_map.get(i)  # 없으면 None
             # 생성자가 key 인자를 받는다면
-            box = Box(bx, by, key=(i == key_index), hint_index=hint_idx)
+            box = Box(bx, by, key=(i == key_index), hint_index=hint_idx, poison_1=(i in poision_1_idx), poison_2=(i in poison_2_idx))
             self.objects.append(box)
 
     def enter(self):

@@ -208,7 +208,7 @@ class MonsterSkull():
                 print("object.handle_collision: remove failed:", e)
 
 class Box():
-    def __init__(self, x, y, key=False, hint_index=0):
+    def __init__(self, x, y, key=False, hint_index=0, poison_1=False, poison_2=False):
         self.x = x
         self.y = y
         self.image = load_image("object_box.png")
@@ -218,6 +218,8 @@ class Box():
         self.key_image = load_image("key_image.png")
 
         self.hint_index = hint_index
+        self.poison_1 = poison_1
+        self.poison_2 = poison_2
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 175, 124,
