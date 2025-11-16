@@ -128,10 +128,10 @@ def draw():   # 객체들 그리기
         hp_image.clip_composite_draw(0, 0, 327, 96,
                                      0, '', 100, 570, 120, 35)
 
-    if player_obj.poision_1:
-        poison_image_1.draw(900, 550, 80, 80)
-    if player_obj.poision_2:
-        poison_image_2.draw(950, 550, 80, 80)
+    if player_obj.poison_1:
+        poison_image_1.draw(500, 300, 700, 700)
+    if player_obj.poison_2:
+        poison_image_2.draw(500, 300, 1000, 600)
 
 
     update_canvas()
