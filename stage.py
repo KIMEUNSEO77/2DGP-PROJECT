@@ -224,7 +224,7 @@ class Stage1(Stage):
         self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
 
         # 인덱스별 힌트 매핑 (요청한 매핑)
-        hint_map = { 0: 1, 4: 2, 10: 3, 15: 4, 12: 5 }
+        hint_map = { 0: 1, 4: 2, 10: 3, 15: 4, 6: 5 }
 
         # key인 인덱스는 True
         for i, (bx, by) in enumerate(zip(self.book_x, self.book_y)):
