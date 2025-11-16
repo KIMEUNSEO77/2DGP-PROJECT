@@ -241,7 +241,8 @@ class Box():
             if self.key:
                 self.finded = True
                 # game_world.remove_object(self)
-            elif self.hint_index is not None:   # 힌트 박스일 경우
+            elif self.hint_index is not None and other.hintOpened == False:   # 힌트 박스일 경우
+                other.hintOpened = True
                 hint_mode.hint_index = self.hint_index
                 game_framework.push_mode(hint_mode)
                 game_world.remove_object(self)

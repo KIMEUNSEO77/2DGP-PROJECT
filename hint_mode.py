@@ -23,11 +23,14 @@ def init():
         p.prev_x, p.prev_y = p.x, p.y
     # -----------------------------------------------------
 
+
 def finish():
     global hint
     if hint:
         #game_world.remove_object(hint)
         hint = None
+    if play_mode.player_obj is not None:
+        play_mode.player_obj.hintOpened = False
 
 def update():
     # 플레이 모드의 업데이트를 호출해서 플레이어 물리/충돌을 계속 수행
@@ -37,9 +40,11 @@ def update():
 
 def draw():
     clear_canvas()
-    #game_world.render()
+    game_world.render()
+
     if hint is not None:
         hint.draw()
+
     update_canvas()
 
 
@@ -53,25 +58,6 @@ def handle_events():
             if event.key == SDLK_RETURN:
                 print('[HINT] POP MODE!!!')
                 game_framework.pop_mode()   # 이전 모드로 복귀
-'''
-def handle_events():
-    events = get_events()
-    for e in events:
-        # 디버그 로그
-        # print(f'[HINT] event: {e.type} {getattr(e, "key", None)}')
-
-        if e.type == SDL_QUIT:
-            game_framework.quit()
-
-        elif e.type == SDL_KEYDOWN:
-            # 여기서 한 번 더 찍어보자
-            # print(f'[HINT] KEYDOWN {e.key}')
-
-            # 엔터 키 처리 (RETURN / 키패드 엔터 / 숫자값 13까지 모두 인정)
-            if e.key in (SDLK_RETURN, SDLK_KP_ENTER, 13):
-                # print('[HINT] POP MODE')
-                game_framework.pop_mode()
-'''
 
 def pause():
     pass

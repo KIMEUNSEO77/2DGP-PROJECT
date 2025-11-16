@@ -41,6 +41,8 @@ class Player:
         self.poison_1 = False   # 독 상태 여부
         self.poison_2 = False
 
+        self.hintOpened = False  # 힌트창 열림 여부
+
         self.state_machine = StateMachine(
             self.IDLE,
             {
