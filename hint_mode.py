@@ -12,7 +12,7 @@ def init():
 
     if hint_index is not None:
         hint = Hint(hint_index)
-    game_world.add_object(hint, 2)
+    #game_world.add_object(hint, 2)
 
     # ---- 여기서 플레이어 강제 정지 (아래 2번에서 설명) ----
     if hasattr(play_mode, 'player_obj') and play_mode.player_obj is not None:
@@ -26,7 +26,7 @@ def init():
 def finish():
     global hint
     if hint:
-        game_world.remove_object(hint)
+        #game_world.remove_object(hint)
         hint = None
 
 def update():
@@ -37,7 +37,9 @@ def update():
 
 def draw():
     clear_canvas()
-    game_world.render()
+    #game_world.render()
+    if hint is not None:
+        hint.draw()
     update_canvas()
 
 
