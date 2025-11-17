@@ -16,7 +16,7 @@ import second_to_third_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
-cur_stage = 1 # 현재 스테이지 번호 디버깅을 위해 1
+cur_stage = 2 # 현재 스테이지 번호 디버깅을 위해 1
 cur_stage_obj = None # 현재 스테이지 객체
 player_obj = None    # 현재 플레이어 객체
 hp_image = None      # 플레이어 체력 이미지
@@ -163,7 +163,6 @@ def update():   # 객체들의 상호작용, 행위 업데이트
     if cur_stage_obj is not None:
         cur_stage_obj.check_collision(player_obj)
 
-    # 0 → 1은 같은 모드 안에서 바로 스테이지 전환 → change_stage 사용
     if cur_stage == 0 and player_obj.at_stage0_exit():
         change_stage(1)
 
@@ -181,7 +180,6 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         player_obj.find_key = False
         delay(1.5)
         game_framework.change_mode(first_to_second_mode)
-        # ❌ 여기서 change_stage(2) 호출하지 않음!
 
     # 2 → 3 : 마찬가지로 Stage2 정리 후 번호만 바꾸고 연출 모드로
     if cur_stage == 2 and player_obj.find_key:
@@ -194,7 +192,6 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         player_obj.find_key = False
         delay(1.5)
         game_framework.change_mode(second_to_third_mode)
-        # ❌ change_stage(3) 호출하지 않음
 
     set_player_hp_image()
     game_world.handle_collisions()
