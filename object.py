@@ -172,6 +172,7 @@ class MonsterVet():
             print("Player collided with MonsterVet")
             game_world.remove_object(self)
         if group == 'attack:monster':
+            print("MonsterVet hit by attack")
             if self.player_id == 0:
                 self.speed_minus = max(0.1, self.speed_minus - 0.1)
             elif self.player_id == 1:

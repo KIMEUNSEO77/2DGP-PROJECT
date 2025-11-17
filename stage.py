@@ -304,10 +304,10 @@ class Stage2(Stage):
         super().enter()
         self._last_spawn = time.time()
         self._spawn_interval = 5.0  # 5초마다 스폰
-        '''
+
         for monster in self.monsters:
             game_world.add_collision_pairs("attack:monster", None, monster)
-            '''
+
         self.active = True  # 스테이지 활성화
 
     def draw(self):
