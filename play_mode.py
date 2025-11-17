@@ -1,3 +1,4 @@
+# play_mode.py
 from pico2d import *
 
 import game_world
@@ -23,7 +24,6 @@ hp_image = None      # 플레이어 체력 이미지
 poison_image_1 = None
 poison_image_2 = None
 
-
 def handle_events():
     global player_obj
 
@@ -43,6 +43,14 @@ def change_stage(new_stage):
     # 기존 월드 객체들 정리
     if cur_stage_obj is not None:
         cur_stage_obj.exit()
+
+        '''
+        # 2) 스테이지 객체 자체도 월드에서 제거
+        try:
+            game_world.remove_object(cur_stage_obj)
+        except:
+            pass
+'''
         cur_stage_obj = None
     cur_stage = new_stage
 
@@ -53,12 +61,12 @@ def change_stage(new_stage):
     elif cur_stage == 3:
         stage = Stage3(WIDTH, HEIGHT, player_obj)
     else:
-        stage = Stage0(WIDTH, HEIGHT)
+        stage = Stage0(player_obj,WIDTH, HEIGHT)
     stage.enter()
     game_world.add_object(stage, 0)
     cur_stage_obj = stage
 
-
+'''
 def init():   # 모든 객체 초기화
     global cur_stage, cur_stage_obj, player_obj, poison_image_1, poison_image_2
 
@@ -85,7 +93,44 @@ def init():   # 모든 객체 초기화
 
     poison_image_1 = load_image("poison_stage2_1.png")
     poison_image_2 = load_image("poison_stage2_2.png")
+    '''
+def init():   # 모든 객체 초기화
+    global cur_stage, cur_stage_obj, player_obj, poison_image_1, poison_image_2
 
+    # 혹시 이전 모드에서 world를 안 비우고 넘어온 경우 대비
+    game_world.clear()
+
+    # 플레이어 생성 (필요하면 나중에 hp/상태 유지용으로 구조 바꿔도 됨)
+    if player == 0:
+        player_obj = Player(40, 40, 0)
+    else:
+        player_obj = Player(40, 40, 1)
+
+    # 현재 cur_stage 값에 맞는 스테이지 하나 생성
+    if cur_stage == 0:
+        stage = Stage0(player_obj, WIDTH, HEIGHT)
+    elif cur_stage == 1:
+        stage = Stage1(WIDTH, HEIGHT, player_obj)
+    elif cur_stage == 2:
+        stage = Stage2(WIDTH, HEIGHT, player_obj)
+    elif cur_stage == 3:
+        stage = Stage3(WIDTH, HEIGHT, player_obj)
+
+    # 월드에 등록 + 스테이지 enter
+    game_world.add_object(stage, 0)
+    game_world.add_object(player_obj, 1)
+    game_world.add_collision_pairs('player:monster', player_obj, None)
+    game_world.add_collision_pairs('player:object', player_obj, None)
+
+    stage.enter()
+    cur_stage_obj = stage  # 🔹 현재 스테이지 객체 기억
+
+    # 독 이미지 로드
+    poison_image_1 = load_image("poison_stage2_1.png")
+    poison_image_2 = load_image("poison_stage2_2.png")
+
+
+'''
 def update():   # 객체들의 상호작용, 행위 업데이트
     game_world.update()
 
@@ -108,6 +153,52 @@ def update():   # 객체들의 상호작용, 행위 업데이트
 
     set_player_hp_image()
     game_world.handle_collisions()
+    '''
+
+def update():   # 객체들의 상호작용, 행위 업데이트
+    global cur_stage, cur_stage_obj  # 🔹 이거 꼭 추가!
+
+    game_world.update()
+
+    if cur_stage_obj is not None:
+        cur_stage_obj.check_collision(player_obj)
+
+    # 0 → 1은 같은 모드 안에서 바로 스테이지 전환 → change_stage 사용
+    if cur_stage == 0 and player_obj.at_stage0_exit():
+        change_stage(1)
+
+    # 1 → 2 : 열쇠 찾으면 Stage1 정리 + cur_stage만 2로 바꾸고 연출 모드로
+    if cur_stage == 1 and player_obj.find_key:
+        # 1) 현재 스테이지 깔끔하게 정리
+        if cur_stage_obj is not None:
+            cur_stage_obj.exit()
+            cur_stage_obj = None
+
+        # 2) 다음에 init()에서 Stage2를 만들 수 있도록 번호만 바꿔 둠
+        cur_stage = 2
+
+        # 3) 플래그 리셋 + 연출 모드로 전환
+        player_obj.find_key = False
+        delay(1.5)
+        game_framework.change_mode(first_to_second_mode)
+        # ❌ 여기서 change_stage(2) 호출하지 않음!
+
+    # 2 → 3 : 마찬가지로 Stage2 정리 후 번호만 바꾸고 연출 모드로
+    if cur_stage == 2 and player_obj.find_key:
+        if cur_stage_obj is not None:
+            cur_stage_obj.exit()
+            cur_stage_obj = None
+
+        cur_stage = 3
+
+        player_obj.find_key = False
+        delay(1.5)
+        game_framework.change_mode(second_to_third_mode)
+        # ❌ change_stage(3) 호출하지 않음
+
+    set_player_hp_image()
+    game_world.handle_collisions()
+
 
 def update_during_hint():   # 힌트 모드에서만 쓸 "안전 버전"
     # 1) 기본 오브젝트 업데이트

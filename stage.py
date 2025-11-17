@@ -1,3 +1,4 @@
+# stage.py
 from pico2d import load_image
 
 import game_world
@@ -157,6 +158,7 @@ class Stage:
         self.monsters.clear()
         self.objects.clear()
 
+
         self.bg = None
 
 
@@ -261,6 +263,8 @@ class Stage2(Stage):
         self.monsters = []
         self.objects = []
 
+        self.active = False  # 스테이지 활성화 상태
+
         floor = Object(1000, 10, w // 2, 20, "floor_stage2.png", 0)
         self.floors.append(floor)
 
@@ -304,6 +308,7 @@ class Stage2(Stage):
         for monster in self.monsters:
             game_world.add_collision_pairs("attack:monster", None, monster)
             '''
+        self.active = True  # 스테이지 활성화
 
     def draw(self):
         super().draw()
@@ -312,8 +317,12 @@ class Stage2(Stage):
         super().exit()
         self.player.poison_1 = False
         self.player.poison_2 = False
+        self.active = False  # 스테이지 비활성화
 
     def update(self):
+        if not self.active:
+            return
+
         now = time.time()
         if self._last_spawn is None:
             self._last_spawn = now

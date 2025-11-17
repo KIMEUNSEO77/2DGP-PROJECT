@@ -1,3 +1,4 @@
+# object.py
 from pico2d import load_image, draw_rectangle
 import game_framework
 import game_world
@@ -168,7 +169,7 @@ class MonsterVet():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            #print("Player collided with MonsterVet")
+            print("Player collided with MonsterVet")
             game_world.remove_object(self)
         if group == 'attack:monster':
             if self.player_id == 0:
@@ -200,12 +201,18 @@ class MonsterSkull():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             game_world.remove_object(self)
+            print("Player collided with MonsterSkull")
         if group == 'attack:monster':
             try:
+                game_world.remove_collision_object(self)
+            except:
+                pass
+
+            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+            try:
                 game_world.remove_object(self)
-            except Exception as e:
-                # 게임월드가 안전하게 처리한다면 이 블록은 실행되지 않음
-                print("object.handle_collision: remove failed:", e)
+            except:
+                pass
 
 class Box():
     def __init__(self, x, y, key=False, hint_index=0, poison_1=False, poison_2=False):
@@ -238,6 +245,7 @@ class Box():
 
     def handle_collision(self, group, other):
         if group == 'player:object':
+            print("Box collided with Player")
             if self.key:
                 self.finded = True
                 # game_world.remove_object(self)
@@ -245,12 +253,41 @@ class Box():
                 other.hintOpened = True
                 hint_mode.hint_index = self.hint_index
                 game_framework.push_mode(hint_mode)
-                game_world.remove_object(self)
+
+                # 1) 충돌 그룹에서 먼저 무조건 제거
+                try:
+                    game_world.remove_collision_object(self)
+                except:
+                    pass
+
+                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+                try:
+                    game_world.remove_object(self)
+                except:
+                    pass
             elif self.poison_1:
                 other.poison_1 = True
-                game_world.remove_object(self)
+                try:
+                    game_world.remove_collision_object(self)
+                except:
+                    pass
+
+                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+                try:
+                    game_world.remove_object(self)
+                except:
+                    pass
             elif self.poison_2:
                 other.poison_2 = True
                 game_world.remove_object(self)
             else:
-                game_world.remove_object(self)
+                try:
+                    game_world.remove_collision_object(self)
+                except:
+                    pass
+
+                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+                try:
+                    game_world.remove_object(self)
+                except:
+                    pass
