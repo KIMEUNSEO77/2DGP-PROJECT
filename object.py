@@ -310,10 +310,14 @@ class LifeLine():
         self.w, self.h = 80, 400
 
         self.hp = 100   # 생명줄 체력 (공격 받으면 감소함)
+        self.hp_image = load_image("lifeline_hp.png")
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 181, 811,
                                            0, '', self.x, self.y, self.w, self.h)
+        # 체력바 그리기
+        self.hp_image.clip_composite_draw(0, 0, 877, 93,
+                                           0, '', self.x, self.y - 40, self.w, 15)
         draw_rectangle(*self.get_bb())
 
     def update(self):
