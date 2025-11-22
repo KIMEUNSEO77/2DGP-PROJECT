@@ -292,3 +292,37 @@ class Box():
                     game_world.remove_object(self)
                 except:
                     pass
+
+# 마녀의 생명줄 (3스테이지)
+class LifeLine():
+    def __init__(self, x, y, id):
+        self.x = x
+        self.y = y
+
+        self.id = id   # 0이면 빨강, 1이면 초록, 2이면 보라(진짜)
+        #self.image = load_image("monster_stage2.png")
+        if self.id == 0:
+            self.image = load_image("lifeline_red.png")
+        elif self.id == 1:
+            self.image = load_image("lifeline_green.png")
+        elif self.id == 2:
+            self.image = load_image("lifeline_purple.png")
+
+        self.w, self.h = 80, 400
+
+        self.hp = 100   # 생명줄 체력 (공격 받으면 감소함)
+
+    def draw(self):
+        self.image.clip_composite_draw(0, 0, 181, 811,
+                                           0, '', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        pass
+
+    def get_bb(self):
+        return self.x - 30, self.y - 25, self.x + 30, self.y + 25
+
+    def handle_collision(self, group, other):
+        if group == 'attack:monster':
+            pass
