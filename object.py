@@ -309,15 +309,25 @@ class LifeLine():
 
         self.w, self.h = 80, 400
 
-        self.hp = 100   # 생명줄 체력 (공격 받으면 감소함)
+        self.hp = 100.0   # 생명줄 체력 (공격 받으면 감소함)
         self.hp_image = load_image("lifeline_hp.png")
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 181, 811,
                                            0, '', self.x, self.y, self.w, self.h)
         # 체력바 그리기
-        self.hp_image.clip_composite_draw(0, 0, 877, 93,
-                                           0, '', self.x, self.y - 40, self.w, 15)
+        # 체력 비율에 따라 hp바 가로 길이 조절
+        hp_ratio = max(0.0, min(self.hp, 100.0)) / 100.0
+        if hp_ratio > 0.0:
+            src_full_w = 877  # 원본 이미지의 전체 가로 픽셀
+            src_w = max(1, int(src_full_w * hp_ratio))  # 소스에서 잘라낼 너비
+            draw_w = max(1, int(self.w * hp_ratio))  # 화면에 그릴 너비
+            # 왼쪽 기준으로 줄어들게 하기 위해 중심 보정
+            draw_x = self.x - (self.w - draw_w) / 2.0
+
+            self.hp_image.clip_composite_draw(0, 0, src_w, 93,
+                                              0, '', draw_x, self.y - 50, draw_w, 15)
+
         draw_rectangle(*self.get_bb())
 
     def update(self):
@@ -329,7 +339,7 @@ class LifeLine():
     def handle_collision(self, group, other):
         if group == 'attack:monster':
             print("LifeLine hit by attack")
-            self.hp -= 10
+            self.hp -= 10.0
             if self.hp <= 0:
                 try:
                     game_world.remove_collision_object(self)
