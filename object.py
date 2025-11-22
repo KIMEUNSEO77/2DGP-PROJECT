@@ -413,7 +413,7 @@ class MonsterDoll_2():
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        self.x -= BOOK_SPEED_PPS * game_framework.frame_time
+        self.x -= BOOK_SPEED_PPS * 0.5 * game_framework.frame_time
 
     def get_bb(self):
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20
@@ -450,17 +450,45 @@ class MonsterDoll_3():
         self.frame_idx_x = 0
         self.frame_idx_y = 0
 
+        self.dir_x = -1   # x축 이동 방향
+        self.dir_y = 0
+
     def draw(self):
-        self.frame_idx = int(self.frame)
+        self.frame_idx_x = int(self.frame)
         if not self.active:
             self.image.clip_composite_draw(self.frames_x[1], self.frames_y[3], 30, 49,
+                                            0, '', self.x, self.y, self.w, self.h)
+        else:
+            self.image.clip_composite_draw(self.frames_x[self.frame_idx_x], self.frames_y[self.frame_idx_y], 30, 49,
                                             0, '', self.x, self.y, self.w, self.h)
         draw_rectangle(*self.get_bb())
 
     def update(self):
-        #self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        #self.x -= BOOK_SPEED_PPS * game_framework.frame_time
-        pass
+        if self.active:
+            self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
+            self.x += self.dir_x * BOOK_SPEED_PPS * game_framework.frame_time
+            self.y += self.dir_y * BOOK_SPEED_PPS * game_framework.frame_time
+
+        if self.x <= 15:
+            self.x = 16
+            self.dir_x = 0
+            self.dir_y = -1
+            self.frame_idx_y = 3
+        elif self.y <= 60:
+            self.y = 61
+            self.dir_x = 1
+            self.dir_y = 0
+            self.frame_idx_y = 1
+        elif self.x >= 985:
+            self.x = 984
+            self.dir_x = 0
+            self.dir_y = 1
+            self.frame_idx_y = 0
+        elif self.y >= 300:
+            self.y = 299
+            self.dir_x = -1
+            self.dir_y = 0
+            self.frame_idx_y = 2
 
     def get_bb(self):
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20
@@ -468,15 +496,7 @@ class MonsterDoll_3():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             game_world.remove_object(self)
-            print("Player collided with MonsterDoll_1")
-        if group == 'attack:monster':
-            try:
-                game_world.remove_collision_object(self)
-            except:
-                pass
+            print("Player collided with MonsterDoll_3")
 
-            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
-            try:
-                game_world.remove_object(self)
-            except:
-                pass
+        if group == 'attack:monster':
+            self.active = True   # 공격받으면 활성화되어 움직이기 시작함
