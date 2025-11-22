@@ -503,17 +503,17 @@ class MonsterDoll_3():
                 self.active = True   # 공격받으면 활성화되어 움직이기 시작함
             else:
                 # 분열: 자기 제거 후 두 개 생성하고 충돌 등록까지 수행
-                left = MonsterDoll_3(self.x - 60, self.y)
-                right = MonsterDoll_3(self.x - 30, self.y)
+                left = MonsterDoll_3(400, 300)
+                right = MonsterDoll_3(460, 300)
 
                 left.active = True
                 right.active = True
 
                 # 서로 반대 또는 원래 방향으로 퍼지게 설정 (원하면 반대로)
-                left.dir_x = self.dir_x
-                left.dir_y = self.dir_y
-                right.dir_x = self.dir_x
-                right.dir_y = self.dir_y
+                left.dir_x = -1
+                left.dir_y = 0
+                right.dir_x = -1
+                right.dir_y = 0
 
                 # 상태 복사
                 left.frame = self.frame
