@@ -361,13 +361,13 @@ class MonsterDoll_1():
         self.image = load_image("monster_stage3_1.png")
         self.w, self.h = 32, 40
 
-        self.frames = [0, 31, 62]
+        self.frames = [0, 28, 56]
         self.frame = 0
         self.frame_idx = 0
 
     def draw(self):
         self.frame_idx = int(self.frame)
-        self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 100, 100,
+        self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 28, 38,
                                            0, '', self.x, self.y, self.w, self.h)
         draw_rectangle(*self.get_bb())
 
@@ -376,7 +376,7 @@ class MonsterDoll_1():
         self.x += BOOK_SPEED_PPS * game_framework.frame_time
 
     def get_bb(self):
-        return self.x - 30, self.y - 20, self.x + 30, self.y + 20
+        return self.x - 16, self.y - 20, self.x + 16, self.y + 20
 
     def handle_collision(self, group, other):
         if group == 'player:monster':

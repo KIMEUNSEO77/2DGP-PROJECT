@@ -369,7 +369,8 @@ class Stage3(Stage):
         self.life_line_purple = LifeLine(800, 500, 2)
         self.monsters.append(self.life_line_purple)
 
-        self.monster_1 = MonsterDoll_1(100, 100)
+        # 테스트용
+        self.monster_1 = MonsterDoll_1(100, 70)
         self.monsters.append(self.monster_1)
 
     def enter(self):
