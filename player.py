@@ -43,6 +43,10 @@ class Player:
 
         self.hintOpened = False  # 힌트창 열림 여부
 
+        self.shift_mode = False   # 시프트 모드 여부
+        self.god_mode = False    # 무적 모드 여부(플레이어 0)
+        self.dash_mode = False   # 대시 모드 여부(플레이어 1)
+
         self.state_machine = StateMachine(
             self.IDLE,
             {
@@ -113,6 +117,15 @@ class Player:
         fire_ball = FireBall(self, self.x, self.y - 25, 0, -1)
         game_world.add_object(fire_ball, 1)
         game_world.add_collision_pairs("attack:monster", fire_ball, None)
+
+    def shift_mode_on(self):
+        self.shift_mode = True
+        if self.id == 0:
+            print("God Mode Activated!")
+            self.god_mode = True
+        elif self.id == 1:
+            print("Dash Mode Activated!")
+            self.dash_mode = True
 
 class FireBall:
     image = None
