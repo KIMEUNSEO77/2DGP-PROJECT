@@ -47,13 +47,17 @@ class Player:
 
         self.shift_mode = False   # 시프트 모드 여부
         self.god_mode = False    # 무적 모드 여부(플레이어 0)
-        self.dash_mode = False   # 대시 모드 여부(플레이어 1)
+        self.dash_mode = False   # 대시 모드 여부(플레이어 1) 크기가 작아지고 속도가 빨라짐.
 
         # --- 무적(깜빡임) 관련 변수 ---
         self.blink_interval = 0.15  # 깜빡임 간격(초)
         self.blink_timer = 0.0  # 깜빡임 내부 타이머
         self.blink_visible = True  # 현재 프레임에서 보일지 여부
         # --------------------------------
+        # ---대시 모드 관련 변수---
+        self.size = 1.0  # 기본 크기 (0.5배 작아지게 할 예정)
+        self.speed = 1.0  # 기본 속도 (2배 빨라지게 할 예정)
+        # ------------------------
 
         self.state_machine = StateMachine(
             self.IDLE,
@@ -96,25 +100,14 @@ class Player:
 
 
     def draw(self):
-        # dash 모드면 스프라이트를 눕혀서 그림
-        if self.dash_mode:
-            # 프레임 소스 x 좌표(프레임 너비는 31, 높이는 40으로 가정)
-            src_x = self.frames[self.frame_idx] if hasattr(self, 'frames') else 0
-            src_w = 31
-            src_h = 40
-            # 오른쪽을 바라보면 시계방향(-90deg), 왼쪽이면 반시계(+90deg)
-            angle = -math.pi / 2 * self.face_dir
-            # 눕힌 상태에서는 화면에 그릴 너비/높이를 서로 바꿔줌
-            self.image.clip_composite_draw(src_x, 0, src_w, src_h, angle, '', self.x, self.y, self.h, self.w)
-        else:
-            # 기존 무적 깜빡임 처리 유지
-            if self.god_mode:
-                if self.blink_visible:
-                    self.state_machine.draw()
-            else:
+        if self.god_mode:
+            if self.blink_visible:
                 self.state_machine.draw()
+        else:
+            self.state_machine.draw()
 
         draw_rectangle(*self.get_bb())
+
 
     def handle_events(self, event):
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
@@ -163,6 +156,8 @@ class Player:
         elif self.id == 1:
             print("Dash Mode Activated!")
             self.dash_mode = True
+            self.size = 0.5  # 크기 절반으로
+            self.speed = 2.0  # 속도 2배로
 
     def shift_mode_off(self):
         self.shift_mode = False
@@ -172,6 +167,8 @@ class Player:
         elif self.id == 1:
             print("Dash Mode Deactivated!")
             self.dash_mode = False
+            self.size = 1.0
+            self.speed = 1.0
 
 class FireBall:
     image = None
