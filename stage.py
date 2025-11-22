@@ -3,7 +3,8 @@ from pico2d import load_image
 
 import game_world
 from game_world import remove_collision_object
-from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box, LifeLine, MonsterDoll_1, MonsterDoll_2
+from object import (Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box, LifeLine,
+                    MonsterDoll_1, MonsterDoll_2, MonsterDoll_3)
 import random
 import time
 
@@ -371,9 +372,12 @@ class Stage3(Stage):
         self.life_line_purple = LifeLine(800, 500, 2)
         self.monsters.append(self.life_line_purple)
 
-        # 테스트용
-        #self.monster_1 = MonsterDoll_1(100, 70)
-        #self.monsters.append(self.monster_1)
+        self.monster_1 = MonsterDoll_3(200, 300)
+        self.monsters.append(self.monster_1)
+        self.monster_2 = MonsterDoll_3(500, 300)
+        self.monsters.append(self.monster_2)
+        self.monster_3 = MonsterDoll_3(800, 300)
+        self.monsters.append(self.monster_3)
 
     def enter(self):
         super().enter()
