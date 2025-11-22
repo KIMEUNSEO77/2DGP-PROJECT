@@ -118,7 +118,7 @@ class Player:
     def get_bb(self):
         # 대시(눕힘)일 때 바운딩박스도 회전에 맞춰 너비/높이 교환
         if self.dash_mode:
-            return self.x - 8, self.y - 10, self.x + 8, self.y + 5
+            return self.x - 8, self.y - 20, self.x + 8, self.y
         # 기본 바운딩박스
         return self.x - 16, self.y - 20, self.x + 16, self.y + 30
 
