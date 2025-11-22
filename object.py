@@ -439,7 +439,7 @@ class MonsterDoll_3():
         self.x = x
         self.y = y
         self.image = load_image("monster_stage3_3.png")
-        self.w, self.h = 30, 49
+        self.w, self.h = 35, 55
         # 처음에는 생명줄 앞에 가만히 서있음(공격받으면 움직이기 시작함)
         self.active = False   # 활성화 여부
 
@@ -499,4 +499,50 @@ class MonsterDoll_3():
             print("Player collided with MonsterDoll_3")
 
         if group == 'attack:monster':
-            self.active = True   # 공격받으면 활성화되어 움직이기 시작함
+            if self.active == False:
+                self.active = True   # 공격받으면 활성화되어 움직이기 시작함
+            else:
+                # 분열: 자기 제거 후 두 개 생성하고 충돌 등록까지 수행
+                left = MonsterDoll_3(self.x - 60, self.y)
+                right = MonsterDoll_3(self.x - 30, self.y)
+
+                left.active = True
+                right.active = True
+
+                # 서로 반대 또는 원래 방향으로 퍼지게 설정 (원하면 반대로)
+                left.dir_x = self.dir_x
+                left.dir_y = self.dir_y
+                right.dir_x = self.dir_x
+                right.dir_y = self.dir_y
+
+                # 상태 복사
+                left.frame = self.frame
+                right.frame = self.frame
+                left.frame_idx_y = self.frame_idx_y
+                right.frame_idx_y = self.frame_idx_y
+
+                # 월드와 충돌 시스템에 등록
+                try:
+                    game_world.add_object(left)
+                    game_world.add_object(right)
+                except Exception:
+                    pass
+
+                # 충돌 처리에 등록하는 API가 있는 경우 호출 (실패해도 무시)
+                try:
+                    game_world.add_collision_pairs("player:monster", None, left)
+                    game_world.add_collision_pairs("attack:monster", None, left)
+                    game_world.add_collision_pairs("player:monster", None, right)
+                    game_world.add_collision_pairs("attack:monster", None, right)
+                except Exception:
+                    pass
+
+                # 원본 충돌 등록 해제 및 월드에서 제거
+                try:
+                    game_world.remove_collision_object(self)
+                except Exception:
+                    pass
+                try:
+                    game_world.remove_object(self)
+                except Exception:
+                    pass
