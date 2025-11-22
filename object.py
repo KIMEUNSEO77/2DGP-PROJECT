@@ -373,7 +373,47 @@ class MonsterDoll_1():
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        self.x += BOOK_SPEED_PPS * game_framework.frame_time
+        self.x += BOOK_SPEED_PPS * 2.0 * game_framework.frame_time
+
+    def get_bb(self):
+        return self.x - 16, self.y - 20, self.x + 16, self.y + 20
+
+    def handle_collision(self, group, other):
+        if group == 'player:monster':
+            game_world.remove_object(self)
+            print("Player collided with MonsterDoll_1")
+        if group == 'attack:monster':
+            try:
+                game_world.remove_collision_object(self)
+            except:
+                pass
+
+            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+            try:
+                game_world.remove_object(self)
+            except:
+                pass
+
+class MonsterDoll_2():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.image = load_image("monster_stage3_2.png")
+        self.w, self.h = 32, 40
+
+        self.frames = [0, 28, 56]
+        self.frame = 0
+        self.frame_idx = 0
+
+    def draw(self):
+        self.frame_idx = int(self.frame)
+        self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 28, 38,
+                                           0, '', self.x, self.y, self.w, self.h)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
+        self.x -= BOOK_SPEED_PPS * game_framework.frame_time
 
     def get_bb(self):
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20

@@ -3,7 +3,7 @@ from pico2d import load_image
 
 import game_world
 from game_world import remove_collision_object
-from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box, LifeLine, MonsterDoll_1
+from object import Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box, LifeLine, MonsterDoll_1, MonsterDoll_2
 import random
 import time
 
@@ -381,6 +381,8 @@ class Stage3(Stage):
         self._last_spawn = time.time()
         self._spawn_interval = 5.0  # 5초마다 스폰
 
+        self._spawn_interval_2 = 3.0  # 3초마다 스폰
+
         self.active = True  # 스테이지 활성화
         for monster in self.monsters:
             game_world.add_collision_pairs("attack:monster", None, monster)
@@ -399,7 +401,7 @@ class Stage3(Stage):
         if self._last_spawn is None:
             self._last_spawn = now
 
-        # 5초마다 MonsterSkull 생성
+        # 5초마다 Monster1 생성
         if now - self._last_spawn >= self._spawn_interval:
             # 스폰 위치: 왼쪽 끝
             spawn_x = 0
@@ -412,6 +414,25 @@ class Stage3(Stage):
             try:
                 game_world.add_collision_pairs("player:monster", None, doll_1)
                 game_world.add_collision_pairs("attack:monster", None, doll_1)
+            except:
+                pass
+
+            self._last_spawn = now
+
+
+        # 3초마다 Monster2 생성
+        if now - self._last_spawn >= self._spawn_interval_2:
+            # 스폰 위치: 오른쪽 끝
+            spawn_x = 1000
+            spawn_y = 60
+            doll_2 = MonsterDoll_2(spawn_x, spawn_y)
+
+            # 월드와 스테이지 리스트에 추가, 충돌 등록
+            self.monsters.append(doll_2)
+            game_world.add_object(doll_2, 2)
+            try:
+                game_world.add_collision_pairs("player:monster", None, doll_2)
+                game_world.add_collision_pairs("attack:monster", None, doll_2)
             except:
                 pass
 
