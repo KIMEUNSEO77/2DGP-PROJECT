@@ -47,12 +47,16 @@ class Idle:   # 가만히 서 있는 상태
     def draw(self):
         frame_idx = int(self.player.frame)
         global w, h
+
+        y_offset = (h * 1.5 * (1.0 - self.player.size)) / 2.0
+        draw_y = self.player.y - y_offset
+
         if self.player.face_dir == 1:   # 오른쪽 바라볼 때
             self.player.image.clip_composite_draw(self.player.frames[frame_idx], 45, w, h,
-                                                  0, '', self.player.x, self.player.y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
+                                                  0, '', self.player.x, draw_y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
         else:   # 왼쪽 바라볼 때
             self.player.image.clip_composite_draw(self.player.frames[frame_idx], 45, w, h,
-                                                  0, 'h', self.player.x, self.player.y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
+                                                  0, 'h', self.player.x, draw_y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
 
 
 class Run:
@@ -87,12 +91,17 @@ class Run:
     def draw(self):
         self.player.frame_idx = int(self.player.frame)
         global w, h
+
+        # 보정: 원래 높이(h * 1.5)와 현재 스케일된 높이(h * 1.5 * size) 차이의 절반만큼 y를 내림
+        y_offset = (h * 1.5 * (1.0 - self.player.size)) / 2.0
+        draw_y = self.player.y - y_offset
+
         if self.player.face_dir == 1:
             self.player.image.clip_composite_draw(self.player.frames[self.player.frame_idx], 45, w, h,
-                                                  0, '', self.player.x, self.player.y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
+                                                  0, '', self.player.x, draw_y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
         else:
             self.player.image.clip_composite_draw(self.player.frames[self.player.frame_idx], 45, w, h,
-                                                  0, 'h', self.player.x, self.player.y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
+                                                  0, 'h', self.player.x, draw_y, w * 1.5 * self.player.size, h * 1.5 * self.player.size)
 
 class Jump:
     def __init__(self, player):
