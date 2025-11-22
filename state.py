@@ -1,5 +1,5 @@
 from event import right_down, left_down, right_up, left_up, up_down, down_down, up_up, down_up, right_attack_down, \
-    left_attack_down, up_attack_down, down_attack_down
+    left_attack_down, up_attack_down, down_attack_down, shift_down, shift_up
 
 import game_framework
 import play_mode
@@ -35,6 +35,10 @@ class Idle:   # 가만히 서 있는 상태
         elif down_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_down()
 
+        if shift_down(e) and play_mode.cur_stage == 3:
+            self.player.shift_mode_on()
+
+
     def do(self):
         self.player.frame = 1
 
@@ -68,6 +72,9 @@ class Run:
             self.player.fire_ball_up()
         elif down_attack_down(e) and (play_mode.cur_stage == 2 or play_mode.cur_stage == 3):
             self.player.fire_ball_down()
+
+        if shift_down(e) and play_mode.cur_stage == 3:
+            self.player.shift_mode_on()
 
     def do(self):
         self.player.frame = (self.player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
