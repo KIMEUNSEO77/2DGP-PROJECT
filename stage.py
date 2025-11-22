@@ -379,6 +379,8 @@ class Stage3(Stage):
         super().enter()
 
         self._last_spawn = time.time()
+        self._last_spawn_2 = time.time()
+
         self._spawn_interval = 5.0  # 5초마다 스폰
 
         self._spawn_interval_2 = 3.0  # 3초마다 스폰
@@ -421,7 +423,7 @@ class Stage3(Stage):
 
 
         # 3초마다 Monster2 생성
-        if now - self._last_spawn >= self._spawn_interval_2:
+        if now - self._last_spawn_2 >= self._spawn_interval_2:
             # 스폰 위치: 오른쪽 끝
             spawn_x = 1000
             spawn_y = 60
@@ -436,4 +438,4 @@ class Stage3(Stage):
             except:
                 pass
 
-            self._last_spawn = now
+            self._last_spawn_2 = now
