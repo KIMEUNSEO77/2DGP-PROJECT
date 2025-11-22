@@ -355,6 +355,8 @@ class Stage3(Stage):
         if player:
             player.x, player.y = 60, 500
 
+        self.active = False  # 스테이지 활성화 상태
+
         self.floors = []
         self.monsters = []
         self.objects = []
@@ -370,17 +372,47 @@ class Stage3(Stage):
         self.monsters.append(self.life_line_purple)
 
         # 테스트용
-        self.monster_1 = MonsterDoll_1(100, 70)
-        self.monsters.append(self.monster_1)
+        #self.monster_1 = MonsterDoll_1(100, 70)
+        #self.monsters.append(self.monster_1)
 
     def enter(self):
         super().enter()
+
+        self._last_spawn = time.time()
+        self._spawn_interval = 5.0  # 5초마다 스폰
+
+        self.active = True  # 스테이지 활성화
         for monster in self.monsters:
             game_world.add_collision_pairs("attack:monster", None, monster)
 
     def draw(self):
         super().draw()
+
     def exit(self):
         super().exit()
+
     def update(self):
-        pass
+        if not self.active:
+            return
+
+        now = time.time()
+        if self._last_spawn is None:
+            self._last_spawn = now
+
+        # 5초마다 MonsterSkull 생성
+        if now - self._last_spawn >= self._spawn_interval:
+            # 스폰 위치: 왼쪽 끝
+            spawn_x = 0
+            spawn_y = 60
+            doll_1 = MonsterDoll_1(spawn_x, spawn_y)
+
+            # 월드와 스테이지 리스트에 추가, 충돌 등록
+            self.monsters.append(doll_1)
+            game_world.add_object(doll_1, 2)
+            try:
+                game_world.add_collision_pairs("player:monster", None, doll_1)
+                game_world.add_collision_pairs("attack:monster", None, doll_1)
+            except:
+                pass
+
+            self._last_spawn = now
