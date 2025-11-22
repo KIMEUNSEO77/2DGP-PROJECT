@@ -1,4 +1,10 @@
-from sdl2 import SDL_KEYDOWN, SDLK_d, SDLK_a, SDLK_SPACE, SDL_KEYUP, SDLK_w, SDLK_s, SDLK_RIGHT, SDLK_LEFT, SDLK_UP, SDLK_DOWN
+from sdl2 import (SDL_KEYDOWN, SDLK_d, SDLK_a, SDLK_SPACE, SDL_KEYUP, SDLK_w, SDLK_s,
+                  SDLK_RIGHT, SDLK_LEFT, SDLK_UP, SDLK_DOWN, SDLK_LSHIFT)
+
+def shift_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LSHIFT
+def shift_up(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LSHIFT
 
 def right_attack_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
