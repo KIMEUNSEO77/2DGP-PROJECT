@@ -320,7 +320,7 @@ class LifeLine():
         pass
 
     def get_bb(self):
-        return self.x - 30, self.y - 25, self.x + 30, self.y + 25
+        return self.x - 32, self.y-200, self.x + 32, self.y-50
 
     def handle_collision(self, group, other):
         if group == 'attack:monster':

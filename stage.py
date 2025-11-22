@@ -363,19 +363,19 @@ class Stage3(Stage):
         self.floors.append(self.floor)
 
         self.life_line_red = LifeLine(200, 500, 0)
-        #self.monsters.append(self.life_line_red)
+        self.monsters.append(self.life_line_red)
         self.life_line_green = LifeLine(500, 500, 1)
-        #self.monsters.append(self.life_line_green)
+        self.monsters.append(self.life_line_green)
         self.life_line_purple = LifeLine(800, 500, 2)
-        #self.monsters.append(self.life_line_purple)
+        self.monsters.append(self.life_line_purple)
 
     def enter(self):
         super().enter()
     def draw(self):
         super().draw()
-        self.life_line_red.draw()
-        self.life_line_green.draw()
-        self.life_line_purple.draw()
+        #self.life_line_red.draw()
+        #self.life_line_green.draw()
+        #self.life_line_purple.draw()
     def exit(self):
         super().exit()
     def update(self):
