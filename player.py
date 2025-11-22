@@ -7,6 +7,7 @@ from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 import game_framework
 import game_world
+import math
 
 GRAVITY_PPS = -200
 
@@ -95,12 +96,23 @@ class Player:
 
 
     def draw(self):
-        # 무적 상태일 때 깜빡이기: blink_visible이 False면 스프라이트는 그리지 않음
-        if self.god_mode:
-            if self.blink_visible:
-                self.state_machine.draw()
+        # dash 모드면 스프라이트를 눕혀서 그림
+        if self.dash_mode:
+            # 프레임 소스 x 좌표(프레임 너비는 31, 높이는 40으로 가정)
+            src_x = self.frames[self.frame_idx] if hasattr(self, 'frames') else 0
+            src_w = 31
+            src_h = 40
+            # 오른쪽을 바라보면 시계방향(-90deg), 왼쪽이면 반시계(+90deg)
+            angle = -math.pi / 2 * self.face_dir
+            # 눕힌 상태에서는 화면에 그릴 너비/높이를 서로 바꿔줌
+            self.image.clip_composite_draw(src_x, 0, src_w, src_h, angle, '', self.x, self.y, self.h, self.w)
         else:
-            self.state_machine.draw()
+            # 기존 무적 깜빡임 처리 유지
+            if self.god_mode:
+                if self.blink_visible:
+                    self.state_machine.draw()
+            else:
+                self.state_machine.draw()
 
         draw_rectangle(*self.get_bb())
 
@@ -111,6 +123,11 @@ class Player:
         return abs(self.x - x_target) <= eps
 
     def get_bb(self):
+        # 대시(눕힘)일 때 바운딩박스도 회전에 맞춰 너비/높이 교환
+        if self.dash_mode:
+            hw, hh = self.h * 0.5, self.w * 0.5
+            return self.x - hw, self.y - hh, self.x + hw, self.y + hh
+        # 기본 바운딩박스
         return self.x - 16, self.y - 20, self.x + 16, self.y + 30
 
     def handle_collision(self, group, other):
