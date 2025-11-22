@@ -82,7 +82,7 @@ class Run:
 
     def do(self):
         self.player.frame = (self.player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        self.player.x += self.player.dir * RUN_SPEED_PPS * game_framework.frame_time
+        self.player.x += self.player.speed * self.player.dir * RUN_SPEED_PPS * game_framework.frame_time
 
     def draw(self):
         self.player.frame_idx = int(self.player.frame)
