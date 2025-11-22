@@ -48,6 +48,12 @@ class Player:
         self.god_mode = False    # 무적 모드 여부(플레이어 0)
         self.dash_mode = False   # 대시 모드 여부(플레이어 1)
 
+        # --- 무적(깜빡임) 관련 변수 ---
+        self.blink_interval = 0.15  # 깜빡임 간격(초)
+        self.blink_timer = 0.0  # 깜빡임 내부 타이머
+        self.blink_visible = True  # 현재 프레임에서 보일지 여부
+        # --------------------------------
+
         self.state_machine = StateMachine(
             self.IDLE,
             {
@@ -80,9 +86,22 @@ class Player:
         elif self.y >= 590:
             self.y = 590
 
+            # 무적 모드 타이머 및 깜빡임 처리
+        if self.god_mode:
+            self.blink_timer += game_framework.frame_time
+            if self.blink_timer >= self.blink_interval:
+                self.blink_visible = not self.blink_visible
+                self.blink_timer -= self.blink_interval
+
 
     def draw(self):
-        self.state_machine.draw()
+        # 무적 상태일 때 깜빡이기: blink_visible이 False면 스프라이트는 그리지 않음
+        if self.god_mode:
+            if self.blink_visible:
+                self.state_machine.draw()
+        else:
+            self.state_machine.draw()
+
         draw_rectangle(*self.get_bb())
 
     def handle_events(self, event):
