@@ -300,7 +300,6 @@ class LifeLine():
         self.y = y
 
         self.id = id   # 0이면 빨강, 1이면 초록, 2이면 보라(진짜)
-        #self.image = load_image("monster_stage2.png")
         if self.id == 0:
             self.image = load_image("lifeline_red.png")
         elif self.id == 1:

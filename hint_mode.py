@@ -51,7 +51,7 @@ def draw():
 def handle_events():
     event_list = get_events()   # 버퍼로부터 모든 입력을 갖고 온다.
     for event in event_list:
-        print('[HINT] event:', event.type, getattr(event, 'key', None))
+        #print('[HINT] event:', event.type, getattr(event, 'key', None))
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
