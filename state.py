@@ -37,6 +37,8 @@ class Idle:   # 가만히 서 있는 상태
 
         if shift_down(e) and play_mode.cur_stage == 3:
             self.player.shift_mode_on()
+        elif shift_up(e) and play_mode.cur_stage == 3:
+            self.player.shift_mode_off()
 
 
     def do(self):
@@ -75,6 +77,8 @@ class Run:
 
         if shift_down(e) and play_mode.cur_stage == 3:
             self.player.shift_mode_on()
+        elif shift_up(e) and play_mode.cur_stage == 3:
+            self.player.shift_mode_off()
 
     def do(self):
         self.player.frame = (self.player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3

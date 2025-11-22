@@ -2,7 +2,7 @@ from pico2d import load_image, draw_rectangle
 
 from event import (right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up,
                    right_attack_down, \
-                   left_attack_down, up_attack_down, down_attack_down, shift_down)
+                   left_attack_down, up_attack_down, down_attack_down, shift_down, shift_up)
 from state import Idle, Run, Jump, Up, Down
 from state_machine import StateMachine
 import game_framework
@@ -51,9 +51,9 @@ class Player:
         self.state_machine = StateMachine(
             self.IDLE,
             {
-                self.IDLE: {shift_down: self.IDLE, down_attack_down: self.IDLE, up_attack_down: self.IDLE, left_attack_down: self.IDLE, right_attack_down: self.IDLE,
+                self.IDLE: {shift_up: self.IDLE, shift_down: self.IDLE, down_attack_down: self.IDLE, up_attack_down: self.IDLE, left_attack_down: self.IDLE, right_attack_down: self.IDLE,
                             jump_down: self.JUMP, right_down: self.RUN, left_down: self.RUN, right_up: self.RUN, left_up: self.RUN},
-                self.RUN: {shift_down: self.RUN, left_attack_down: self.RUN, up_attack_down: self.RUN, down_attack_down: self.RUN, right_attack_down: self.RUN,
+                self.RUN: {shift_up: self.RUN, shift_down: self.RUN, left_attack_down: self.RUN, up_attack_down: self.RUN, down_attack_down: self.RUN, right_attack_down: self.RUN,
                            right_down: self.IDLE, left_down: self.IDLE, left_up: self.IDLE, right_up: self.IDLE},
                 self.JUMP: {jump_up: self.IDLE, right_down: self.RUN, left_down: self.RUN}
             }
@@ -95,7 +95,7 @@ class Player:
         return self.x - 16, self.y - 20, self.x + 16, self.y + 30
 
     def handle_collision(self, group, other):
-        if group == 'player:monster':
+        if group == 'player:monster' and not self.god_mode:
             self.hp -= 1
             print("Player collided with monster!")
 
@@ -127,6 +127,15 @@ class Player:
         elif self.id == 1:
             print("Dash Mode Activated!")
             self.dash_mode = True
+
+    def shift_mode_off(self):
+        self.shift_mode = False
+        if self.id == 0:
+            print("God Mode Deactivated!")
+            self.god_mode = False
+        elif self.id == 1:
+            print("Dash Mode Deactivated!")
+            self.dash_mode = False
 
 class FireBall:
     image = None

@@ -379,7 +379,7 @@ class MonsterDoll_1():
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20
 
     def handle_collision(self, group, other):
-        if group == 'player:monster':
+        if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
             print("Player collided with MonsterDoll_1")
         if group == 'attack:monster':
@@ -419,7 +419,7 @@ class MonsterDoll_2():
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20
 
     def handle_collision(self, group, other):
-        if group == 'player:monster':
+        if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
             print("Player collided with MonsterDoll_1")
         if group == 'attack:monster':
@@ -494,7 +494,7 @@ class MonsterDoll_3():
         return self.x - 16, self.y - 20, self.x + 16, self.y + 20
 
     def handle_collision(self, group, other):
-        if group == 'player:monster':
+        if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
             print("Player collided with MonsterDoll_3")
 
