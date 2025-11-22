@@ -371,6 +371,9 @@ class Stage3(Stage):
 
     def enter(self):
         super().enter()
+        for monster in self.monsters:
+            game_world.add_collision_pairs("attack:monster", None, monster)
+
     def draw(self):
         super().draw()
         #self.life_line_red.draw()

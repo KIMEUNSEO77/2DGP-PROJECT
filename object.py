@@ -324,4 +324,16 @@ class LifeLine():
 
     def handle_collision(self, group, other):
         if group == 'attack:monster':
-            pass
+            print("LifeLine hit by attack")
+            self.hp -= 10
+            if self.hp <= 0:
+                try:
+                    game_world.remove_collision_object(self)
+                except:
+                    pass
+
+                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
+                try:
+                    game_world.remove_object(self)
+                except:
+                    pass
