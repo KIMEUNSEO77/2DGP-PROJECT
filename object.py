@@ -4,6 +4,7 @@ import game_framework
 import game_world
 import hint_mode
 import game_clear_mode
+import game_over_mode
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -345,6 +346,8 @@ class LifeLine():
                 if self.id == 2:
                     print("Final LifeLine destroyed! Stage Clear!")
                     game_framework.change_mode(game_clear_mode)
+                else:
+                    game_framework.change_mode(game_over_mode)
                 try:
                     game_world.remove_collision_object(self)
                 except:
