@@ -3,6 +3,7 @@ from pico2d import load_image, draw_rectangle
 import game_framework
 import game_world
 import hint_mode
+import game_clear_mode
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -341,6 +342,9 @@ class LifeLine():
             print("LifeLine hit by attack")
             self.hp -= 10.0
             if self.hp <= 0:
+                if self.id == 2:
+                    print("Final LifeLine destroyed! Stage Clear!")
+                    game_framework.change_mode(game_clear_mode)
                 try:
                     game_world.remove_collision_object(self)
                 except:
