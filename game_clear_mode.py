@@ -16,13 +16,11 @@ def finish():
 
 def update():
     global image, start_time
-    if get_time() - start_time >= 1.5:
+    if get_time() - start_time >= 2.5:
         if play_mode.player == 0:
             image = load_image('game_clear_2(1).png')
         elif play_mode.player == 1:
             image = load_image('game_clear_2(2).png')
-        if get_time() - start_time >= 3.0:
-            game_framework.change_mode(title_mode)
 
 def draw():
     clear_canvas()
