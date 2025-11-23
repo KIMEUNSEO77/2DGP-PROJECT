@@ -22,7 +22,6 @@ def update():
         elif play_mode.player == 1:
             image = load_image('game_clear_2(2).png')
         if get_time() - start_time >= 3.0:
-            #play_mode.cur_stage = 2
             game_framework.change_mode(title_mode)
 
 def draw():
@@ -37,8 +36,6 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_mode(title_mode)
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            game_framework.change_mode(play_mode)
 
 def pause(): pass
 def resume(): pass
