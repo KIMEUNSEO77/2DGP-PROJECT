@@ -1,12 +1,14 @@
 # stage.py
 from pico2d import load_image
 
+import game_framework
 import game_world
 from game_world import remove_collision_object
 from object import (Object, MonsterBook, Book, MonsterVet, MonsterSkull, Box, LifeLine,
                     MonsterDoll_1, MonsterDoll_2, MonsterDoll_3)
 import random
 import time
+import game_over_mode
 
 
 class Stage:
@@ -245,7 +247,8 @@ class Stage1(Stage):
         super().exit()
 
     def update(self):
-        pass
+        if self.player.y < -150:
+            game_framework.change_mode(game_over_mode)
 
 
 
