@@ -13,6 +13,7 @@ import title_mode
 import choose_mode
 import first_to_second_mode
 import second_to_third_mode
+import game_over_mode
 
 WIDTH, HEIGHT = 1000, 600
 player = 0 # 0: mage, 1: knight
@@ -194,6 +195,9 @@ def update():   # 객체들의 상호작용, 행위 업데이트
         game_framework.change_mode(second_to_third_mode)
 
     set_player_hp_image()
+    if player_obj.hp <= 0:
+        delay(0.5)
+        game_framework.change_mode(game_over_mode)
     game_world.handle_collisions()
 
 

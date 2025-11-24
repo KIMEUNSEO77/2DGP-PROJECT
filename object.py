@@ -344,7 +344,6 @@ class LifeLine():
             self.hp -= 10.0
             if self.hp <= 0:
                 if self.id == 2:
-                    print("Final LifeLine destroyed! Stage Clear!")
                     game_framework.change_mode(game_clear_mode)
                 else:
                     game_framework.change_mode(game_over_mode)
