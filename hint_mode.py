@@ -48,7 +48,6 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RETURN:
-                print('[HINT] POP MODE!!!')
                 game_framework.pop_mode()   # 이전 모드로 복귀
 
 def pause():

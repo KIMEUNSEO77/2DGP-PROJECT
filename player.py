@@ -1,9 +1,8 @@
 from pico2d import load_image, draw_rectangle, load_wav
 
-from event import (right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up,
-                   right_attack_down, \
+from event import (right_down, left_down, jump_down, right_up, left_up, jump_up, right_attack_down, \
                    left_attack_down, up_attack_down, down_attack_down, shift_down, shift_up)
-from state import Idle, Run, Jump, Up, Down
+from state import Idle, Run, Jump
 from state_machine import StateMachine
 import game_framework
 import game_world
@@ -152,10 +151,8 @@ class Player:
     def shift_mode_on(self):
         self.shift_mode = True
         if self.id == 0:
-            print("God Mode Activated!")
             self.god_mode = True
         elif self.id == 1:
-            print("Dash Mode Activated!")
             self.dash_mode = True
             self.size = 0.5  # 크기 절반으로
             self.speed = 2.0  # 속도 2배로
@@ -163,10 +160,8 @@ class Player:
     def shift_mode_off(self):
         self.shift_mode = False
         if self.id == 0:
-            print("God Mode Deactivated!")
             self.god_mode = False
         elif self.id == 1:
-            print("Dash Mode Deactivated!")
             self.dash_mode = False
             self.size = 1.0
             self.speed = 1.0
@@ -205,7 +200,6 @@ class FireBall:
 
     def handle_collision(self, group, other):
         if group == 'attack:monster':
-            print("FireBall collided with monster!")
             try:
                 game_world.remove_object(self)
             except Exception:

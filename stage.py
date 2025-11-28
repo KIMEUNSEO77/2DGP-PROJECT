@@ -130,8 +130,6 @@ class Stage:
             self.bgm.repeat_play()
 
     def exit(self):  # 스테이지 종료 시 처리
-        print("Stage", self.id, "exit")
-
         # 안전 제거 함수
         def safe_remove(obj):
             try:
