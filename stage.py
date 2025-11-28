@@ -41,17 +41,17 @@ class Stage:
         for obj in self.floors:
             ol, ob, or_, ot = obj.aabb()
 
-            # 빠른 탈락(AABB 안겹치면 continue)
+            # AABB 안겹치면 continue
             if pr <= ol or pl >= or_ or pt <= ob or pb >= ot:
                 continue
 
             if obj.id == 0:
-                # --- 위에서만 착지 ---
+                # 위에서만 착지
                 self._resolve_top_only(player, ol, ob, or_, ot, vy, prev_y)
-                # 착지/위치가 바뀌었을 수 있으니 AABB 갱신
+                # AABB 갱신
                 pl, pb, pr, pt = player.aabb()
             else:
-                # --- 완전 솔리드 ---
+                # 완전 솔리드
                 self._resolve_solid(player, pl, pb, pr, pt, ol, ob, or_, ot, vx, vy)
                 # 위치가 바뀌었으니 AABB 갱신
                 pl, pb, pr, pt = player.aabb()
@@ -61,10 +61,10 @@ class Stage:
         descending = vy <= 0
         # 이전 프레임 발바닥 위치
         prev_foot = prev_y - (player.h * 0.5)
-        # 위에서 접근했는지(스루 방지)
+        # 위에서 접근했는지
         coming_from_above = prev_foot >= ot - self._top_snap_tol
 
-        # 수평 범위 겹침 체크(현 프레임)
+        # 수평 범위 겹침 체크
         pl, pb, pr, pt = player.aabb()
         horiz_overlap = (pr > ol) and (pl < or_)
 
@@ -77,15 +77,12 @@ class Stage:
                 player.on_ground = True
 
     def _resolve_solid(self, player, pl, pb, pr, pt, ol, ob, or_, ot, vx, vy):
-        # 침투량
         overlap_x = min(pr, or_) - max(pl, ol)
         overlap_y = min(pt, ot) - max(pb, ob)
         if overlap_x <= 0 or overlap_y <= 0:
             return
 
-        # 최소 침투축으로 밀어내기
         if overlap_x < overlap_y:
-            # X축으로 밀기
             center_obj = (ol + or_) * 0.5
             if player.x < center_obj:
                 player.x -= overlap_x
@@ -94,15 +91,14 @@ class Stage:
             if hasattr(player, 'vx'):
                 player.vx = 0
         else:
-            # Y축으로 밀기(천장/바닥)
             center_obj_y = (ob + ot) * 0.5
             if player.y < center_obj_y:
-                # 아래에서 위로 박음 → 아래로
+                # 아래에서 위로 박음
                 player.y -= overlap_y
                 if hasattr(player, 'vy') and vy > 0:
                     player.vy = 0
             else:
-                # 위에서 내려옴 → 바닥에
+                # 위에서 내려옴
                 player.y += overlap_y
                 if hasattr(player, 'vy'):
                     player.vy = 0
@@ -138,12 +134,10 @@ class Stage:
 
         # 안전 제거 함수
         def safe_remove(obj):
-            # 충돌 제거 시도 (없으면 조용히 패스)
             try:
                 remove_collision_object(obj)
             except:
                 pass
-            # 월드에서 제거 시도 (없으면 조용히 패스)
             try:
                 game_world.remove_object(obj)
             except:
@@ -237,12 +231,11 @@ class Stage1(Stage):
             monster = MonsterBook(mx, my)
             self.monsters.append(monster)
 
-        # key_index = random.randint(0, 17)
         key_index = 17   # key 인덱스를 17로 고정
         self.book_x = [200, 400, 600, 800, 100, 300, 500, 700, 900, 150, 350, 550, 750, 100, 300, 500, 700, 900]
         self.book_y = [80, 80, 80, 80, 210, 210, 210, 210, 210, 350, 350, 350, 350, 485, 485, 485, 485, 485]
 
-        # 인덱스별 힌트 매핑 (요청한 매핑)
+        # 인덱스별 힌트 매핑
         hint_map = { 0: 1, 4: 2, 10: 3, 15: 4, 6: 5 }
 
         # key인 인덱스는 True
@@ -302,14 +295,13 @@ class Stage2(Stage):
             platform = Object(100, 10, px, py, "floor_stage2_3.png", 0)
             self.floors.append(platform)
 
-        #key_index = random.randint(0, 26)   # key인 인덱스는 True
         key_index = 4  # key 인덱스를 4로 고정
         self.box_x = [50, 300, 550, 700, 950, 150, 400, 650, 900, 100, 300, 550, 750, 950, 200, 450, 700, 900,
                            250, 500, 750, 900, 100, 300, 500, 800]
         self.box_y = [120, 140, 160, 180, 160, 220, 240, 260, 280, 320, 340, 360, 380, 360, 420, 440, 460, 480,
                             540, 560, 580, 560, 30, 30, 30, 30]
 
-        # 인덱스별 힌트 매핑 (요청한 매핑)
+        # 인덱스별 힌트 매핑
         hint_map = {9: 6, 6: 7, 15: 8, 7: 9, 13: 10}
         poision_1_idx = [18, 19, 20, 21]
         poison_2_idx = [22, 23, 24, 25]
@@ -352,7 +344,6 @@ class Stage2(Stage):
 
         # 5초마다 MonsterSkull 생성
         if now - self._last_spawn >= self._spawn_interval:
-            # 스폰 위치: 오른쪽 화면(예시) 및 y는 랜덤 선택
             spawn_x = random.randint(100, 900)
             spawn_y = 600
             skull = MonsterSkull(spawn_x, spawn_y)

@@ -35,8 +35,6 @@ class Player:
         self.IDLE = Idle(self)
         self.RUN = Run(self)
         self.JUMP = Jump(self)
-        # self.UP = Up(self)
-        # self.DOWN = Down(self)
         self.find_key = False
         self.hp = 3  # 기본 플레이어 체력은 3로 시작
 
@@ -49,15 +47,13 @@ class Player:
         self.god_mode = False    # 무적 모드 여부(플레이어 0)
         self.dash_mode = False   # 대시 모드 여부(플레이어 1) 크기가 작아지고 속도가 빨라짐.
 
-        # --- 무적(깜빡임) 관련 변수 ---
+        # 무적 변수
         self.blink_interval = 0.15  # 깜빡임 간격(초)
         self.blink_timer = 0.0  # 깜빡임 내부 타이머
         self.blink_visible = True  # 현재 프레임에서 보일지 여부
-        # --------------------------------
-        # ---대시 모드 관련 변수---
+        # 대시 모드 변수
         self.size = 1.0  # 기본 크기 (0.5배 작아지게 할 예정)
         self.speed = 1.0  # 기본 속도 (2배 빨라지게 할 예정)
-        # ------------------------
 
         # 공격 효과음
         self.attack_sfx = load_wav("sound/sound_attack.wav")
@@ -117,7 +113,6 @@ class Player:
         return abs(self.x - x_target) <= eps
 
     def get_bb(self):
-        # 대시(눕힘)일 때 바운딩박스도 회전에 맞춰 너비/높이 교환
         if self.dash_mode:
             return self.x - 8, self.y - 20, self.x + 8, self.y
         # 기본 바운딩박스

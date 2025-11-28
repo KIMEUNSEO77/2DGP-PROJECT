@@ -27,7 +27,6 @@ class Object:
 
     def draw(self):
         self.image.draw(self.x, self.y, self.w, self.h)
-        #draw_rectangle(*self.aabb())
     def update(self):
         pass
 
@@ -205,8 +204,6 @@ class MonsterSkull():
                 game_world.remove_collision_object(self)
             except:
                 pass
-
-            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
             try:
                 game_world.remove_object(self)
             except:
@@ -249,19 +246,15 @@ class Box():
 
             if self.key:
                 self.finded = True
-                # game_world.remove_object(self)
             elif self.hint_index is not None and other.hintOpened == False:   # 힌트 박스일 경우
                 other.hintOpened = True
                 hint_mode.hint_index = self.hint_index
                 game_framework.push_mode(hint_mode)
 
-                # 1) 충돌 그룹에서 먼저 무조건 제거
                 try:
                     game_world.remove_collision_object(self)
                 except:
                     pass
-
-                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
                 try:
                     game_world.remove_object(self)
                 except:
@@ -272,8 +265,6 @@ class Box():
                     game_world.remove_collision_object(self)
                 except:
                     pass
-
-                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
                 try:
                     game_world.remove_object(self)
                 except:
@@ -286,8 +277,6 @@ class Box():
                     game_world.remove_collision_object(self)
                 except:
                     pass
-
-                # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
                 try:
                     game_world.remove_object(self)
                 except:
@@ -319,7 +308,6 @@ class LifeLine():
         self.image.clip_composite_draw(0, 0, 181, 811,
                                            0, '', self.x, self.y, self.w, self.h)
         # 체력바 그리기
-        # 체력 비율에 따라 hp바 가로 길이 조절
         hp_ratio = max(0.0, min(self.hp, 100.0)) / 100.0
         if hp_ratio > 0.0:
             src_full_w = 877  # 원본 이미지의 전체 가로 픽셀
@@ -391,8 +379,6 @@ class MonsterDoll_1():
                 game_world.remove_collision_object(self)
             except:
                 pass
-
-            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
             try:
                 game_world.remove_object(self)
             except:
@@ -429,8 +415,6 @@ class MonsterDoll_2():
                 game_world.remove_collision_object(self)
             except:
                 pass
-
-            # 2) 월드에서 제거 (이미 빠졌을 수도 있으니 예외 무시)
             try:
                 game_world.remove_object(self)
             except:
@@ -502,14 +486,13 @@ class MonsterDoll_3():
             if self.active == False:
                 self.active = True   # 공격받으면 활성화되어 움직이기 시작함
             else:
-                # 분열: 자기 제거 후 두 개 생성하고 충돌 등록까지 수행
+                # 분열
                 left = MonsterDoll_3(400, 300)
                 right = MonsterDoll_3(460, 300)
 
                 left.active = True
                 right.active = True
 
-                # 서로 반대 또는 원래 방향으로 퍼지게 설정 (원하면 반대로)
                 left.dir_x = -1
                 left.dir_y = 0
                 right.dir_x = -1
@@ -528,7 +511,6 @@ class MonsterDoll_3():
                 except Exception:
                     pass
 
-                # 충돌 처리에 등록하는 API가 있는 경우 호출 (실패해도 무시)
                 try:
                     game_world.add_collision_pairs("player:monster", None, left)
                     game_world.add_collision_pairs("attack:monster", None, left)

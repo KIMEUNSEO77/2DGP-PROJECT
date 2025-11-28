@@ -26,7 +26,7 @@ def remove_object(o):
             remove_collision_object(o)
             return
     #raise ValueError("Cannot find object in any layer")
-    print("Warning: Cannot find object in any layer to remove.")
+    #print("Warning: Cannot find object in any layer to remove.")
 
 def remove_collision_object(o):
     for pairs in collision_pairs.values():
