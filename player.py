@@ -129,7 +129,6 @@ class Player:
     def handle_collision(self, group, other):
         if group == 'player:monster' and not self.god_mode:
             self.hp -= 1
-            print("Player collided with monster!")
 
         elif group == 'player:object' and other.key:
             self.find_key = True

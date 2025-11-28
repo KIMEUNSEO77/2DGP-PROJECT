@@ -1,5 +1,5 @@
 # object.py
-from pico2d import load_image, draw_rectangle
+from pico2d import load_image, draw_rectangle, load_wav
 import game_framework
 import game_world
 import hint_mode
@@ -75,7 +75,6 @@ class MonsterBook():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            #print("Player collided with MonsterBook")
             game_world.remove_object(self)
 
 class Book():
@@ -99,6 +98,8 @@ class Book():
         self.finded = False
 
         self.hint_index = hint_index
+        self.sfx = load_wav("sound/sound_object.wav")
+        self.sfx.set_volume(128)
 
     def draw(self):
         self.image.clip_composite_draw(0, 0, 120, 120,
@@ -117,9 +118,10 @@ class Book():
 
     def handle_collision(self, group, other):
         if group == 'player:object':
+            self.sfx.play()
+
             if self.key:
                 self.finded = True
-                # game_world.remove_object(self)
             elif self.hint_index is not None:   # 힌트 책일 경우
                 hint_mode.hint_index = self.hint_index
                 game_world.remove_object(self)
@@ -171,10 +173,8 @@ class MonsterVet():
 
     def handle_collision(self, group, other):
         if group == 'player:monster':
-            print("Player collided with MonsterVet")
             game_world.remove_object(self)
         if group == 'attack:monster':
-            print("MonsterVet hit by attack")
             if self.player_id == 0:
                 self.speed_minus = max(0.1, self.speed_minus - 0.1)
             elif self.player_id == 1:
@@ -204,7 +204,6 @@ class MonsterSkull():
     def handle_collision(self, group, other):
         if group == 'player:monster':
             game_world.remove_object(self)
-            print("Player collided with MonsterSkull")
         if group == 'attack:monster':
             try:
                 game_world.remove_collision_object(self)
@@ -231,6 +230,9 @@ class Box():
         self.poison_1 = poison_1
         self.poison_2 = poison_2
 
+        self.sfx = load_wav("sound/sound_object.wav")
+        self.sfx.set_volume(128)
+
     def draw(self):
         self.image.clip_composite_draw(0, 0, 175, 124,
                                            0, '', self.x, self.y, self.w, self.h)
@@ -248,7 +250,8 @@ class Box():
 
     def handle_collision(self, group, other):
         if group == 'player:object':
-            print("Box collided with Player")
+            self.sfx.play()
+
             if self.key:
                 self.finded = True
                 # game_world.remove_object(self)
@@ -340,7 +343,6 @@ class LifeLine():
 
     def handle_collision(self, group, other):
         if group == 'attack:monster':
-            print("LifeLine hit by attack")
             self.hp -= 10.0
             if self.hp <= 0:
                 if self.id == 2:
@@ -387,7 +389,6 @@ class MonsterDoll_1():
     def handle_collision(self, group, other):
         if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
-            print("Player collided with MonsterDoll_1")
         if group == 'attack:monster':
             try:
                 game_world.remove_collision_object(self)
@@ -427,7 +428,6 @@ class MonsterDoll_2():
     def handle_collision(self, group, other):
         if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
-            print("Player collided with MonsterDoll_1")
         if group == 'attack:monster':
             try:
                 game_world.remove_collision_object(self)
@@ -502,7 +502,6 @@ class MonsterDoll_3():
     def handle_collision(self, group, other):
         if group == 'player:monster' and other.god_mode == False:
             game_world.remove_object(self)
-            print("Player collided with MonsterDoll_3")
 
         if group == 'attack:monster':
             if self.active == False:
