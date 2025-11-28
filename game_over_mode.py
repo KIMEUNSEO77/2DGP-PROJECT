@@ -11,7 +11,7 @@ def init():
     image = load_image('game_over.png')
 
     # 배경 음악 로드 & 재생
-    bgm = load_music('sound/sound_game_over.mp3')
+    bgm = load_music('sound/sound_game_over.wav')
     bgm.set_volume(64)  # 볼륨
     bgm.repeat_play()
 

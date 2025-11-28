@@ -1,4 +1,4 @@
-from pico2d import load_image, draw_rectangle
+from pico2d import load_image, draw_rectangle, load_wav
 
 from event import (right_down, left_down, jump_down, right_up, left_up, jump_up, up_down, up_up, down_down, down_up,
                    right_attack_down, \
@@ -58,6 +58,10 @@ class Player:
         self.size = 1.0  # 기본 크기 (0.5배 작아지게 할 예정)
         self.speed = 1.0  # 기본 속도 (2배 빨라지게 할 예정)
         # ------------------------
+
+        # 공격 효과음
+        self.attack_sfx = load_wav("sound/sound_attack.wav")
+        self.attack_sfx.set_volume(128)
 
         self.state_machine = StateMachine(
             self.IDLE,
@@ -134,18 +138,25 @@ class Player:
         fire_ball = FireBall(self, self.x + 25, self.y, 1, 0)
         game_world.add_object(fire_ball, 1)
         game_world.add_collision_pairs("attack:monster", fire_ball, None)
+        self.attack_sfx.play()
+
     def fire_ball_left(self):
         fire_ball = FireBall(self, self.x - 25, self.y, -1, 0)
         game_world.add_object(fire_ball, 1)
         game_world.add_collision_pairs("attack:monster", fire_ball, None)
+        self.attack_sfx.play()
+
     def fire_ball_up(self):
         fire_ball = FireBall(self, self.x, self.y + 25, 0, 1)
         game_world.add_object(fire_ball, 1)
         game_world.add_collision_pairs("attack:monster", fire_ball, None)
+        self.attack_sfx.play()
+
     def fire_ball_down(self):
         fire_ball = FireBall(self, self.x, self.y - 25, 0, -1)
         game_world.add_object(fire_ball, 1)
         game_world.add_collision_pairs("attack:monster", fire_ball, None)
+        self.attack_sfx.play()
 
     def shift_mode_on(self):
         self.shift_mode = True

@@ -12,7 +12,7 @@ def init():
     start_time = get_time()
 
     # 배경 음악 로드 & 재생
-    bgm = load_music('sound/sound_game_clear.mp3')
+    bgm = load_music('sound/sound_game_clear.wav')
     bgm.set_volume(64)  # 볼륨
     bgm.repeat_play()
 

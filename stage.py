@@ -200,7 +200,7 @@ class Stage0(Stage):
         player.gravity = -10
 
         self.bgm = load_music('sound/sound_stage0.mp3')
-        self.bgm.set_volume(64)
+        self.bgm.set_volume(40)
 
     def enter(self):
         super().enter()
@@ -252,7 +252,7 @@ class Stage1(Stage):
             self.objects.append(book)
 
         self.bgm = load_music('sound/sound_stage1.mp3')
-        self.bgm.set_volume(64)
+        self.bgm.set_volume(50)
 
     def enter(self):
         super().enter()
