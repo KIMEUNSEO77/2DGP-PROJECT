@@ -252,7 +252,7 @@ class Stage1(Stage):
             self.objects.append(book)
 
         self.bgm = load_music('sound/sound_title.mp3')
-        self.bgm.set_volume(40)
+        self.bgm.set_volume(128)
 
     def enter(self):
         super().enter()

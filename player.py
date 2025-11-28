@@ -110,9 +110,6 @@ class Player:
         else:
             self.state_machine.draw()
 
-        draw_rectangle(*self.get_bb())
-
-
     def handle_events(self, event):
         self.state_machine.handle_state_event(('INPUT', event))  # 스테이트 머신에 적합한 이벤트 전달
 
@@ -200,7 +197,6 @@ class FireBall:
     def draw(self):
         self.image.clip_composite_draw(0, 0, self.draw_w, self.draw_h,
                                        0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x += self.dirX * 400 * game_framework.frame_time

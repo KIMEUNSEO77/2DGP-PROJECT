@@ -60,7 +60,6 @@ class MonsterBook():
         else:
             self.image.clip_composite_draw(self.frames[self.frame_idx], 450, 200, 120,
                                                   0, 'h', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
@@ -104,7 +103,6 @@ class Book():
     def draw(self):
         self.image.clip_composite_draw(0, 0, 120, 120,
                                        0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
         if self.key and self.finded:
             self.key_image.clip_composite_draw(0, 0, 47, 111,
@@ -152,7 +150,6 @@ class MonsterVet():
         else:
             self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 135, 85,
                                            0, 'h', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.freeze_time > 0.0:
@@ -191,7 +188,6 @@ class MonsterSkull():
     def draw(self):
         self.image.clip_composite_draw(0, 0, 100, 100,
                                            0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.y -= 1.5 + BOOK_SPEED_PPS * game_framework.frame_time
@@ -236,7 +232,6 @@ class Box():
     def draw(self):
         self.image.clip_composite_draw(0, 0, 175, 124,
                                            0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
         if self.key and self.finded:
             self.key_image.clip_composite_draw(0, 0, 47, 111,
@@ -336,8 +331,6 @@ class LifeLine():
             self.hp_image.clip_composite_draw(0, 0, src_w, 93,
                                               0, '', draw_x, self.y - 50, draw_w, 15)
 
-        draw_rectangle(*self.get_bb())
-
     def update(self):
         pass
 
@@ -382,7 +375,6 @@ class MonsterDoll_1():
         self.frame_idx = int(self.frame)
         self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 28, 38,
                                            0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
@@ -421,7 +413,6 @@ class MonsterDoll_2():
         self.frame_idx = int(self.frame)
         self.image.clip_composite_draw(self.frames[self.frame_idx], 0, 28, 38,
                                            0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
@@ -472,7 +463,6 @@ class MonsterDoll_3():
         else:
             self.image.clip_composite_draw(self.frames_x[self.frame_idx_x], self.frames_y[self.frame_idx_y], 30, 49,
                                             0, '', self.x, self.y, self.w, self.h)
-        draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.active:
