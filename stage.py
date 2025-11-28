@@ -1,5 +1,5 @@
 # stage.py
-from pico2d import load_image
+from pico2d import load_image, load_music
 
 import game_framework
 import game_world
@@ -22,6 +22,8 @@ class Stage:
         self.objects = []   # 기타 오브젝트 리스트
 
         self._top_snap_tol = 8  # 위만 충돌 스냅 허용 오차(px)
+
+        self.bgm = None  # 배경 음악
 
     def check_collision(self, player):
         # 플레이어 상태 추출(없으면 폴백)
@@ -128,6 +130,9 @@ class Stage:
             game_world.add_object(obj, 1)
             game_world.add_collision_pairs("player:object", None, obj)
 
+        if self.bgm:
+            self.bgm.repeat_play()
+
     def exit(self):  # 스테이지 종료 시 처리
         print("Stage", self.id, "exit")
 
@@ -164,6 +169,11 @@ class Stage:
 
         self.bg = None
 
+        # BGM 정리
+        if self.bgm:
+            self.bgm.stop()
+            self.bgm = None
+
 
     def update(self): # 게임 로직 업데이트
         pass
@@ -188,6 +198,10 @@ class Stage0(Stage):
         player.x = 400
         player.y = 600
         player.gravity = -10
+
+        self.bgm = load_music('sound/sound_stage0.mp3')
+        self.bgm.set_volume(64)
+
     def enter(self):
         super().enter()
     def draw(self):
@@ -237,9 +251,11 @@ class Stage1(Stage):
             book = Book(bx, by, random.randint(1, 5), key=(i == key_index), hint_index=hint_idx)
             self.objects.append(book)
 
+        self.bgm = load_music('sound/sound_stage1.mp3')
+        self.bgm.set_volume(64)
+
     def enter(self):
         super().enter()
-
     def draw(self):
         super().draw()
 
@@ -303,6 +319,9 @@ class Stage2(Stage):
             # 생성자가 key 인자를 받는다면
             box = Box(bx, by, key=(i == key_index), hint_index=hint_idx, poison_1=(i in poision_1_idx), poison_2=(i in poison_2_idx))
             self.objects.append(box)
+
+        self.bgm = load_music('sound/sound_stage2.mp3')
+        self.bgm.set_volume(64)
 
     def enter(self):
         super().enter()
@@ -381,6 +400,9 @@ class Stage3(Stage):
         self.monsters.append(self.monster_2)
         self.monster_3 = MonsterDoll_3(800, 300)
         self.monsters.append(self.monster_3)
+
+        self.bgm = load_music('sound/sound_stage3.mp3')
+        self.bgm.set_volume(64)
 
     def enter(self):
         super().enter()
