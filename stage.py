@@ -251,8 +251,8 @@ class Stage1(Stage):
             book = Book(bx, by, random.randint(1, 5), key=(i == key_index), hint_index=hint_idx)
             self.objects.append(book)
 
-        self.bgm = load_music('sound/sound_stage1.mp3')
-        self.bgm.set_volume(50)
+        self.bgm = load_music('sound/sound_title.mp3')
+        self.bgm.set_volume(40)
 
     def enter(self):
         super().enter()
@@ -321,7 +321,7 @@ class Stage2(Stage):
             self.objects.append(box)
 
         self.bgm = load_music('sound/sound_stage2.mp3')
-        self.bgm.set_volume(64)
+        self.bgm.set_volume(40)
 
     def enter(self):
         super().enter()
@@ -402,7 +402,7 @@ class Stage3(Stage):
         self.monsters.append(self.monster_3)
 
         self.bgm = load_music('sound/sound_stage3.mp3')
-        self.bgm.set_volume(64)
+        self.bgm.set_volume(30)
 
     def enter(self):
         super().enter()

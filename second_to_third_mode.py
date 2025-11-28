@@ -4,6 +4,7 @@ import play_mode
 import title_mode
 
 image = None
+bgm = None
 
 def init():
     global image, start_time
@@ -13,9 +14,17 @@ def init():
         image = load_image('Knight_2.5stage_1.png')
     start_time = get_time()
 
+    # 배경 음악 로드 & 재생
+    bgm = load_music('sound/sound_title.mp3')
+    bgm.set_volume(128)  # 볼륨
+    bgm.repeat_play()
+
 def finish():
-    global image
+    global image, bgm
     del image
+
+    if bgm:
+        bgm.stop()
 
 def update():
     global image, start_time

@@ -12,7 +12,7 @@ def init():
 
     # 배경 음악 로드 & 재생
     bgm = load_music('sound/sound_title.mp3')
-    bgm.set_volume(64)  # 볼륨
+    bgm.set_volume(128)  # 볼륨
     bgm.repeat_play()
 
 def finish():

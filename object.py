@@ -317,6 +317,9 @@ class LifeLine():
         self.hp = 100.0   # 생명줄 체력 (공격 받으면 감소함)
         self.hp_image = load_image("lifeline_hp.png")
 
+        self.afx = load_wav("sound/sound_lifeline.wav")
+        self.afx.set_volume(128)
+
     def draw(self):
         self.image.clip_composite_draw(0, 0, 181, 811,
                                            0, '', self.x, self.y, self.w, self.h)
@@ -343,6 +346,8 @@ class LifeLine():
 
     def handle_collision(self, group, other):
         if group == 'attack:monster':
+            self.afx.play()
+
             self.hp -= 10.0
             if self.hp <= 0:
                 if self.id == 2:
