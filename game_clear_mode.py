@@ -4,15 +4,25 @@ import play_mode
 import title_mode
 
 image = None
+bgm = None
 
 def init():
-    global image, start_time
+    global image, start_time, bgm
     image = load_image('game_clear_1.png')
     start_time = get_time()
+
+    # 배경 음악 로드 & 재생
+    bgm = load_music('sound/sound_game_clear.mp3')
+    bgm.set_volume(64)  # 볼륨
+    bgm.repeat_play()
 
 def finish():
     global image
     del image
+    global bgm
+    # 모드 이동 시 음악 끄기
+    if bgm:
+        bgm.stop()
 
 def update():
     global image, start_time
