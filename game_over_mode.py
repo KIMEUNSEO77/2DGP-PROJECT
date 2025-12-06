@@ -23,6 +23,10 @@ def finish():
     if bgm:
         bgm.stop()
 
+
+    # 모드 이동 시 스테이지 0으로 되돌림
+    play_mode.cur_stage = 0
+
 def update():
     pass
 
