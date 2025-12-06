@@ -58,6 +58,9 @@ class Player:
         self.attack_sfx = load_wav("sound/sound_attack.wav")
         self.attack_sfx.set_volume(128)
 
+        # 게임 오버 상태
+        self.game_over = False
+
         self.state_machine = StateMachine(
             self.IDLE,
             {
