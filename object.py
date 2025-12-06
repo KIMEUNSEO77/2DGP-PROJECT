@@ -5,6 +5,7 @@ import game_world
 import hint_mode
 import game_clear_mode
 import game_over_mode
+import play_mode
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION

@@ -36,8 +36,10 @@ def remove_collision_object(o):
             pairs[1].remove(o)
 
 def clear():
+    global world, collision_pairs
     for layer in world:
         layer.clear()
+    collision_pairs.clear()  # 충돌 정보도 초기화
 
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()

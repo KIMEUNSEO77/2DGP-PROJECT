@@ -131,6 +131,7 @@ def update():   # 객체들의 상호작용, 행위 업데이트
     if player_obj.hp <= 0:
         delay(0.5)
         game_framework.change_mode(game_over_mode)
+
     game_world.handle_collisions()
 
 
@@ -161,7 +162,8 @@ def draw():   # 객체들 그리기
     update_canvas()
 
 def finish():   # 게임 종료 시 처리
-    game_world.clear()
+    #game_world.clear()
+    pass
 
 def set_player_hp_image():
     global player_obj, hp_image
